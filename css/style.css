@@ -97,11 +97,13 @@ a { text-decoration: none; color: inherit; }
   background: var(--neon-dim);
 }
 
+
 .nav-icons {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   flex-shrink: 0;
+  flex: 1;
 }
 
 .nav-icon-btn {
@@ -117,6 +119,49 @@ a { text-decoration: none; color: inherit; }
   position: relative;
 }
 .nav-icon-btn:hover { border-color: var(--neon); color: var(--neon); background: var(--neon-dim); }
+
+
+/*Search*/
+.search {
+  /* width: 500px; remember to make this responsive lmao */
+  flex: 1;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  color: var(--text-grey);
+  background: transparent;
+  position: relative;
+  transition: box-shadow 0.25s;
+}
+
+.search:focus-within {
+  box-shadow: var(--neon-glow);
+}
+
+
+.search-icon {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-grey);
+  position: relative;
+}
+
+.search-input {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  outline: none;
+  border: none;
+  background: transparent;
+  flex: 1;
+  caret-color: var(--text-grey);
+  color: var(--text-grey);
+}
+
+.search-input::placeholder {
+  color: var(--text-grey);
+}
 
 .cart-badge {
   position: absolute;

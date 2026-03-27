@@ -34,7 +34,7 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['username'] ?? 'Account')
   </a>
 
   <!-- Nav links -->
-  <ul class="nav-links" id="navLinks" role="menubar">
+  <!-- <ul class="nav-links" id="navLinks" role="menubar">
     <?php foreach ($navItems as $item): ?>
       <li role="none">
         <a href="<?= $item['href'] ?>"
@@ -45,16 +45,23 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['username'] ?? 'Account')
         </a>
       </li>
     <?php endforeach; ?>
-  </ul>
+  </ul> -->
 
   <!-- Icons -->
   <div class="nav-icons">
-    <!-- Search -->
-    <a href="search.php" class="nav-icon-btn" aria-label="Search">
+    <!-- <a href="search.php" class="nav-icon-btn" aria-label="Search">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
       </svg>
-    </a>
+    </a> -->
+    <!-- Search -->
+    <div class="search">
+      
+      <div class="search-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg></div>
+      <input class="search-input" type="search" id="site-search" name="q" placeholder="Search Products" />
+    </div>
 
     <!-- User / Login -->
     <?php if ($isLoggedIn): ?>
