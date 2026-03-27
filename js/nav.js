@@ -8,19 +8,19 @@ toggle.addEventListener('click', () => {
 });
 }
 
-const searchBtn = document.getElementById('searchBtn');
-searchBtn.addEventListener('click', searchActive);
-const searchBar = document.getElementById('searchBar');
+// const searchBtn = document.getElementById('searchBtn');
+// searchBtn.addEventListener('click', searchActive);
+// const searchBar = document.getElementById('searchBar');
 
-function searchActive()
-{
-    links.style.display = "none";
-    searchBtn.style.display = "none";
-    searchBar.style.display = "flex";
-}
+// function searchActive()
+// {
+//     links.style.display = "none";
+//     searchBtn.style.display = "none";
+//     searchBar.style.display = "flex";
+// }
 
-function searchInactive()
-{
-    links.style.display = "block";
+// function searchInactive()
+// {
+//     links.style.display = "block";
 
-}
+// }

@@ -143,6 +143,10 @@ a { text-decoration: none; color: inherit; }
   margin-left: 1rem;
 }
 
+.search form {
+  flex: 1;
+}
+
 .search:focus-within {
   box-shadow: var(--neon-glow);
 }
@@ -164,10 +168,15 @@ a { text-decoration: none; color: inherit; }
   flex: 1;
   caret-color: var(--text-grey);
   color: var(--text-grey);
+  padding-left: 1rem;
 }
 
 .search-input::placeholder {
   color: var(--text-grey);
+}
+
+.search-input::-webkit-search-cancel-button {
+  display: none;
 }
 
 .cart-badge {
@@ -906,3 +915,104 @@ a { text-decoration: none; color: inherit; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .navbar-brand { font-size: 0.95rem; }
 }
+
+
+
+/* Products Page */
+.products-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* Category Filter Buttons */
+.category-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  color: var(--text-grey);
+  background: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.filter-btn:hover {
+  background: var(--border);
+}
+
+.filter-btn.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+/* Product Grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+/* Product Card */
+.product-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: box-shadow 0.2s;
+}
+
+.product-card:hover {
+  box-shadow: 0 0 12px var(--neon-glow);
+}
+
+.product-card img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.product-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.product-card p {
+  font-size: 0.875rem;
+  color: var(--text-grey);
+}
+
+.product-card .price {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.add-to-cart {
+  margin-top: auto;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.add-to-cart:hover {
+  opacity: 0.8;
+}
+
+
+/* End Of Product Card */

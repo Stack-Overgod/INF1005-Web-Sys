@@ -6,6 +6,7 @@
 $activePage = $activePage ?? '';
 
 $navItems = [
+  ['href' => 'products.php',                'label' => 'Products',   'key' => 'products'],
   ['href' => 'products.php?cat=gaming-pc',  'label' => 'Gaming PC',  'key' => 'gaming-pc'],
   ['href' => 'products.php?cat=laptop',     'label' => 'Laptop',     'key' => 'laptop'],
   ['href' => 'products.php?cat=keyboard',   'label' => 'Keyboard',   'key' => 'keyboard'],
@@ -35,52 +36,51 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['username'] ?? 'Account')
     </a>
 
     <!-- Icons -->
-  <div class="nav-icons">
-    <!-- Search -->
-    
-    <div class="search" id="searchBar">
-      <!-- <div class="search-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg></div> -->
-      <input class="search-input" type="search" id="site-search" name="q" placeholder="Search Products" />
+    <div class="nav-icons">
+      <!-- Search -->
+      
+      <div class="search" id="searchBar">
+      <form action="search.php" method="GET">
+        <input class="search-input" type="search" id="site-search" name="q" placeholder="Search Products" />
+      </form>
       <button class="nav-icon-btn" id="searchBtn" aria-label="Search">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg>
-    </button>
-    </div>
-
-    <!-- User / Login -->
-    <?php if ($isLoggedIn): ?>
-      <a href="profile.php" class="nav-icon-btn" aria-label="My Account: <?= $userName ?>">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
         </svg>
-      </a>
-    <?php else: ?>
-      <a href="login.php" class="nav-icon-btn" aria-label="Login">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-        </svg>
-      </a>
-    <?php endif; ?>
+      </button>
+      </div>
 
-    <!-- Cart -->
-    <a href="cart.php" class="nav-icon-btn" aria-label="Shopping cart, <?= $cartCount ?> items">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
-        <path d="M16 10a4 4 0 01-8 0"/>
-      </svg>
-      <?php if ($cartCount > 0): ?>
-        <span class="cart-badge" aria-hidden="true"><?= $cartCount > 9 ? '9+' : $cartCount ?></span>
+      <!-- User / Login -->
+      <?php if ($isLoggedIn): ?>
+        <a href="profile.php" class="nav-icon-btn" aria-label="My Account: <?= $userName ?>">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </a>
+      <?php else: ?>
+        <a href="login.php" class="nav-icon-btn" aria-label="Login">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+          </svg>
+        </a>
       <?php endif; ?>
-    </a>
 
-    <!-- Mobile toggle -->
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
+      <!-- Cart -->
+      <a href="cart.php" class="nav-icon-btn" aria-label="Shopping cart, <?= $cartCount ?> items">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <?php if ($cartCount > 0): ?>
+          <span class="cart-badge" aria-hidden="true"><?= $cartCount > 9 ? '9+' : $cartCount ?></span>
+        <?php endif; ?>
+      </a>
+
+      <!-- Mobile toggle -->
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
 
 
