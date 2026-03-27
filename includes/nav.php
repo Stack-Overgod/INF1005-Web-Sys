@@ -34,7 +34,7 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['username'] ?? 'Account')
   </a>
 
   <!-- Nav links -->
-  <!-- <ul class="nav-links" id="navLinks" role="menubar">
+  <ul class="nav-links" id="navLinks" role="menubar">
     <?php foreach ($navItems as $item): ?>
       <li role="none">
         <a href="<?= $item['href'] ?>"
@@ -45,22 +45,24 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['username'] ?? 'Account')
         </a>
       </li>
     <?php endforeach; ?>
-  </ul> -->
+  </ul>
 
   <!-- Icons -->
   <div class="nav-icons">
-    <!-- <a href="search.php" class="nav-icon-btn" aria-label="Search">
+
+      
+    <!-- Search -->
+    <button class="nav-icon-btn" id="searchBtn" aria-label="Search">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
       </svg>
-    </a> -->
-    <!-- Search -->
-    <div class="search">
-      
+    </button>
+    <div class="search" id="searchBar">
       <div class="search-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
       </svg></div>
       <input class="search-input" type="search" id="site-search" name="q" placeholder="Search Products" />
+      
     </div>
 
     <!-- User / Login -->
@@ -96,14 +98,4 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['username'] ?? 'Account')
   </div>
 </nav>
 
-<script>
-  // Mobile nav toggle
-  const toggle = document.getElementById('navToggle');
-  const links  = document.getElementById('navLinks');
-  if (toggle && links) {
-    toggle.addEventListener('click', () => {
-      const open = links.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', open);
-    });
-  }
-</script>
+<script src="js/nav.js" defer></script>

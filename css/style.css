@@ -126,7 +126,7 @@ a { text-decoration: none; color: inherit; }
   /* width: 500px; remember to make this responsive lmao */
   flex: 1;
   height: 36px;
-  display: flex;
+  display: none;
   align-items: center;
   border-radius: 8px;
   border: 1px solid var(--border);
