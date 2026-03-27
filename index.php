@@ -65,6 +65,35 @@
       background: var(--border);
       align-self: stretch;
     }
+
+    .landing-about-link {
+      display: block;
+      margin-top: 0.25rem;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+      transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .landing-about-link:hover,
+    .landing-about-link:focus-visible {
+      transform: translateY(-3px);
+      border-color: var(--border-hover);
+      background: rgba(15, 15, 24, 0.55);
+      outline: none;
+    }
+
+    .landing-about-link .about-link-text {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-top: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--neon);
+    }
   </style>
 </head>
 <body>
@@ -94,12 +123,20 @@
 
     <!-- About Us -->
     <div class="landing-about">
-      <h2>About Us</h2>
-      <p>
-        OVERCLOCK/TECH is a premium gaming hardware company dedicated to delivering
-        cutting-edge performance machines to competitive players and enthusiasts alike.
-        We engineer every product with one goal — giving you the edge you deserve.
-      </p>
+      <a href="about.php" class="landing-about-link" aria-label="Read more about OVERCLOCK TECH">
+        <h2>About Us</h2>
+        <p>
+          OVERCLOCK/TECH is a premium gaming hardware company dedicated to delivering
+          cutting-edge performance machines to competitive players and enthusiasts alike.
+          We engineer every product with one goal — giving you the edge you deserve.
+        </p>
+        <span class="about-link-text">
+          Read More
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </span>
+      </a>
     </div>
 
     <!-- Speciality -->
