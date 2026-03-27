@@ -29,40 +29,25 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['username'] ?? 'Account')
 
 <nav class="navbar" role="navigation" aria-label="Main navigation">
   <!-- Brand -->
-  <a href="home.php" class="navbar-brand" aria-label="OVERCLOCK TECH Home">
-    OVERCLOCK<span class="brand-slash">/</span><span>TECH</span>
-  </a>
+  <div class="nav-top">
+    <a href="home.php" class="navbar-brand" aria-label="OVERCLOCK TECH Home">
+      OVERCLOCK<span class="brand-slash">/</span><span>TECH</span>
+    </a>
 
-  <!-- Nav links -->
-  <ul class="nav-links" id="navLinks" role="menubar">
-    <?php foreach ($navItems as $item): ?>
-      <li role="none">
-        <a href="<?= $item['href'] ?>"
-           class="<?= $activePage === $item['key'] ? 'active' : '' ?>"
-           role="menuitem"
-           aria-current="<?= $activePage === $item['key'] ? 'page' : 'false' ?>">
-          <?= $item['label'] ?>
-        </a>
-      </li>
-    <?php endforeach; ?>
-  </ul>
-
-  <!-- Icons -->
+    <!-- Icons -->
   <div class="nav-icons">
-
-      
     <!-- Search -->
-    <button class="nav-icon-btn" id="searchBtn" aria-label="Search">
+    
+    <div class="search" id="searchBar">
+      <!-- <div class="search-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg></div> -->
+      <input class="search-input" type="search" id="site-search" name="q" placeholder="Search Products" />
+      <button class="nav-icon-btn" id="searchBtn" aria-label="Search">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
       </svg>
     </button>
-    <div class="search" id="searchBar">
-      <div class="search-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-      </svg></div>
-      <input class="search-input" type="search" id="site-search" name="q" placeholder="Search Products" />
-      
     </div>
 
     <!-- User / Login -->
@@ -96,6 +81,23 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['username'] ?? 'Account')
       <span></span><span></span><span></span>
     </button>
   </div>
+  </div>
+
+
+  <!-- Nav links -->
+  <ul class="nav-links" id="navLinks" role="menubar">
+    <?php foreach ($navItems as $item): ?>
+      <li role="none">
+        <a href="<?= $item['href'] ?>"
+           class="<?= $activePage === $item['key'] ? 'active' : '' ?>"
+           role="menuitem"
+           aria-current="<?= $activePage === $item['key'] ? 'page' : 'false' ?>">
+          <?= $item['label'] ?>
+        </a>
+      </li>
+    <?php endforeach; ?>
+  </ul>
+
 </nav>
 
 <script src="js/nav.js" defer></script>

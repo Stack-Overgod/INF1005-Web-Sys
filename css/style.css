@@ -48,11 +48,11 @@ a { text-decoration: none; color: inherit; }
   background: rgba(5, 5, 8, 0.92);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
-  padding: 0 2rem;
+  padding: 1rem 2rem;
   display: flex;
-  align-items: center;
-  height: 64px;
-  gap: 2rem;
+  flex-direction: column;
+  /* align-items: center; */
+  height: 96px;
 }
 
 .navbar-brand {
@@ -70,6 +70,12 @@ a { text-decoration: none; color: inherit; }
 .navbar-brand .brand-slash {
   color: var(--neon2);
   margin: 0 2px;
+}
+
+.nav-top {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 .nav-links {
@@ -126,7 +132,7 @@ a { text-decoration: none; color: inherit; }
   /* width: 500px; remember to make this responsive lmao */
   flex: 1;
   height: 36px;
-  display: none;
+  display: flex;
   align-items: center;
   border-radius: 8px;
   border: 1px solid var(--border);
@@ -134,6 +140,7 @@ a { text-decoration: none; color: inherit; }
   background: transparent;
   position: relative;
   transition: box-shadow 0.25s;
+  margin-left: 1rem;
 }
 
 .search:focus-within {
