@@ -1,18 +1,19 @@
 <?php
 // includes/nav.php — Shared Navigation
-// Usage: include 'includes/nav.php';
-// Set $activePage before including, e.g. $activePage = 'gaming-pc';
+// Set $activePage and $basePath before including.
+// Root pages: $basePath = '';  |  Forms pages: $basePath = '../';
 
 $activePage = $activePage ?? '';
+$basePath   = $basePath ?? '';
 
 $navItems = [
-  ['href' => 'products.php',                'label' => 'Products',   'key' => 'products'],
-  ['href' => 'products.php?cat=gaming-pc',  'label' => 'Gaming PC',  'key' => 'gaming-pc'],
-  ['href' => 'products.php?cat=laptop',     'label' => 'Laptop',     'key' => 'laptop'],
-  ['href' => 'products.php?cat=keyboard',   'label' => 'Keyboard',   'key' => 'keyboard'],
-  ['href' => 'products.php?cat=mouse',      'label' => 'Mouse',      'key' => 'mouse'],
-  ['href' => 'find-us.php',                 'label' => 'Find Us',    'key' => 'find-us'],
-  ['href' => 'partnership.php',             'label' => 'Partnership','key' => 'partnership'],
+  ['href' => $basePath . 'products.php',                'label' => 'Products',   'key' => 'products'],
+  ['href' => $basePath . 'products.php?cat=gaming-pc',  'label' => 'Gaming PC',  'key' => 'gaming-pc'],
+  ['href' => $basePath . 'products.php?cat=laptop',     'label' => 'Laptop',     'key' => 'laptop'],
+  ['href' => $basePath . 'products.php?cat=keyboard',   'label' => 'Keyboard',   'key' => 'keyboard'],
+  ['href' => $basePath . 'products.php?cat=mouse',      'label' => 'Mouse',      'key' => 'mouse'],
+  ['href' => $basePath . 'find-us.php',                 'label' => 'Find Us',    'key' => 'find-us'],
+  ['href' => $basePath . 'partnership.php',             'label' => 'Partnership','key' => 'partnership'],
 ];
 
 // Cart item count (from session)
@@ -31,7 +32,7 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['username'] ?? 'Account')
 <nav class="navbar" role="navigation" aria-label="Main navigation">
   <!-- Brand -->
   <div class="nav-top">
-    <a href="home.php" class="navbar-brand" aria-label="OVERCLOCK TECH Home">
+    <a href="<?= $basePath ?>home.php" class="navbar-brand" aria-label="OVERCLOCK TECH Home">
       OVERCLOCK<span class="brand-slash">/</span><span>TECH</span>
     </a>
 
@@ -40,7 +41,7 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['username'] ?? 'Account')
       <!-- Search -->
       
       <div class="search" id="searchBar">
-      <form action="search.php" method="GET">
+      <form action="<?= $basePath ?>search.php" method="GET">
         <input class="search-input" type="search" id="site-search" name="q" placeholder="Search Products" />
       </form>
       <button class="nav-icon-btn" id="searchBtn" aria-label="Search">
@@ -52,13 +53,18 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['username'] ?? 'Account')
 
       <!-- User / Login -->
       <?php if ($isLoggedIn): ?>
-        <a href="profile.php" class="nav-icon-btn" aria-label="My Account: <?= $userName ?>">
+        <a href="<?= $basePath ?>profile.php" class="nav-icon-btn" aria-label="My Account: <?= $userName ?>" title="My Profile">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
           </svg>
         </a>
+        <a href="<?= $basePath ?>forms/logout.php" class="nav-icon-btn nav-logout-btn" aria-label="Log out" title="Log Out">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+        </a>
       <?php else: ?>
-        <a href="login.php" class="nav-icon-btn" aria-label="Login">
+        <a href="<?= $basePath ?>forms/login.php" class="nav-icon-btn" aria-label="Login">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
           </svg>
@@ -66,7 +72,7 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['username'] ?? 'Account')
       <?php endif; ?>
 
       <!-- Cart -->
-      <a href="cart.php" class="nav-icon-btn" aria-label="Shopping cart, <?= $cartCount ?> items">
+      <a href="<?= $basePath ?>cart.php" class="nav-icon-btn" aria-label="Shopping cart, <?= $cartCount ?> items">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/>
           <path d="M16 10a4 4 0 01-8 0"/>
@@ -100,4 +106,4 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['username'] ?? 'Account')
 
 </nav>
 
-<script src="js/nav.js" defer></script>
+<script src="<?= $basePath ?>js/nav.js" defer></script>

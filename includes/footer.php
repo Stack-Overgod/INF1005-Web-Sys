@@ -1,5 +1,7 @@
 <?php
-// Include at the bottom of every page EXCEPT the landing page??
+// Include at the bottom of every page EXCEPT the landing page
+// $basePath should be set before including this file
+$basePath = $basePath ?? '';
 ?>
 
 <footer class="site-footer" role="contentinfo">
@@ -17,11 +19,11 @@
     <div class="footer-col">
       <h4>Products</h4>
       <ul>
-        <li><a href="products.php?cat=gaming-pc">Gaming PCs</a></li>
-        <li><a href="products.php?cat=laptop">Laptops</a></li>
-        <li><a href="products.php?cat=keyboard">Keyboards</a></li>
-        <li><a href="products.php?cat=mouse">Mice</a></li>
-        <li><a href="products.php?cat=headset">Headsets</a></li>
+        <li><a href="<?= $basePath ?>products.php?cat=gaming-pc">Gaming PCs</a></li>
+        <li><a href="<?= $basePath ?>products.php?cat=laptop">Laptops</a></li>
+        <li><a href="<?= $basePath ?>products.php?cat=keyboard">Keyboards</a></li>
+        <li><a href="<?= $basePath ?>products.php?cat=mouse">Mice</a></li>
+        <li><a href="<?= $basePath ?>products.php?cat=headset">Headsets</a></li>
       </ul>
     </div>
 
@@ -29,10 +31,10 @@
     <div class="footer-col">
       <h4>Company</h4>
       <ul>
-        <li><a href="about.php">About Us</a></li>
-        <li><a href="find-us.php">Find Us</a></li>
-        <li><a href="partnership.php">Partnerships</a></li>
-        <li><a href="careers.php">Careers</a></li>
+        <li><a href="<?= $basePath ?>about.php">About Us</a></li>
+        <li><a href="<?= $basePath ?>find-us.php">Find Us</a></li>
+        <li><a href="<?= $basePath ?>partnership.php">Partnerships</a></li>
+        <li><a href="<?= $basePath ?>careers.php">Careers</a></li>
       </ul>
     </div>
 
@@ -40,10 +42,10 @@
     <div class="footer-col">
       <h4>Support</h4>
       <ul>
-        <li><a href="faq.php">FAQ</a></li>
-        <li><a href="shipping.php">Shipping</a></li>
-        <li><a href="returns.php">Returns</a></li>
-        <li><a href="contact.php">Contact</a></li>
+        <li><a href="<?= $basePath ?>faq.php">FAQ</a></li>
+        <li><a href="<?= $basePath ?>shipping.php">Shipping</a></li>
+        <li><a href="<?= $basePath ?>returns.php">Returns</a></li>
+        <li><a href="<?= $basePath ?>contact.php">Contact</a></li>
       </ul>
     </div>
 

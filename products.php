@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once 'db.php';
 
 // fetch all categories for filter buttons
@@ -16,6 +17,30 @@ if ($selected_category) {
 }
 
 $products = $stmt->fetchAll();
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
+  $product_id = (int)$_POST['product_id'];
+  $user_id = 1;
+
+  // Check if product already in cart
+  $stmt = $pdo->prepare("SELECT quantity FROM cartitems WHERE product_id = ? AND user_id = ?");
+  $stmt->execute([$product_id, $user_id]);
+  $item = $stmt->fetch();
+
+  if ($item) {
+    // Increment quantity
+    $stmt = $pdo->prepare("UPDATE cartitems SET quantity = quantity + 1 WHERE product_id = ? AND user_id = ?");
+    $stmt->execute([$product_id, $user_id]);
+  } else {
+    // Insert new item
+    $stmt = $pdo->prepare("INSERT INTO cartitems (product_id, user_id, quantity) VALUES (?, ?, 1)");
+    $stmt->execute([$product_id, $user_id]);
+  }
+  $_SESSION['cart_success'] = true;
+  // Redirect to avoid form resubmission
+  $redirect_url = "products.php" . ($selected_category ? "?category=$selected_category" : "");
+  header("Location: $redirect_url");
+  exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -24,10 +49,21 @@ $products = $stmt->fetchAll();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Products</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <?php include 'includes/nav.php'; ?>
+
+  <?php if (isset($_SESSION['cart_success'])): ?>
+    <div class="container mt-3">
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success!</strong> Item added to cart.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    </div>
+    <?php unset($_SESSION['cart_success']); ?>
+  <?php endif; ?>
 
   <main class="products-page">
 
@@ -53,7 +89,10 @@ $products = $stmt->fetchAll();
             <h3><?= htmlspecialchars($product['name']) ?></h3>
             <p><?= htmlspecialchars($product['description']) ?></p>
             <p class="price">$<?= number_format($product['price'], 2) ?></p>
-            <button class="add-to-cart">Add to Cart</button>
+            <form method="POST" action="products.php<?= $selected_category ? '?category=' . $selected_category : '' ?>">
+              <input type="hidden" name="product_id" value="<?= $product['product_id'] ?>">
+              <button type="submit" name="add_to_cart" class="add-to-cart">Add to Cart</button>
+            </form>
           </div>
         <?php endforeach; ?>
       <?php endif; ?>
@@ -62,5 +101,6 @@ $products = $stmt->fetchAll();
   </main>
 
   <?php include 'includes/footer.php'; ?>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

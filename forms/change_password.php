@@ -1,0 +1,139 @@
+<?php
+session_start();
+$activePage = 'profile';
+
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['pwd_verified'])) {
+    header("Location: verify_password.php");
+    exit();
+}
+
+$errorMsg = "";
+$successMsg = "";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $newPwd = $_POST['new_pwd'] ?? '';
+    $confirmPwd = $_POST['confirm_pwd'] ?? '';
+
+    if (empty($newPwd)) {
+        $errorMsg = "New password is required.";
+    } else if (empty($confirmPwd)) {
+        $errorMsg = "Please confirm your new password.";
+    } else if ($newPwd !== $confirmPwd) {
+        $errorMsg = "Passwords do not match.";
+    } else if (!preg_match('/[a-z]/', $newPwd) || !preg_match('/[A-Z]/', $newPwd) ||
+               !preg_match('/[0-9]/', $newPwd) || strlen($newPwd) < 8) {
+        $errorMsg = "Password does not meet the required strength.";
+    } else {
+        try {
+            $host = 'localhost';
+            $dbname = 'overclock_tech';
+            $dbuser = 'root';
+            $dbpass = ''; // update this to match your MySQL password
+
+            $pdo = new PDO("mysql:host=$host;dbname=$dbname", $dbuser, $dbpass);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $role   = $_SESSION['role'] ?? 'customer';
+            $userId = $_SESSION['user_id'];
+            $table  = ($role === 'staff') ? 'staff' : 'customers';
+            $idCol  = ($role === 'staff') ? 'staff_id' : 'customer_id';
+
+            $hashedPwd = password_hash($newPwd, PASSWORD_BCRYPT);
+            $stmt = $pdo->prepare("UPDATE $table SET password = :pwd WHERE $idCol = :id");
+            $stmt->execute([':pwd' => $hashedPwd, ':id' => $userId]);
+
+            unset($_SESSION['pwd_verified']);
+            $successMsg = "Your password has been changed successfully.";
+        } catch (PDOException $e) {
+            $errorMsg = "A system error occurred. Please try again later.";
+        }
+    }
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Change your OVERCLOCK/TECH account password.">
+  <title>OVERCLOCK/TECH — Change Password</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<?php $basePath = '../';
+include '../includes/nav.php'; ?>
+
+<main id="main-content" class="auth-page">
+  <div class="auth-card">
+
+    <a href="../profile.php" class="auth-back-link" aria-label="Back to profile">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </a>
+
+    <h1 class="auth-heading">Change Password</h1>
+    <p class="auth-subtext">For your account's security, do not share your password with anyone else</p>
+
+    <?php if (!empty($successMsg)): ?>
+      <div class="success-box" role="status">
+        <?php echo htmlspecialchars($successMsg); ?>
+        <a href="../profile.php" class="auth-link" style="display:block; margin-top:0.75rem;">Return to Profile</a>
+      </div>
+    <?php endif; ?>
+
+    <?php if (!empty($errorMsg)): ?>
+      <div class="error-box" role="alert"><?php echo htmlspecialchars($errorMsg); ?></div>
+    <?php endif; ?>
+
+    <?php if (empty($successMsg)): ?>
+    <form id="changePasswordForm" action="change_password.php" method="post" novalidate>
+
+      <div class="auth-form-group">
+        <label for="new_pwd" class="auth-form-label">New Password</label>
+        <div class="password-wrapper">
+          <input required class="auth-form-input" type="password" id="new_pwd" name="new_pwd"
+            placeholder="Enter new password" autocomplete="new-password" aria-describedby="newPwdError pwdChecklist">
+          <button type="button" class="toggle-pwd" aria-label="Toggle password visibility" data-target="new_pwd">
+            <svg class="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg class="eye-closed" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </button>
+        </div>
+        <span class="field-error" id="newPwdError" role="alert"></span>
+        <div class="pwd-checklist" id="pwdChecklist" style="display:none;" aria-live="polite">
+          <p class="pwd-checklist-title">Password must contain:</p>
+          <ul>
+            <li id="checkLower" class="pwd-req"><span class="pwd-req-icon" aria-hidden="true"></span> At least one <strong>lowercase</strong> letter</li>
+            <li id="checkUpper" class="pwd-req"><span class="pwd-req-icon" aria-hidden="true"></span> At least one <strong>uppercase</strong> letter</li>
+            <li id="checkNumber" class="pwd-req"><span class="pwd-req-icon" aria-hidden="true"></span> At least one <strong>number</strong></li>
+            <li id="checkLength" class="pwd-req"><span class="pwd-req-icon" aria-hidden="true"></span> Minimum <strong>8 characters</strong></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="auth-form-group">
+        <label for="confirm_pwd" class="auth-form-label">Confirm Password</label>
+        <div class="password-wrapper">
+          <input required class="auth-form-input" type="password" id="confirm_pwd" name="confirm_pwd"
+            placeholder="Confirm new password" autocomplete="new-password" aria-describedby="confirmPwdError">
+          <button type="button" class="toggle-pwd" aria-label="Toggle confirm password visibility" data-target="confirm_pwd">
+            <svg class="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg class="eye-closed" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </button>
+        </div>
+        <span class="field-error" id="confirmPwdError" role="alert"></span>
+      </div>
+
+      <button type="submit" class="btn-auth">
+        <span>Confirm</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </form>
+    <?php endif; ?>
+
+  </div>
+</main>
+
+<?php include '../includes/footer.php'; ?>
+<script src="../js/auth.js?v=5" defer></script>
+</body>
+</html>
