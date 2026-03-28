@@ -1315,3 +1315,95 @@ a { text-decoration: none; color: inherit; }
 
 
 /* End Of Product Card */
+
+/* Product.php shenanigans*/
+
+.product-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.product-details {
+  display: flex;
+  gap: 48px;
+}
+
+.product-image {
+  flex: 1;
+}
+
+.product-image img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.product-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.product-category {
+  color: var(--accent);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.product-info h1 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.product-description {
+  color: var(--text-grey);
+}
+
+.product-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.product-stock {
+  color: var(--text-grey);
+  font-size: 0.875rem;
+}
+
+.product-specs {
+  margin-top: 24px;
+}
+
+.product-specs h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.specs-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.specs-table tr {
+  border-bottom: 1px solid var(--border);
+}
+
+.specs-table td {
+  padding: 8px 0;
+}
+
+.spec-name {
+  color: var(--text-grey);
+  width: 40%;
+}
+
+.spec-value {
+  font-weight: 500;
+}
+
+/* End of product.php shenanigans */

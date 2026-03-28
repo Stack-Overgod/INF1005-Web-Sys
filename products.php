@@ -48,6 +48,7 @@ $products = $stmt->fetchAll();
         <p>No products found.</p>
       <?php else: ?>
         <?php foreach ($products as $product): ?>
+        <a href="product.php?id=<?= $product['product_id'] ?>" class="product-card-link">
           <div class="product-card">
             <img src="images/<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>">
             <h3><?= htmlspecialchars($product['name']) ?></h3>
@@ -55,6 +56,7 @@ $products = $stmt->fetchAll();
             <p class="price">$<?= number_format($product['price'], 2) ?></p>
             <button class="add-to-cart">Add to Cart</button>
           </div>
+        </a>
         <?php endforeach; ?>
       <?php endif; ?>
     </div>
