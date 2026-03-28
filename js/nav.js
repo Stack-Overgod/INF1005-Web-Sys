@@ -1,3 +1,5 @@
+console.log('nav.js loaded');
+
 // Mobile nav toggle
 const toggle = document.getElementById('navToggle');
 const links  = document.getElementById('navLinks');
@@ -8,7 +10,9 @@ toggle.addEventListener('click', () => {
 });
 }
 
-// const searchBtn = document.getElementById('searchBtn');
+document.getElementById('searchBtn').addEventListener('click', () => {
+    document.getElementById('searchForm').submit();
+});
 // searchBtn.addEventListener('click', searchActive);
 // const searchBar = document.getElementById('searchBar');
 

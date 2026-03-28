@@ -40,8 +40,8 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['username'] ?? 'Account')
       <!-- Search -->
       
       <div class="search" id="searchBar">
-      <form action="search.php" method="GET">
-        <input class="search-input" type="search" id="site-search" name="q" placeholder="Search Products" />
+      <form action="search.php" method="GET" id="searchForm">
+        <input class="search-input" type="search" name="q" placeholder="Search Products" />
       </form>
       <button class="nav-icon-btn" id="searchBtn" aria-label="Search">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -100,4 +100,4 @@ $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['username'] ?? 'Account')
 
 </nav>
 
-<script src="js/nav.js" defer></script>
+<script src="js/nav.js"></script>
