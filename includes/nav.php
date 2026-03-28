@@ -7,10 +7,10 @@ $activePage = $activePage ?? '';
 
 $navItems = [
   ['href' => 'products.php',                'label' => 'Products',   'key' => 'products'],
-  ['href' => 'products.php?cat=gaming-pc',  'label' => 'Gaming PC',  'key' => 'gaming-pc'],
-  ['href' => 'products.php?cat=laptop',     'label' => 'Laptop',     'key' => 'laptop'],
-  ['href' => 'products.php?cat=keyboard',   'label' => 'Keyboard',   'key' => 'keyboard'],
-  ['href' => 'products.php?cat=mouse',      'label' => 'Mouse',      'key' => 'mouse'],
+  ['href' => 'products.php?category=1',     'label' => 'Gaming PC',  'key' => 'gaming-pc'],
+  ['href' => 'products.php?category=2',     'label' => 'Laptop',     'key' => 'laptop'],
+  ['href' => 'products.php?category=3',     'label' => 'Keyboard',   'key' => 'keyboard'],
+  ['href' => 'products.php?category=4',     'label' => 'Mouse',      'key' => 'mouse'],
   ['href' => 'find-us.php',                 'label' => 'Find Us',    'key' => 'find-us'],
   ['href' => 'partnership.php',             'label' => 'Partnership','key' => 'partnership'],
 ];
