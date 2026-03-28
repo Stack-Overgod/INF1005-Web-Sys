@@ -22,23 +22,33 @@ if (!empty($query)) {
 
 </head>
 <body>
-      <?php include 'nav.php'; ?>
+      <?php include 'includes/nav.php'; ?>
 
-  <!-- Then display results inside body -->
-  <?php if (empty($query)): ?>
-    <p>Enter a search term above.</p>
+  <main class="products-page">
+  <h2>Search results for "<?= htmlspecialchars($query) ?>"</h2>
 
-  <?php elseif (empty($results)): ?>
-    <p>No results found for "<?= htmlspecialchars($query) ?>"</p>
+  <div class="product-grid">
+    <?php if (empty($query)): ?>
+      <p>Enter a search term above.</p>
 
-  <?php else: ?>
-    <?php foreach ($results as $product): ?>
-      <div class="product-card">
-        <?= htmlspecialchars($product['name']) ?>
-      </div>
-    <?php endforeach; ?>
+    <?php elseif (empty($results)): ?>
+      <p>No results found for "<?= htmlspecialchars($query) ?>"</p>
 
-  <?php endif; ?>
+    <?php else: ?>
+      <?php foreach ($results as $product): ?>
+        <a href="product.php?id=<?= $product['product_id'] ?>" class="product-card-link">
+          <div class="product-card">
+            <img src="images/<?= htmlspecialchars($product['image']) ?>" 
+                 alt="<?= htmlspecialchars($product['name']) ?>">
+            <h3><?= htmlspecialchars($product['name']) ?></h3>
+            <p><?= htmlspecialchars($product['description']) ?></p>
+            <p class="price">$<?= number_format($product['price'], 2) ?></p>
+          </div>
+        </a>
+      <?php endforeach; ?>
+    <?php endif; ?>
+  </div>
+</main>
 
 </body>
 </html>
