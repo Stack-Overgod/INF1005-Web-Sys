@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once 'db.php';
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -33,6 +34,48 @@ $stmt = $pdo->prepare("SELECT name FROM categories WHERE category_id = ?");
 $stmt->execute([$product['category_id']]);
 $category = $stmt->fetch();
 
+$can_review = false;
+$already_reviewed = false;
+
+if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'customer') {
+  $customer_id = $_SESSION['user_id'];
+
+  // check if customer purchased this product
+  $stmt = $pdo->prepare("
+    SELECT COUNT(*) FROM order_items oi
+    JOIN order_info o ON oi.order_id = o.order_id
+    WHERE o.user_id = ? AND oi.product_id = ? AND o.status = 'delivered'
+  ");
+  $stmt->execute([$customer_id, $product_id]);
+  $can_review = $stmt->fetchColumn() > 0;
+
+  // check if already reviewed
+  $stmt = $pdo->prepare("
+    SELECT COUNT(*) FROM reviews 
+    WHERE customer_id = ? AND product_id = ?
+  ");
+  $stmt->execute([$customer_id, $product_id]);
+  $already_reviewed = $stmt->fetchColumn() > 0;
+}
+
+
+// handle review submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_review'])) {
+  $rating = (int)$_POST['rating'];
+  $comment = trim($_POST['comment']);
+  $customer_id = $_SESSION['user_id'];
+
+  if ($rating >= 1 && $rating <= 5 && !empty($comment)) {
+    $stmt = $pdo->prepare("
+      INSERT INTO reviews (product_id, customer_id, rating, comment)
+      VALUES (?, ?, ?, ?)
+    ");
+    $stmt->execute([$product_id, $customer_id, $rating, htmlspecialchars($comment)]);
+    header("Location: product.php?id=$product_id");
+    exit;
+  }
+}
+
 // fetch reviews
 $stmt = $pdo->prepare("
   SELECT r.*, c.fname, c.lname 
@@ -49,6 +92,7 @@ $avg_rating = 0;
 if (!empty($reviews)) {
   $avg_rating = array_sum(array_column($reviews, 'rating')) / count($reviews);
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -135,6 +179,44 @@ if (!empty($reviews)) {
             </div>
           <?php endif; ?>
         </div>
+
+        <?php if (isset($_SESSION['user_id'])): ?>
+          <?php if ($can_review && !$already_reviewed): ?>
+            <div class="review-form">
+              <h3>Leave a Review</h3>
+              <form action="product.php?id=<?= $product_id ?>" method="POST">
+                
+                <!-- Star Rating -->
+                <div class="rating-input">
+                  <label>Rating</label>
+                  <div class="star-select">
+                    <?php for ($i = 5; $i >= 1; $i--): ?>
+                      <input type="radio" name="rating" id="star<?= $i ?>" value="<?= $i ?>" required>
+                      <label for="star<?= $i ?>">★</label>
+                    <?php endfor; ?>
+                  </div>
+                </div>
+
+                <!-- Comment -->
+                <div class="review-input">
+                  <label for="comment">Comment</label>
+                  <textarea id="comment" name="comment" rows="4" 
+                    placeholder="Share your experience..." required
+                    maxlength="500"></textarea>
+                </div>
+
+                <input type="hidden" name="submit_review" value="1">
+                <button type="submit" class="btn-submit-review">Submit Review</button>
+              </form>
+            </div>
+          <?php elseif ($already_reviewed): ?>
+            <p class="text-grey">You have already reviewed this product.</p>
+          <?php else: ?>
+            <p class="text-grey">Only customers who have purchased this product can leave a review.</p>
+          <?php endif; ?>
+        <?php else: ?>
+          <p class="text-grey">Please <a href="<?= $basePath ?>forms/login.php">log in</a> to leave a review.</p>
+        <?php endif; ?>
 
 
       </div>

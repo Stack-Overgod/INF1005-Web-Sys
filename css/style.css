@@ -1570,6 +1570,100 @@ a { text-decoration: none; color: inherit; }
   color: var(--text-grey);
   font-size: 0.9rem;
 }
+
+.review-form {
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-card);
+}
+
+.review-form h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.rating-input {
+  margin-bottom: 16px;
+}
+
+.rating-input label {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--text-grey);
+  margin-bottom: 8px;
+}
+
+/* Reverse star trick */
+.star-select {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.star-select input {
+  display: none;
+}
+
+.star-select label {
+  font-size: 1.75rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.star-select label:hover,
+.star-select label:hover ~ label,
+.star-select input:checked ~ label {
+  color: #ffd700;
+}
+
+.review-input {
+  margin-bottom: 16px;
+}
+
+.review-input label {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--text-grey);
+  margin-bottom: 8px;
+}
+
+.review-input textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-grey);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  resize: vertical;
+  outline: none;
+  transition: box-shadow 0.2s;
+}
+
+.review-input textarea:focus {
+  box-shadow: var(--neon-glow);
+}
+
+.btn-submit-review {
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  background: var(--neon);
+  color: var(--bg-black);
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-submit-review:hover {
+  opacity: 0.85;
+}
 /*===============End of Review================*/
 
 
