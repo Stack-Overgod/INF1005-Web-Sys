@@ -13,6 +13,14 @@ $userId = $_SESSION['user_id'];
 $fname = $lname = $email = "";
 $errorMsg = "";
 $successMsg = "";
+$roleConfig = [
+  'customer' => ['table' => 'customers', 'id_col' => 'customer_id'],
+  'staff' => ['table' => 'staff', 'id_col' => 'staff_id'],
+];
+
+if (!array_key_exists($role, $roleConfig)) {
+  $role = 'customer';
+}
 
 // Fetch current user data from DB
 try {
@@ -24,8 +32,8 @@ try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $dbuser, $dbpass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $table = ($role === 'staff') ? 'staff' : 'customers';
-    $idCol = ($role === 'staff') ? 'staff_id' : 'customer_id';
+    $table = $roleConfig[$role]['table'];
+    $idCol = $roleConfig[$role]['id_col'];
 
     $stmt = $pdo->prepare("SELECT fname, lname, email FROM $table WHERE $idCol = :id");
     $stmt->execute([':id' => $userId]);
