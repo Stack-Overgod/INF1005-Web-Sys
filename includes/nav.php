@@ -30,11 +30,10 @@ $isLoggedIn = isset($_SESSION['user_id']);
 $userRole   = $_SESSION['role'] ?? 'customer';
 $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['username'] ?? 'Account') : null;
 
-if ($isLoggedIn && $userRole === 'admin') {
-  $navItems[] = ['href' => $basePath . 'admin.php', 'label' => 'Admin', 'key' => 'admin'];
+if ($isLoggedIn && $userRole === 'staff') {
+  $navItems[] = ['href' => $basePath . 'staff.php', 'label' => 'Staff', 'key' => 'staff'];
 }
 ?>
-
 
 <nav class="navbar" role="navigation" aria-label="Main navigation">
   <!-- Brand -->
