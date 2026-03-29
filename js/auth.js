@@ -131,8 +131,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
           if (selectedRole === 'staff') {
             emailPlaceholder = 'yourname@overclocktech.com';
-          } else if (selectedRole === 'admin') {
-            emailPlaceholder = 'Enter admin email';
           }
 
           emailInput.setAttribute('placeholder', emailPlaceholder);
@@ -204,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Registration Form for Customers and Staffs
+  // Registration Form
 
   var registerForm = document.getElementById('registerForm');
   if (registerForm) {
@@ -225,10 +223,6 @@ document.addEventListener('DOMContentLoaded', function () {
         showFieldError(email, emailError, 'Email is required.'); valid = false;
       } else if (!isValidEmail(email.value.trim())) {
         showFieldError(email, emailError, 'Please enter a valid email address.'); valid = false;
-      } else if (roleInput && roleInput.value === 'staff' && !isOverclockEmail(email.value.trim())) {
-        showFieldError(email, emailError, 'Staff must use an @overclocktech.com email.'); valid = false;
-      } else if (roleInput && roleInput.value === 'customer' && isOverclockEmail(email.value.trim())) {
-        showFieldError(email, emailError, 'This is a staff email. Please select Staff to register.'); valid = false;
       } else {
         var domainCheck = checkEmailDomain(email.value.trim());
         if (!domainCheck.valid && domainCheck.suggestion) {
