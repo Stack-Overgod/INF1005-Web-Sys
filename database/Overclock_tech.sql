@@ -248,8 +248,8 @@ LOCK TABLES `reviews` WRITE;
 /*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
 INSERT INTO `reviews` VALUES (1,4,1,4,'garbage','2026-03-29 06:44:21'),(2,4,2,1,'absolute horrible mouse','2026-03-29 07:28:37');
 /*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
-
 UNLOCK TABLES;
+
 --
 -- Table structure for table `staff`
 --
@@ -266,7 +266,7 @@ CREATE TABLE `staff` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`staff_id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -288,4 +288,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-29 16:45:53
+-- Dump completed on 2026-03-29 18:50:51
