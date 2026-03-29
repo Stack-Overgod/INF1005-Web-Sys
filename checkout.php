@@ -25,10 +25,22 @@ $stmt = $pdo->prepare("SELECT p.product_id, p.name, p.price, ci.quantity FROM ca
 $stmt->execute([$user_id]);
 $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$total_amt = 0;
-foreach ($cart_items as $item) {
-    $total_amt += $item['price'] * $item['quantity'];
+// Fetch user info for prefilling the form based on role
+$user_role = $_SESSION['role'] ?? 'customer';
+if ($user_role === 'staff') {
+    $stmt = $pdo->prepare("SELECT fname, lname, email FROM staff WHERE staff_id = ?");
+} else {
+    $stmt = $pdo->prepare("SELECT fname, lname, email FROM customers WHERE customer_id = ?");
 }
+$stmt->execute([$user_id]);
+$user_info = $stmt->fetch(PDO::FETCH_ASSOC) ?: ['fname' => '', 'lname' => '', 'email' => ''];
+
+$subtotal = 0;
+foreach ($cart_items as $item) {
+    $subtotal += $item['price'] * $item['quantity'];
+}
+$shipping_fee = 10.00;
+$total_amt = $subtotal + $shipping_fee;
 
 $error = '';
 
@@ -48,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
             unset($_SESSION['can_checkout']);
 
             // --- STRIPE PREPARATION ---
-            Stripe::setApiKey('pk_test_51TF60b3Qg4Lg671611lR46VDVFhZHUM2Z8qMX2v4TeUOTFmtofME7xrshJndezcNBjacVzpo6VTW3OBmLeN3HbQ800AILmXFyV'); // Intentionally left out api key - the repo is still public btw
+            Stripe::setApiKey(''); // Intentionally left out api key - the repo is still public btw
             // Build Line Items for Stripe
             $stripe_line_items = [];
             foreach ($cart_items as $item) {
@@ -63,6 +75,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                     'quantity' => $item['quantity'],
                 ];
             }
+            
+            // Add Shipping Fee as a line item
+            $stripe_line_items[] = [
+                'price_data' => [
+                    'currency' => 'sgd',
+                    'unit_amount' => (int)round($shipping_fee * 100),
+                    'product_data' => [
+                        'name' => 'Shipping Fee',
+                    ],
+                ],
+                'quantity' => 1,
+            ];
 
             $session = Session::create([
                 'payment_method_types' => ['card', 'grabpay', 'paynow', 'alipay'],
@@ -176,6 +200,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                     </li>
                     <?php endforeach; ?>
                     <li class="list-group-item d-flex justify-content-between">
+                        <span>Subtotal (SGD)</span>
+                        <strong class="text-white">$<?php echo number_format($subtotal, 2); ?></strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Shipping (SGD)</span>
+                        <strong class="text-white">$<?php echo number_format($shipping_fee, 2); ?></strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
                         <span>Total (SGD)</span>
                         <strong class="text-neon">$<?php echo number_format($total_amt, 2); ?></strong>
                     </li>
@@ -188,17 +220,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="firstName">First name</label>
-                            <input type="text" class="form-control" id="firstName" name="first_name" required>
+                            <input type="text" class="form-control" id="firstName" name="first_name" value="<?= htmlspecialchars($user_info['fname']) ?>" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="lastName">Last name</label>
-                            <input type="text" class="form-control" id="lastName" name="last_name" required>
+                            <input type="text" class="form-control" id="lastName" name="last_name" value="<?= htmlspecialchars($user_info['lname']) ?>" required>
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
+                        <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($user_info['email']) ?>" placeholder="you@example.com" required>
                     </div>
 
                     <div class="mb-3">

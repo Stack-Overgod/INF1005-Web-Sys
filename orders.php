@@ -58,6 +58,28 @@ foreach ($orders as &$order) {
             background: rgba(255, 255, 255, 0.1);
             color: var(--neon);
         }
+        .btn-view-order {
+            background: transparent;
+            border: 1px solid var(--neon);
+            color: var(--neon);
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            padding: 0.5rem 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s;
+            border-radius: 4px;
+            font-weight: 700;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .btn-view-order:hover {
+            background: var(--neon-dim);
+            color: var(--text-white);
+            box-shadow: var(--neon-glow);
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
         .orders-container {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -104,6 +126,7 @@ foreach ($orders as &$order) {
         .status-pending { background: rgba(255, 193, 7, 0.2); color: #ffc107; border: 1px solid #ffc107; }
         .status-shipped { background: rgba(0, 123, 255, 0.2); color: #007bff; border: 1px solid #007bff; }
         .status-delivered { background: rgba(40, 167, 69, 0.2); color: #28a745; border: 1px solid #28a745; }
+        .status-success { background: rgba(0, 229, 255, 0.2); color: var(--neon); border: 1px solid var(--neon); }
         
         .order-body { padding: 1.5rem; }
         .order-item {
@@ -188,10 +211,10 @@ foreach ($orders as &$order) {
                             <div class="text-muted small">Paid via <?= htmlspecialchars($order['payment_method']) ?></div>
                             <div class="text-muted small">Shipping to: <?= htmlspecialchars($order['address']) ?></div>
                         </div>
-                        <div class="text-right">
-                            <span class="total-label d-block">Total Amount</span>
-                            <span class="total-amount">$<?= number_format($order['total_price'], 2) ?></span>
-                            <a href="orderdetail.php?order_id=<?= $order['order_id'] ?>" class="btn btn-sm btn-outline-info mt-2">View Order</a>
+                        <div class="text-right d-flex flex-column align-items-end">
+                            <span class="total-label">Total Amount</span>
+                            <span class="total-amount mb-2">$<?= number_format($order['total_price'], 2) ?></span>
+                            <a href="orderdetail.php?order_id=<?= $order['order_id'] ?>" class="btn-view-order">View Order</a>
                         </div>
                     </div>
                 </div>

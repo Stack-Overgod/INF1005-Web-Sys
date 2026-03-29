@@ -53,7 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Products</title>
+  <title>Products — OVERCLOCK/TECH</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -61,9 +63,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
 
   <?php if (isset($_SESSION['cart_success'])): ?>
     <div class="container mt-3">
-      <div class="alert alert-success alert-dismissible fade show" role="alert" style="background: rgba(0, 255, 150, 0.1); border: 1px solid var(--neon-green); color: var(--neon-green);">
+      <div class="alert alert-success alert-dismissible fade show" role="alert" style="background: rgba(0, 255, 150, 0.1); border: 1px solid var(--neon-green); color: var(--neon-green); position: relative; z-index: 1000;">
         <strong>Success!</strong> Item added to cart.
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color: var(--neon-green); opacity: 1;">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
     </div>
     <?php unset($_SESSION['cart_success']); ?>
@@ -88,18 +92,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
         <p>No products found.</p>
       <?php else: ?>
         <?php foreach ($products as $product): ?>
-        <a href="product.php?id=<?= $product['product_id'] ?>" class="product-card-link">
-          <div class="product-card">
+        <div class="product-card">
+          <a href="product.php?id=<?= $product['product_id'] ?>" style="text-decoration: none;">
             <img src="images/<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>">
             <h3><?= htmlspecialchars($product['name']) ?></h3>
             <p><?= htmlspecialchars($product['description']) ?></p>
             <p class="price">$<?= number_format($product['price'], 2) ?></p>
-            <form method="POST" action="products.php<?= $selected_category ? '?category=' . $selected_category : '' ?>">
-              <input type="hidden" name="product_id" value="<?= $product['product_id'] ?>">
-              <button type="submit" name="add_to_cart" class="add-to-cart">Add to Cart</button>
-            </form>
-          </div>
-        </a>
+          </a>
+          <form method="POST" action="products.php<?= $selected_category ? '?category=' . $selected_category : '' ?>">
+            <input type="hidden" name="product_id" value="<?= $product['product_id'] ?>">
+            <button type="submit" name="add_to_cart" class="add-to-cart">Add to Cart</button>
+          </form>
+        </div>
         <?php endforeach; ?>
       <?php endif; ?>
     </div>
@@ -107,6 +111,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
   </main>
 
   <?php include 'includes/footer.php'; ?>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

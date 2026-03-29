@@ -1,6 +1,10 @@
 <?php
 session_start();
 require_once 'db.php';
+require_once 'lib/stripe-php/init.php';
+
+use Stripe\Stripe;
+use Stripe\Checkout\Session;
 
 // Authentication check
 if (!isset($_SESSION['user_id'])) {
@@ -15,13 +19,31 @@ $error = '';
 // Check if we have pending order data recorded during checkout
 if (isset($_SESSION['pending_order_data']) && isset($_GET['session_id'])) {
     $data = $_SESSION['pending_order_data'];
+    $session_id = $_GET['session_id'];
     
     try {
+        // --- FETCH STRIPE SESSION TO GET ACTUAL PAYMENT METHOD ---
+        Stripe::setApiKey('');
+        // Expand payment_intent.payment_method to see the actual method used
+        $checkout_session = Session::retrieve(['id' => $session_id, 'expand' => ['payment_intent.payment_method']]);
+        
+        $method_used = 'Stripe';
+        if ($checkout_session->payment_intent && $checkout_session->payment_intent->payment_method) {
+            $type = $checkout_session->payment_intent->payment_method->type;
+            $map = [
+                'card' => 'Credit Card',
+                'paynow' => 'PayNow',
+                'grabpay' => 'GrabPay',
+                'alipay' => 'Alipay'
+            ];
+            $method_used = $map[$type] ?? ucfirst($type);
+        }
+
         $pdo->beginTransaction();
         
         // Create the final order record using parameterized query
-        $stmt = $pdo->prepare("INSERT INTO order_info (user_id, total_price, address, payment_method, status) VALUES (?, ?, ?, ?, 'Success')");
-        $stmt->execute([$user_id, $data['total_price'], $data['full_address'], 'Stripe Card (Verified)']);
+        $stmt = $pdo->prepare("INSERT INTO order_info (user_id, total_price, address, payment_method, status) VALUES (?, ?, ?, ?, ?)");
+        $stmt->execute([$user_id, $data['total_price'], $data['full_address'], $method_used, 'Success']);
         $order_id = $pdo->lastInsertId();
         
         // Add items to the order record and update stock

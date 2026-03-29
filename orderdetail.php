@@ -86,7 +86,7 @@ $order_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
             gap: 2rem;
             margin-bottom: 3rem;
         }
-        .info-section h4 {
+        .info-section h2 {
             color: var(--neon);
             font-family: var(--font-display);
             text-transform: uppercase;
@@ -176,21 +176,22 @@ $order_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="invoice-meta">
                 <div>Order #ORD-<?= str_pad($order['order_id'], 6, '0', STR_PAD_LEFT) ?></div>
-                <div>Date: <?= date('d M Y', strtotime($order['timestamp'])) ?></div>
+                <div>Date: <?= date('d M Y, g:i a', strtotime($order['timestamp'])) ?></div>
+                <div>Payment: <?= htmlspecialchars($order['payment_method']) ?></div>
                 <div>Status: <span style="color:var(--neon)"><?= strtoupper($order['status']) ?></span></div>
             </div>
         </div>
 
         <div class="invoice-info-grid">
             <div class="info-section">
-                <h4>Customer Details</h4>
+                <h2>Customer Details</h2>
                 <div class="info-content">
                     <?= htmlspecialchars($_SESSION['username']) ?><br>
                     <?= htmlspecialchars($_SESSION['email']) ?>
                 </div>
             </div>
             <div class="info-section">
-                <h4>Shipping Address</h4>
+                <h2>Shipping Address</h2>
                 <div class="info-content">
                     <?= nl2br(htmlspecialchars($order['address'])) ?>
                 </div>
@@ -220,14 +221,21 @@ $order_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </tbody>
         </table>
 
+        <?php 
+            $calc_subtotal = 0;
+            foreach ($order_items as $item) {
+                $calc_subtotal += $item['purchased_price'] * $item['quantity'];
+            }
+            $calc_shipping = $order['total_price'] - $calc_subtotal;
+        ?>
         <div class="invoice-total-section">
             <div class="total-row">
                 <span>Subtotal</span>
-                <span>$<?= number_format($order['total_price'], 2) ?></span>
+                <span>$<?= number_format($calc_subtotal, 2) ?></span>
             </div>
             <div class="total-row">
                 <span>Shipping</span>
-                <span>FREE</span>
+                <span><?= $calc_shipping > 0 ? '$' . number_format($calc_shipping, 2) : 'FREE' ?></span>
             </div>
             <div class="total-row grand-total">
                 <span>TOTAL</span>
@@ -237,7 +245,6 @@ $order_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <div class="footer-note">
             <p>Thank you for choosing OVERCLOCK/TECH. For any questions regarding this invoice, please contact support@overclocktech.com</p>
-            <p class="small">Payment Method: <?= htmlspecialchars($order['payment_method']) ?></p>
         </div>
     </div>
 </main>

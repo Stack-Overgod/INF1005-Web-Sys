@@ -44,10 +44,12 @@ $stmt = $pdo->prepare("SELECT ci.cartitems_id, p.product_id, p.name, p.price, p.
 $stmt->execute([$user_id]);
 $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$total_amt = 0;
+$subtotal = 0;
 foreach ($cart_items as $product) {
-    $total_amt += $product['price'] * $product['quantity'];
+    $subtotal += $product['price'] * $product['quantity'];
 }
+$shipping_fee = 10.00;
+$total_amt = $subtotal + $shipping_fee;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -165,8 +167,24 @@ foreach ($cart_items as $product) {
                     <td colspan="3"></td>
                     <td class="d-none"></td>
                     <td class="d-none"></td>
-                    <td class="text-right">Total:</td>
-                    <td class="text-right">$<?php echo number_format($total_amt, 2); ?></td>
+                    <td class="text-right">Sub-Total:</td>
+                    <td class="text-right">$<?php echo number_format($subtotal, 2); ?></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3"></td>
+                    <td class="d-none"></td>
+                    <td class="d-none"></td>
+                    <td class="text-right">Shipping:</td>
+                    <td class="text-right">$<?php echo number_format($shipping_fee, 2); ?></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3"></td>
+                    <td class="d-none"></td>
+                    <td class="d-none"></td>
+                    <td class="text-right"><strong>Total:</strong></td>
+                    <td class="text-right"><strong>$<?php echo number_format($total_amt, 2); ?></strong></td>
                     <td></td>
                 </tr>
             </tbody>
