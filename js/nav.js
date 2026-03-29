@@ -13,6 +13,19 @@ if (toggle && links) {
 const mobileSearchBtn = document.getElementById('mobileSearchBtn');
 const searchBtn = document.getElementById('searchBtn');
 const searchBar = document.getElementById('searchBar');
+const mobileSearchBack = document.getElementById('mobileSearchBack');
+const mobileSearchNav = document.getElementById('mobileSearchNav');
+const navbar = document.querySelector('.navbar');
+
+mobileSearchBtn.addEventListener('click', () => {
+  navbar.classList.add('search-active');
+  mobileSearchNav.querySelector('input').focus();
+  console.log('HI IM MOBILE');
+});
+
+mobileSearchBack.addEventListener('click', () => {
+  navbar.classList.remove('search-active');
+});
 
 searchBtn.addEventListener('click', () => {
   const isMobile = window.innerWidth <= 768;

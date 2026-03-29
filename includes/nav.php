@@ -45,17 +45,6 @@ if ($isLoggedIn) {
       OVERCLOCK<span class="brand-slash">/</span><span>TECH</span>
     </a>
 
-    <!-- Icons -->
-    <div class="nav-icons">
-      <!-- Search -->
-
-      <!-- Only for Mobile Search -->
-      <button class="nav-icon-btn" id="mobileSearchBtn" aria-label="Search">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-        </svg>
-      </button>
-
       <!-- Desktop Search -->
       <div class="search" id="searchBar">
       <form action="search.php" method="GET" id="searchForm">
@@ -67,6 +56,21 @@ if ($isLoggedIn) {
         </svg>
       </button>
       </div>
+
+    <!-- Icons -->
+    <div class="nav-icons">
+      <!-- Search -->
+
+      <!-- Only for Mobile Search -->
+      <button class="nav-icon-btn" id="mobileSearchBtn" aria-label="Search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </button>
+
+
+
+      
       
 
       <!-- User / Login -->
@@ -108,6 +112,7 @@ if ($isLoggedIn) {
   </div>
 
 
+
   <!-- Nav links -->
   <ul class="nav-links" id="navLinks" role="menubar">
     <?php foreach ($navItems as $item): ?>
@@ -121,6 +126,18 @@ if ($isLoggedIn) {
       </li>
     <?php endforeach; ?>
   </ul>
+
+      <!-- Mobile Search Nav (hidden by default) -->
+      <div class="mobile-search-nav" id="mobileSearchNav">
+        <button class="nav-icon-btn" id="mobileSearchBack" aria-label="Back">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <form action="search.php" method="GET" id="mobileSearchForm" class="mobile-search-form">
+          <input class="search-input" type="search" name="q" placeholder="Search Products" autofocus/>
+        </form>
+      </div>
 
 </nav>
 <!-- <script src="js/nav.js"></script> -->

@@ -110,7 +110,7 @@ a { text-decoration: none; color: inherit; }
   align-items: center;
   gap: 0.5rem;
   flex-shrink: 0;
-  flex: 1;
+  margin-left: auto;
 }
 
 .nav-icon-btn {
@@ -141,6 +141,7 @@ a { text-decoration: none; color: inherit; }
   position: relative;
   transition: box-shadow 0.25s;
   margin-left: 1rem;
+  margin-right: 0.5rem;
 }
 
 .search form {
@@ -156,6 +157,53 @@ a { text-decoration: none; color: inherit; }
 
 #mobileSearchBtn {
   display: none;
+}
+
+.mobile-search-nav {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 0 1rem;
+  height: 100%;
+}
+
+.mobile-search-form {
+  flex: 1;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+}
+
+.mobile-search-form input {
+  width: 100%;
+  height: 100%;
+  padding-left: 1rem;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-grey);
+  font-family: var(--font-body);
+  font-size: 1rem;
+}
+
+.mobile-search-nav.active {
+  display: flex;
+}
+
+.navbar.search-active .nav-top {
+  display: none;
+}
+
+.navbar.search-active .nav-links {
+  display: none;
+}
+
+.navbar.search-active .mobile-search-nav {
+  display: flex;
 }
 
 .search-icon {
@@ -189,6 +237,7 @@ a { text-decoration: none; color: inherit; }
 @media (max-width: 768px) {
   #mobileSearchBtn {
     display: flex;
+    margin-left: 0.5rem;
   }
 
   .search {
@@ -205,6 +254,11 @@ a { text-decoration: none; color: inherit; }
     z-index: 100;
     margin: 0;
   }
+
+  .navbar {
+    height: 64px;
+  }
+
 }
 
 .cart-badge {
