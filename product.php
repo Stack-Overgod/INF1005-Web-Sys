@@ -66,6 +66,48 @@ $stmt = $pdo->prepare("SELECT name FROM categories WHERE category_id = ?");
 $stmt->execute([$product['category_id']]);
 $category = $stmt->fetch();
 
+$can_review = false;
+$already_reviewed = false;
+
+if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'customer') {
+  $customer_id = $_SESSION['user_id'];
+
+  // check if customer purchased this product
+  $stmt = $pdo->prepare("
+    SELECT COUNT(*) FROM order_items oi
+    JOIN order_info o ON oi.order_id = o.order_id
+    WHERE o.user_id = ? AND oi.product_id = ? AND o.status = 'delivered'
+  ");
+  $stmt->execute([$customer_id, $product_id]);
+  $can_review = $stmt->fetchColumn() > 0;
+
+  // check if already reviewed
+  $stmt = $pdo->prepare("
+    SELECT COUNT(*) FROM reviews 
+    WHERE customer_id = ? AND product_id = ?
+  ");
+  $stmt->execute([$customer_id, $product_id]);
+  $already_reviewed = $stmt->fetchColumn() > 0;
+}
+
+
+// handle review submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_review'])) {
+  $rating = (int)$_POST['rating'];
+  $comment = trim($_POST['comment']);
+  $customer_id = $_SESSION['user_id'];
+
+  if ($rating >= 1 && $rating <= 5 && !empty($comment)) {
+    $stmt = $pdo->prepare("
+      INSERT INTO reviews (product_id, customer_id, rating, comment)
+      VALUES (?, ?, ?, ?)
+    ");
+    $stmt->execute([$product_id, $customer_id, $rating, htmlspecialchars($comment)]);
+    header("Location: product.php?id=$product_id");
+    exit;
+  }
+}
+
 // fetch reviews
 $stmt = $pdo->prepare("
   SELECT r.*, c.fname, c.lname 
@@ -82,7 +124,24 @@ $avg_rating = 0;
 if (!empty($reviews)) {
   $avg_rating = array_sum(array_column($reviews, 'rating')) / count($reviews);
 }
+
+//calculation for average rating + stars display
+$full_stars = floor($avg_rating);
+$partial = $avg_rating - $full_stars;
+$empty_stars = 5 - $full_stars - ($partial > 0 ? 1 : 0);
+
+$stars_html = '';
+for ($i = 0; $i < $full_stars; $i++) {
+  $stars_html .= '<span class="star filled">★</span>';
+}
+if ($partial > 0) {
+  $stars_html .= '<span class="star partial" style="--fill: ' . ($partial * 100) . '%">★</span>';
+}
+for ($i = 0; $i < $empty_stars; $i++) {
+  $stars_html .= '<span class="star">★</span>';
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -151,16 +210,26 @@ if (!empty($reviews)) {
         <?php endif; ?>
 
         <!-- Reviews Section -->
+<<<<<<< HEAD
         <div class="reviews-section mt-5">
           <h2 style="font-family: var(--font-display); font-size: 1.2rem; color: var(--neon); letter-spacing: 0.1em; text-transform: uppercase;">
             Customer Reviews 
+=======
+        <div class="reviews-section">
+          <h2>Customer Reviews 
+              <!--If there is a review, display it-->
+>>>>>>> main
             <?php if (!empty($reviews)): ?>
               <span class="review-count">(<?= count($reviews) ?>)</span>
               <span class="avg-rating ml-3" style="font-size: 0.9rem; color: var(--text-white);">
                 <?= number_format($avg_rating, 1) ?> / 5
+<<<<<<< HEAD
                 <?php for ($i = 1; $i <= 5; $i++): ?>
                   <span class="star <?= $i <= round($avg_rating) ? 'filled' : '' ?>" style="color: <?= $i <= round($avg_rating) ? '#ffc107' : 'rgba(255,255,255,0.2)' ?>;">★</span>
                 <?php endfor; ?>
+=======
+                <?= $stars_html ?>
+>>>>>>> main
               </span>
             <?php endif; ?>
           </h2>
@@ -168,7 +237,12 @@ if (!empty($reviews)) {
           <?php if (empty($reviews)): ?>
             <p class="no-reviews mt-3 text-muted">No reviews yet. Be the first to share your experience!</p>
           <?php else: ?>
+<<<<<<< HEAD
             <div class="reviews-list mt-4">
+=======
+            <!--Display reviews if they exist-->
+            <div class="reviews-list">
+>>>>>>> main
               <?php foreach ($reviews as $review): ?>
                 <div class="review-item mb-4 p-3" style="background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
                   <div class="review-header d-flex justify-content-between mb-2">
@@ -179,10 +253,21 @@ if (!empty($reviews)) {
                       <?= date('d M Y', strtotime($review['created_at'])) ?>
                     </span>
                   </div>
+<<<<<<< HEAD
                   <div class="review-stars mb-2">
                     <?php for ($i = 1; $i <= 5; $i++): ?>
                       <span class="star <?= $i <= $review['rating'] ? 'filled' : '' ?>" style="color: <?= $i <= $review['rating'] ? '#ffc107' : 'rgba(255,255,255,0.2)' ?>;">★</span>
                     <?php endfor; ?>
+=======
+                  <div>
+                    <?php
+                    $review_stars = '';
+                    for ($i = 1; $i <= 5; $i++) {
+                      $review_stars .= '<span class="star ' . ($i <= $review['rating'] ? 'filled' : '') . '">★</span>';
+                    }
+                    echo $review_stars;
+                    ?>
+>>>>>>> main
                   </div>
                   <p class="review-comment text-grey m-0" style="font-size: 0.9rem;"><?= htmlspecialchars($review['comment']) ?></p>
                 </div>
@@ -190,6 +275,44 @@ if (!empty($reviews)) {
             </div>
           <?php endif; ?>
         </div>
+
+        <?php if (isset($_SESSION['user_id'])): ?>
+          <?php if ($can_review && !$already_reviewed): ?>
+            <div class="review-form">
+              <h3>Leave a Review</h3>
+              <form action="product.php?id=<?= $product_id ?>" method="POST">
+                
+                <!-- Star Rating -->
+                <div class="rating-input">
+                  <label>Rating</label>
+                  <div class="star-select">
+                    <?php for ($i = 5; $i >= 1; $i--): ?>
+                      <input type="radio" name="rating" id="star<?= $i ?>" value="<?= $i ?>" required>
+                      <label for="star<?= $i ?>">★</label>
+                    <?php endfor; ?>
+                  </div>
+                </div>
+
+                <!-- Comment -->
+                <div class="review-input">
+                  <label for="comment">Comment</label>
+                  <textarea id="comment" name="comment" rows="4" 
+                    placeholder="Share your experience..." required
+                    maxlength="500"></textarea>
+                </div>
+
+                <input type="hidden" name="submit_review" value="1">
+                <button type="submit" class="btn-submit-review">Submit Review</button>
+              </form>
+            </div>
+          <?php elseif ($already_reviewed): ?>
+            <p class="text-grey">You have already reviewed this product.</p>
+          <?php else: ?>
+            <p class="text-grey">Only customers who have purchased this product can leave a review.</p>
+          <?php endif; ?>
+        <?php else: ?>
+          <p class="text-grey">Please <a href="<?= $basePath ?>forms/login.php">log in</a> to leave a review.</p>
+        <?php endif; ?>
 
 
       </div>
