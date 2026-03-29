@@ -126,8 +126,16 @@ document.addEventListener('DOMContentLoaded', function () {
         btn.setAttribute('aria-pressed', 'true');
         roleInput.value = btn.getAttribute('data-role');
         if (emailInput) {
-          emailInput.setAttribute('placeholder',
-            btn.getAttribute('data-role') === 'staff' ? 'yourname@overclocktech.com' : 'Enter your email');
+          var selectedRole = btn.getAttribute('data-role');
+          var emailPlaceholder = 'Enter your email';
+
+          if (selectedRole === 'staff') {
+            emailPlaceholder = 'yourname@overclocktech.com';
+          } else if (selectedRole === 'admin') {
+            emailPlaceholder = 'Enter admin email';
+          }
+
+          emailInput.setAttribute('placeholder', emailPlaceholder);
         }
         clearFieldError(emailInput);
       });
