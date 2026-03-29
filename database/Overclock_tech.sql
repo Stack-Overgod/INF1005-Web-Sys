@@ -269,7 +269,7 @@ CREATE TABLE `staff` (
 
 LOCK TABLES `staff` WRITE;
 /*!40000 ALTER TABLE `staff` DISABLE KEYS */;
-INSERT INTO `staff` VALUES (1,'yuxuan','yuxuan','12345@gmail.com','$2y$10$UAOTJPSNhN9zLeFRw1I3wecvKZe9shQx7cKpmSCZFOs9IQOgt9rv2','2026-03-29 11:57:11');
+INSERT INTO `staff` VALUES (1,'yuxuan','yuxuan','12345@overclocktech.com','$2y$10$UAOTJPSNhN9zLeFRw1I3wecvKZe9shQx7cKpmSCZFOs9IQOgt9rv2','2026-03-29 11:57:11');
 /*!40000 ALTER TABLE `staff` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
