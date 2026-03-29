@@ -1490,33 +1490,64 @@ a { text-decoration: none; color: inherit; }
   font-size: 1.2rem;
 }
 
-/* Review shenanigans */
-/* Reviews Section */
+/*============Reviews Section=============*/
 .reviews-section {
   margin-top: 48px;
   padding-top: 24px;
+  padding-bottom: 24px;
   border-top: 1px solid var(--border);
 }
 
 .reviews-section h2 {
-  font-size: 1.2rem;
   font-weight: 600;
-  margin-bottom: 16px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 1rem;
 }
 
 .review-count {
   color: var(--text-grey);
-  font-size: 0.9rem;
-  font-weight: 400;
 }
 
 .avg-rating {
-  font-size: 0.9rem;
   color: var(--text-grey);
-  font-weight: 400;
+}
+.star,
+.star-select label,
+.filled,
+.partial {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.star {
+  color: var(--text-muted);
+  margin-right: 2px;
+}
+
+.star.filled {
+  color: #ffd700;
+}
+
+.star.partial {
+  position: relative;
+  display: inline-block;
+  color: var(--text-muted);
+}
+
+.star.partial::before {
+  content: '★';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #ffd700;
+  width: var(--fill);
+  overflow: hidden;
+}
+
+.no-reviews {
+  color: var(--text-grey);
+  font-size: 1rem;
 }
 
 .reviews-list {
@@ -1532,7 +1563,7 @@ a { text-decoration: none; color: inherit; }
   padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 
 .review-header {
@@ -1542,37 +1573,24 @@ a { text-decoration: none; color: inherit; }
 }
 
 .reviewer-name {
+  font-size: 1rem;
   font-weight: 600;
-  font-size: 0.9rem;
 }
+
 
 .review-date {
   font-size: 0.8rem;
   color: var(--text-grey);
 }
 
-.star {
-  color: var(--text-muted);
-  font-size: 1rem;
-}
-
-.star.filled {
-  color: #ffd700;
-}
 
 .review-comment {
   color: var(--text-grey);
-  font-size: 0.9rem;
-  line-height: 1.6;
+  font-size: 1rem;
 }
 
-.no-reviews {
-  color: var(--text-grey);
-  font-size: 0.9rem;
-}
 
 .review-form {
-  margin-top: 24px;
   padding: 20px;
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -1580,20 +1598,13 @@ a { text-decoration: none; color: inherit; }
 }
 
 .review-form h3 {
-  font-size: 1.1rem;
-  font-weight: 600;
   margin-bottom: 16px;
 }
 
-.rating-input {
-  margin-bottom: 16px;
-}
 
 .rating-input label {
   display: block;
-  font-size: 0.875rem;
   color: var(--text-grey);
-  margin-bottom: 8px;
 }
 
 /* Reverse star trick */
@@ -1601,7 +1612,6 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   flex-direction: row-reverse;
   justify-content: flex-end;
-  gap: 4px;
 }
 
 .star-select input {

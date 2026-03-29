@@ -93,6 +93,23 @@ if (!empty($reviews)) {
   $avg_rating = array_sum(array_column($reviews, 'rating')) / count($reviews);
 }
 
+//calculation for average rating + stars display
+$full_stars = floor($avg_rating);
+$partial = $avg_rating - $full_stars;
+$empty_stars = 5 - $full_stars - ($partial > 0 ? 1 : 0);
+
+$stars_html = '';
+for ($i = 0; $i < $full_stars; $i++) {
+  $stars_html .= '<span class="star filled">★</span>';
+}
+if ($partial > 0) {
+  $stars_html .= '<span class="star partial" style="--fill: ' . ($partial * 100) . '%">★</span>';
+}
+for ($i = 0; $i < $empty_stars; $i++) {
+  $stars_html .= '<span class="star">★</span>';
+}
+?>
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -143,13 +160,12 @@ if (!empty($reviews)) {
         <!-- Reviews Section -->
         <div class="reviews-section">
           <h2>Customer Reviews 
+              <!--If there is a review, display it-->
             <?php if (!empty($reviews)): ?>
               <span class="review-count">(<?= count($reviews) ?>)</span>
               <span class="avg-rating">
                 <?= number_format($avg_rating, 1) ?> / 5
-                <?php for ($i = 1; $i <= 5; $i++): ?>
-                  <span class="star <?= $i <= round($avg_rating) ? 'filled' : '' ?>">★</span>
-                <?php endfor; ?>
+                <?= $stars_html ?>
               </span>
             <?php endif; ?>
           </h2>
@@ -157,6 +173,7 @@ if (!empty($reviews)) {
           <?php if (empty($reviews)): ?>
             <p class="no-reviews">No reviews yet. Be the first to review!</p>
           <?php else: ?>
+            <!--Display reviews if they exist-->
             <div class="reviews-list">
               <?php foreach ($reviews as $review): ?>
                 <div class="review-item">
@@ -168,10 +185,14 @@ if (!empty($reviews)) {
                       <?= date('d M Y', strtotime($review['created_at'])) ?>
                     </span>
                   </div>
-                  <div class="review-stars">
-                    <?php for ($i = 1; $i <= 5; $i++): ?>
-                      <span class="star <?= $i <= $review['rating'] ? 'filled' : '' ?>">★</span>
-                    <?php endfor; ?>
+                  <div>
+                    <?php
+                    $review_stars = '';
+                    for ($i = 1; $i <= 5; $i++) {
+                      $review_stars .= '<span class="star ' . ($i <= $review['rating'] ? 'filled' : '') . '">★</span>';
+                    }
+                    echo $review_stars;
+                    ?>
                   </div>
                   <p class="review-comment"><?= htmlspecialchars($review['comment']) ?></p>
                 </div>

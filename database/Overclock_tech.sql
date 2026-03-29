@@ -30,7 +30,7 @@ CREATE TABLE `cartitems` (
   PRIMARY KEY (`cartitems_id`),
   KEY `product id` (`product_id`),
   CONSTRAINT `product id` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +39,7 @@ CREATE TABLE `cartitems` (
 
 LOCK TABLES `cartitems` WRITE;
 /*!40000 ALTER TABLE `cartitems` DISABLE KEYS */;
+INSERT INTO `cartitems` VALUES (1,2,1,1);
 /*!40000 ALTER TABLE `cartitems` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,7 +83,7 @@ CREATE TABLE `customers` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`customer_id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +92,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (1,NULL,'RAAAAA','apple@gmail.com','$2y$10$lvIM48mypj2iCBUne4pad.fo0kTACzKfwWS.UPk1car0dbZQz0hwm','2026-03-29 11:57:11'),(2,NULL,'aba','a@gmail.com','$2y$10$h29dl7jOCcVWj/Qs.WaeEuOokxgBcTIAE39QPAEn0/7ogQM2O21xu','2026-03-29 12:28:51');
+INSERT INTO `customers` VALUES (1,NULL,'RAAAAA','apple@gmail.com','$2y$10$lvIM48mypj2iCBUne4pad.fo0kTACzKfwWS.UPk1car0dbZQz0hwm','2026-03-29 11:57:11'),(2,NULL,'aba','a@gmail.com','$2y$10$h29dl7jOCcVWj/Qs.WaeEuOokxgBcTIAE39QPAEn0/7ogQM2O21xu','2026-03-29 12:28:51'),(3,NULL,'Bararara','banana@gmail.com','$2y$10$Cjj2xC.y.YvDgXmbXcwz7edXUJYI8xTRQx4rC5WGhsAqhhYvxee.u','2026-03-29 16:13:59');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,8 +111,10 @@ CREATE TABLE `order_info` (
   `payment_method` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL DEFAULT 'Pending',
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  PRIMARY KEY (`order_id`),
+  KEY `order_info_customer_fk` (`user_id`),
+  CONSTRAINT `order_info_customer_fk` FOREIGN KEY (`user_id`) REFERENCES `customers` (`customer_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -120,6 +123,7 @@ CREATE TABLE `order_info` (
 
 LOCK TABLES `order_info` WRITE;
 /*!40000 ALTER TABLE `order_info` DISABLE KEYS */;
+INSERT INTO `order_info` VALUES (1,1,49.99,'123 Test St','card','delivered','2026-03-29 06:21:48'),(2,2,49.99,'456 Test St','card','delivered','2026-03-29 07:28:04'),(3,3,49.99,'456 Test St','card','delivered','2026-03-29 08:16:15');
 /*!40000 ALTER TABLE `order_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,7 +146,7 @@ CREATE TABLE `order_items` (
   KEY `product infos` (`product_id`),
   CONSTRAINT `order id` FOREIGN KEY (`order_id`) REFERENCES `order_info` (`order_id`) ON UPDATE NO ACTION,
   CONSTRAINT `product infos` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,6 +155,7 @@ CREATE TABLE `order_items` (
 
 LOCK TABLES `order_items` WRITE;
 /*!40000 ALTER TABLE `order_items` DISABLE KEYS */;
+INSERT INTO `order_items` VALUES (1,1,4,'Gaming Mouse',49.99,1),(2,2,4,'Gaming Mouse',49.99,1),(3,3,4,'Gaming Mouse',49.99,1);
 /*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,7 +237,7 @@ CREATE TABLE `reviews` (
   KEY `customer_id` (`customer_id`),
   CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`),
   CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,6 +246,7 @@ CREATE TABLE `reviews` (
 
 LOCK TABLES `reviews` WRITE;
 /*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
+INSERT INTO `reviews` VALUES (1,4,1,4,'garbage','2026-03-29 06:44:21'),(2,4,2,1,'absolute horrible mouse','2026-03-29 07:28:37');
 /*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -281,4 +287,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-29 14:08:12
+-- Dump completed on 2026-03-29 16:45:53
