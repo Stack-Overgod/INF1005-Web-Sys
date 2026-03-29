@@ -1489,6 +1489,90 @@ a { text-decoration: none; color: inherit; }
   margin-bottom: 16px;
   font-size: 1.2rem;
 }
+
+/* Review shenanigans */
+/* Reviews Section */
+.reviews-section {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.reviews-section h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.review-count {
+  color: var(--text-grey);
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.avg-rating {
+  font-size: 0.9rem;
+  color: var(--text-grey);
+  font-weight: 400;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.review-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reviewer-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.review-date {
+  font-size: 0.8rem;
+  color: var(--text-grey);
+}
+
+.star {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.star.filled {
+  color: #ffd700;
+}
+
+.review-comment {
+  color: var(--text-grey);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.no-reviews {
+  color: var(--text-grey);
+  font-size: 0.9rem;
+}
+/*===============End of Review================*/
+
+
 /* Login and Registration Form */
 
 /* Page Layout */
@@ -2200,3 +2284,5 @@ a { text-decoration: none; color: inherit; }
   content: '\2718';
   color: var(--neon2);
 }
+
+

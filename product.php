@@ -32,6 +32,23 @@ $specs = $stmt->fetchAll();
 $stmt = $pdo->prepare("SELECT name FROM categories WHERE category_id = ?");
 $stmt->execute([$product['category_id']]);
 $category = $stmt->fetch();
+
+// fetch reviews
+$stmt = $pdo->prepare("
+  SELECT r.*, c.fname, c.lname 
+  FROM reviews r
+  JOIN customers c ON r.customer_id = c.customer_id
+  WHERE r.product_id = ?
+  ORDER BY r.created_at DESC
+");
+$stmt->execute([$product_id]);
+$reviews = $stmt->fetchAll();
+
+// calculate average rating
+$avg_rating = 0;
+if (!empty($reviews)) {
+  $avg_rating = array_sum(array_column($reviews, 'rating')) / count($reviews);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -78,6 +95,47 @@ $category = $stmt->fetch();
             </table>
           </div>
         <?php endif; ?>
+
+        <!-- Reviews Section -->
+        <div class="reviews-section">
+          <h2>Customer Reviews 
+            <?php if (!empty($reviews)): ?>
+              <span class="review-count">(<?= count($reviews) ?>)</span>
+              <span class="avg-rating">
+                <?= number_format($avg_rating, 1) ?> / 5
+                <?php for ($i = 1; $i <= 5; $i++): ?>
+                  <span class="star <?= $i <= round($avg_rating) ? 'filled' : '' ?>">★</span>
+                <?php endfor; ?>
+              </span>
+            <?php endif; ?>
+          </h2>
+
+          <?php if (empty($reviews)): ?>
+            <p class="no-reviews">No reviews yet. Be the first to review!</p>
+          <?php else: ?>
+            <div class="reviews-list">
+              <?php foreach ($reviews as $review): ?>
+                <div class="review-item">
+                  <div class="review-header">
+                    <span class="reviewer-name">
+                      <?= htmlspecialchars($review['fname'] . ' ' . $review['lname']) ?>
+                    </span>
+                    <span class="review-date">
+                      <?= date('d M Y', strtotime($review['created_at'])) ?>
+                    </span>
+                  </div>
+                  <div class="review-stars">
+                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                      <span class="star <?= $i <= $review['rating'] ? 'filled' : '' ?>">★</span>
+                    <?php endfor; ?>
+                  </div>
+                  <p class="review-comment"><?= htmlspecialchars($review['comment']) ?></p>
+                </div>
+              <?php endforeach; ?>
+            </div>
+          <?php endif; ?>
+        </div>
+
 
       </div>
     </div>
