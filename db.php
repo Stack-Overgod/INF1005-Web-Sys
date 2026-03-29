@@ -1,8 +1,9 @@
 <?php
 $host = 'localhost';
-$dbname = 'Overclock_tech';
+$dbname = 'overclock_tech';
 $username = 'root';
-$password = ''; // leave blank for XAMPP
+// $password = 'IfkingluvSIT12629!@#$'; // leave blank for XAMPP
+$password = '';
 
 try {
   $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
