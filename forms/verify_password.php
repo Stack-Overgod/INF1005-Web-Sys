@@ -8,6 +8,11 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $errorMsg = "";
+$roleConfig = [
+  'customer' => ['table' => 'customers', 'id_col' => 'customer_id'],
+  'staff' => ['table' => 'staff', 'id_col' => 'staff_id'],
+  'admin' => ['table' => 'admin', 'id_col' => 'admin_id'],
+];
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -27,8 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $role = $_SESSION['role'] ?? 'customer';
             $userId = $_SESSION['user_id'];
-            $table = ($role === 'staff') ? 'staff' : 'customers';
-            $idCol = ($role === 'staff') ? 'staff_id' : 'customer_id';
+            if (!array_key_exists($role, $roleConfig)) {
+              $role = 'customer';
+            }
+
+            $table = $roleConfig[$role]['table'];
+            $idCol = $roleConfig[$role]['id_col'];
 
             $stmt = $pdo->prepare("SELECT password FROM $table WHERE $idCol = :id");
             $stmt->execute([':id' => $userId]);
