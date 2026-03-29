@@ -12,7 +12,6 @@ $successMsg = "";
 $roleConfig = [
   'customer' => ['table' => 'customers', 'id_col' => 'customer_id'],
   'staff' => ['table' => 'staff', 'id_col' => 'staff_id'],
-  'admin' => ['table' => 'admin', 'id_col' => 'admin_id'],
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
