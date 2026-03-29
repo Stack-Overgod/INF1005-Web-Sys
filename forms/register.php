@@ -29,11 +29,6 @@ include '../includes/nav.php'; ?>
       Already have an account? <a href="login.php" class="auth-link">Sign in</a>
     </p>
 
-    <div class="role-selector" role="radiogroup" aria-label="Account type">
-      <button type="button" class="role-btn active" data-role="customer" aria-pressed="true">Customer</button>
-      <button type="button" class="role-btn" data-role="staff" aria-pressed="false">Staff</button>
-    </div>
-
     <form id="registerForm" action="process_register.php" method="post" novalidate>
       <input type="hidden" name="role" id="roleInput" value="customer">
 
