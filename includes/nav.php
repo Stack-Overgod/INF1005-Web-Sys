@@ -48,7 +48,15 @@ if ($isLoggedIn) {
     <!-- Icons -->
     <div class="nav-icons">
       <!-- Search -->
-      
+
+      <!-- Only for Mobile Search -->
+      <button class="nav-icon-btn" id="mobileSearchBtn" aria-label="Search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+      </button>
+
+      <!-- Desktop Search -->
       <div class="search" id="searchBar">
       <form action="search.php" method="GET" id="searchForm">
         <input class="search-input" type="search" name="q" placeholder="Search Products" />
@@ -59,6 +67,7 @@ if ($isLoggedIn) {
         </svg>
       </button>
       </div>
+      
 
       <!-- User / Login -->
       <?php if ($isLoggedIn): ?>
