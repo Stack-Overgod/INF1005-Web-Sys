@@ -1,6 +1,17 @@
 <?php
+session_start();
 require_once 'db.php';
-$user_id = 1;
+
+// Authentication check
+if (!isset($_SESSION['user_id'])) {
+    header("Location: forms/login.php");
+    exit;
+}
+
+$user_id = $_SESSION['user_id'];
+
+// Allow access to checkout only if coming from cart
+$_SESSION['can_checkout'] = true;
 
 // Handle Actions
 if (isset($_GET['action'])) {

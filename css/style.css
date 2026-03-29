@@ -11,6 +11,8 @@
   --neon-glow:    0 0 24px rgba(0, 229, 255, 0.5);
   --neon2:        #ff2d55;
   --neon2-glow:   0 0 24px rgba(255, 45, 85, 0.5);
+  --neon-green:      #00ff96;
+  --neon-green-glow: 0 0 24px rgba(0, 255, 150, 0.5);
   --text-white:   #f0f4ff;
   --text-grey:    #8899bb;
   --text-muted:   #4a5570;

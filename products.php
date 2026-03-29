@@ -18,8 +18,13 @@ if ($selected_category) {
 
 $products = $stmt->fetchAll();
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
+  // Authentication check before adding to cart
+  if (!isset($_SESSION['user_id'])) {
+    header("Location: forms/login.php");
+    exit;
+  }
   $product_id = (int)$_POST['product_id'];
-  $user_id = 1;
+  $user_id = $_SESSION['user_id'];
 
   // Check if product already in cart
   $stmt = $pdo->prepare("SELECT quantity FROM cartitems WHERE product_id = ? AND user_id = ?");
@@ -56,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
 
   <?php if (isset($_SESSION['cart_success'])): ?>
     <div class="container mt-3">
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <div class="alert alert-success alert-dismissible fade show" role="alert" style="background: rgba(0, 255, 150, 0.1); border: 1px solid var(--neon-green); color: var(--neon-green);">
         <strong>Success!</strong> Item added to cart.
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>

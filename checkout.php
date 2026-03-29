@@ -1,15 +1,27 @@
 <?php
+session_start();
 require_once 'db.php';
 require_once 'lib/stripe-php/init.php';
 
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 
-// For demonstration, user_id=1
-$user_id = 1;
+// Authentication check
+if (!isset($_SESSION['user_id'])) {
+    header("Location: forms/login.php");
+    exit;
+}
+
+// Ensure the user is coming from the cart page
+if (!isset($_SESSION['can_checkout']) || $_SESSION['can_checkout'] !== true) {
+    header("Location: cart.php");
+    exit;
+}
+
+$user_id = $_SESSION['user_id'];
 
 // Fetch cart items and calculate total from DB
-$stmt = $pdo->prepare("SELECT p.name, p.price, ci.quantity FROM cartitems ci JOIN products p ON ci.product_id = p.product_id WHERE ci.user_id = ?");
+$stmt = $pdo->prepare("SELECT p.product_id, p.name, p.price, ci.quantity FROM cartitems ci JOIN products p ON ci.product_id = p.product_id WHERE ci.user_id = ?");
 $stmt->execute([$user_id]);
 $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -23,10 +35,20 @@ $error = '';
 // Handle Checkout Trigger
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
     if ($total_amt >= 0.50) {
-        // Intentionally left out api key - the repo is still public btw
-        Stripe::setApiKey(base64_decode(''));
-        
         try {
+            // --- PREPARE PENDING ORDER in Session ---
+            // Instead of saving now, we save it on ordersuccess.php after Stripe redirect
+            $_SESSION['pending_order_data'] = [
+                'total_price'  => $total_amt,
+                'full_address' => $_POST['address'] . ", " . $_POST['unit_no'] . " SG " . $_POST['zip'],
+                'items'        => $cart_items
+            ];
+
+            // Clear the checkout flag
+            unset($_SESSION['can_checkout']);
+
+            // --- STRIPE PREPARATION ---
+            Stripe::setApiKey(base64_decode('c2tfdGVzdF81MVRGNjBiM1FnNExnNjcxNnYyQnBoNWVWanVXSkFvWGhEYTh4MkQ2bmRUcG1Lbzd6czU2UjFHSHpPMnJCTTVKTzlvY1ZnY1hBWlQ1QXJtdzYyRGRDMGdTWDAwdmtwUzhNQXc=')); // Intentionally left out api key - the repo is still public btw
             // Build Line Items for Stripe
             $stripe_line_items = [];
             foreach ($cart_items as $item) {
@@ -46,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                 'payment_method_types' => ['card', 'grabpay', 'paynow', 'alipay'],
                 'line_items' => $stripe_line_items,
                 'mode' => 'payment',
-                'success_url' => 'http://localhost/home.php?status=success',
+                'success_url' => 'http://localhost/ordersuccess.php?session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => 'http://localhost/checkout.php',
             ]);
 
