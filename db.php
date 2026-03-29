@@ -2,7 +2,6 @@
 $host = 'localhost';
 $dbname = 'overclock_tech';
 $username = 'root';
-// $password = 'IfkingluvSIT12629!@#$'; // leave blank for XAMPP
 $password = '';
 
 try {

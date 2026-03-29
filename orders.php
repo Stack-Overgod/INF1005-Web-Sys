@@ -33,6 +33,130 @@ foreach ($orders as &$order) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <style>
+        .navbar {
+            display: flex !important;
+            flex-direction: column !important;
+            padding: 1rem 2rem !important;
+            height: 96px !important;
+            flex-wrap: nowrap !important;
+            align-items: stretch !important;
+            justify-content: flex-start !important;
+        }
+
+        .nav-top {
+            display: flex !important;
+            align-items: center !important;
+            width: 100% !important;
+            flex: 0 0 auto !important;
+            flex-wrap: nowrap !important;
+            margin-bottom: 0 !important;
+            height: 52px !important;
+        }
+
+        .nav-links {
+            display: flex !important;
+            flex-direction: row !important;
+            list-style: none !important;
+            gap: 0.25rem !important;
+            flex: 0 0 auto !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            justify-content: flex-start !important;
+            align-items: flex-end !important;
+            align-self: flex-end !important;
+            height: 36px !important;
+        }
+
+        .nav-links li {
+            list-style: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .nav-links a {
+            display: inline-flex !important;
+            align-items: center !important;
+            font-family: var(--font-body) !important;
+            font-weight: 600 !important;
+            font-size: 0.85rem !important;
+            letter-spacing: 0.08em !important;
+            text-transform: uppercase !important;
+            color: var(--text-grey) !important;
+            padding: 0.4rem 0.75rem !important;
+            border-radius: 4px !important;
+            border-bottom-left-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+            transition: color 0.2s, background 0.2s !important;
+            white-space: nowrap !important;
+            text-decoration: none !important;
+            background: transparent !important;
+        }
+        .nav-links a:hover,
+        .nav-links a:focus,
+        .nav-links a.active {
+            color: var(--neon) !important;
+            background: var(--neon-dim) !important;
+            text-decoration: none !important;
+        }
+
+        .nav-icons {
+            margin-left: auto !important;
+            display: flex !important;
+            align-items: center !important;
+            gap: 0.5rem !important;
+            flex-shrink: 0 !important;
+        }
+
+        .navbar-brand {
+            color: var(--neon) !important;
+        }
+        .navbar-brand:hover {
+            color: var(--neon) !important;
+            text-decoration: none !important;
+        }
+        .navbar-brand span {
+            color: var(--text-white) !important;
+        }
+        .navbar-brand:hover span {
+            color: var(--text-white) !important;
+        }
+        .navbar-brand .brand-slash,
+        .navbar-brand:hover .brand-slash {
+            color: var(--neon2) !important;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                height: 64px !important;
+                padding: 0 1rem !important;
+                flex-direction: row !important;
+                align-items: center !important;
+            }
+            .nav-top {
+                height: 64px !important;
+                flex: 1 !important;
+                width: 100% !important;
+            }
+            .nav-links {
+                display: none !important;
+                position: absolute !important;
+                top: 64px !important;
+                left: 0 !important;
+                right: 0 !important;
+                background: rgba(5,5,8,0.98) !important;
+                flex-direction: column !important;
+                padding: 1rem !important;
+                border-bottom: 1px solid var(--border) !important;
+                gap: 0 !important;
+                height: auto !important;
+                align-items: flex-start !important;
+                z-index: 999 !important;
+            }
+            .nav-links.open {
+                display: flex !important;
+            }
+        }
+
         .orders-wrapper {
             display: flex;
             justify-content: center;

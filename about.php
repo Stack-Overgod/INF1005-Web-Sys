@@ -35,7 +35,7 @@ $activePage = 'about';
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </a>
-          <a href="index.php" class="btn-secondary">Back to Landing</a>
+          <a href="index.php" class="btn-secondary"><span>Back to Landing</span></a>
         </div>
       </div>
 
@@ -161,7 +161,7 @@ $activePage = 'about';
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
         </a>
-        <a href="index.php" class="btn-secondary">View Welcome Page</a>
+        <a href="index.php" class="btn-secondary"><span>View Welcome Page</span></a>
       </div>
     </div>
   </section>

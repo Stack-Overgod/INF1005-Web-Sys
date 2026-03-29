@@ -53,7 +53,6 @@ a { text-decoration: none; color: inherit; }
   padding: 1rem 2rem;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   height: 96px;
 }
 
@@ -73,11 +72,11 @@ a { text-decoration: none; color: inherit; }
   color: var(--neon2);
   margin: 0 2px;
 }
-
 .nav-top {
   display: flex;
   align-items: center;
   margin-bottom: 1rem;
+  width: 100%;
 }
 
 .nav-links {
@@ -488,7 +487,6 @@ a { text-decoration: none; color: inherit; }
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  margin-top: 2.5rem;
   padding: 0.9rem 2.5rem;
   background: transparent;
   border: 2px solid var(--neon);
@@ -557,7 +555,7 @@ a { text-decoration: none; color: inherit; }
   position: relative;
   overflow: hidden;
   background: var(--bg-dark);
-  height: 480px;
+  height: 540px;
 }
 
 .carousel-track {
@@ -711,6 +709,67 @@ a { text-decoration: none; color: inherit; }
 .carousel-btn:hover { border-color: var(--neon); color: var(--neon); background: var(--neon-dim); }
 .carousel-btn.prev { left: 1.5rem; }
 .carousel-btn.next { right: 1.5rem; }
+
+/* Slide product image — centred in the right half of each hero slide */
+.slide-image {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  padding: 1.5rem;
+}
+
+.slide-image img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(0 0 40px rgba(0, 229, 255, 0.25));
+  animation: slideImgFloat 6s ease-in-out infinite alternate;
+}
+
+.slide-2 .slide-image img {
+  filter: drop-shadow(0 0 40px rgba(255, 45, 85, 0.25));
+}
+
+.slide-3 .slide-image img {
+  filter: drop-shadow(0 0 40px rgba(0, 255, 150, 0.25));
+}
+
+@keyframes slideImgFloat {
+  from { transform: translateY(-2%); }
+  to   { transform: translateY(2%); }
+}
+
+/* Ensure text content doesn't overlap the image */
+.slide-content {
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .slide-image {
+    opacity: 0.18;
+    width: 60%;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .slide-image {
+    display: none;
+  }
+}
 
 /*SECTIONS COMMON*/
 .section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
@@ -1039,33 +1098,47 @@ a { text-decoration: none; color: inherit; }
 .about-hero-actions {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 1rem;
-  margin-top: 2rem;
+  margin-top: 2.5rem;
 }
 
 .btn-secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 0.9rem 1.5rem;
-  border: 1px solid var(--border);
-  border-radius: 4px;
+  gap: 0.6rem;
+  padding: 0.9rem 2.5rem;
+  background: transparent;
+  border: 2px solid var(--neon);
+  color: var(--neon);
   font-family: var(--font-display);
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--text-white);
-  background: rgba(255, 255, 255, 0.02);
-  transition: all 0.25s;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  animation: fadeSlideDown 0.8s 0.7s ease both;
 }
 
-.btn-secondary:hover {
-  border-color: var(--border-hover);
-  color: var(--neon);
-  background: var(--neon-dim);
+.btn-secondary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--neon);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+  z-index: 0;
 }
+
+.btn-secondary:hover::before { transform: scaleX(1); }
+.btn-secondary:hover { color: var(--bg-black); box-shadow: var(--neon-glow); }
+.btn-secondary span, .btn-secondary svg { position: relative; z-index: 1; }
 
 .about-hero-panel {
   background: rgba(15, 15, 24, 0.88);
@@ -1264,6 +1337,7 @@ a { text-decoration: none; color: inherit; }
 .about-cta-actions {
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
   margin-top: 1.75rem;
@@ -2310,103 +2384,6 @@ a { text-decoration: none; color: inherit; }
   }
 }
 
-
-/* Terms and Conditions Page */
-
-.terms-page {
-  padding: 2rem 1.5rem 4rem;
-  position: relative;
-}
-
-.terms-page::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
-  background-size: 48px 48px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.terms-container {
-  position: relative;
-  z-index: 1;
-  max-width: 760px;
-  margin: 0 auto;
-}
-
-.terms-header {
-  margin-bottom: 2.5rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.terms-header h1 {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  font-weight: 900;
-  letter-spacing: 0.04em;
-  color: var(--text-white);
-  margin-bottom: 0.5rem;
-}
-
-.terms-updated {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
-  color: var(--text-muted);
-  text-transform: uppercase;
-}
-
-.terms-content {
-  line-height: 1.85;
-}
-
-.terms-section {
-  margin-bottom: 2.25rem;
-}
-
-.terms-section h2 {
-  font-family: var(--font-display);
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  color: var(--neon);
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-
-.terms-section p {
-  color: var(--text-grey);
-  font-size: 0.95rem;
-  margin-bottom: 0.85rem;
-}
-
-.terms-section p:last-child {
-  margin-bottom: 0;
-}
-
-.terms-closing {
-  text-align: center;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--border);
-}
-
-.terms-closing p {
-  font-size: 1.05rem;
-  color: var(--text-white);
-  font-weight: 600;
-}
-
-@media (max-width: 520px) {
-  .terms-header h1 {
-    font-size: 1.4rem;
-  }
-}
-
-
 /* Profile Page */
 
 /* Logout icon in navbar */
@@ -2583,4 +2560,15 @@ a { text-decoration: none; color: inherit; }
 .pwd-req-fail .pwd-req-icon::before {
   content: '\2718';
   color: var(--neon2);
+}
+
+/* ── Remove number input spinners (price filter) ───────────── */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textbox;
 }
