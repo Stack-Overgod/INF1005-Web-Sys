@@ -22,8 +22,7 @@ $basePath = $basePath ?? '';
         <li><a href="<?= $basePath ?>products.php?cat=gaming-pc">Gaming PCs</a></li>
         <li><a href="<?= $basePath ?>products.php?cat=laptop">Laptops</a></li>
         <li><a href="<?= $basePath ?>products.php?cat=keyboard">Keyboards</a></li>
-        <li><a href="<?= $basePath ?>products.php?cat=mouse">Mice</a></li>
-        <li><a href="<?= $basePath ?>products.php?cat=headset">Headsets</a></li>
+        <li><a href="<?= $basePath ?>products.php?cat=mouse">Mouse</a></li>
       </ul>
     </div>
 

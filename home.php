@@ -8,7 +8,7 @@ $activePage = 'home';
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="OVERCLOCK/TECH — Shop the latest gaming PCs, laptops, keyboards, mice and peripherals. Built for champions.">
+  <meta name="description" content="OVERCLOCK/TECH — Shop the latest gaming PCs, laptops, keyboards, mouse and peripherals. Built for champions.">
   <title>OVERCLOCK/TECH — Home</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -24,6 +24,7 @@ $activePage = 'home';
     <div class="carousel-track" id="carouselTrack">
 
       <!-- Slide 1: Gaming PC -->
+
       <div class="carousel-slide slide-1" role="group" aria-label="Slide 1 of 3">
         <div class="slide-bg-glow" aria-hidden="true"></div>
         <div class="slide-content">
@@ -32,15 +33,16 @@ $activePage = 'home';
             OVERCLOCK <span class="hi">PHANTOM</span><br>PRO X
           </h2>
           <p class="slide-subtitle">RTX 5090 &bull; Intel Core i9 &bull; 64GB DDR5 &bull; 4TB NVMe</p>
-          <div class="slide-price">$4,999 <span>starting from</span></div>
+          <div class="slide-price">$4,999</div>
           <a href="products.php?cat=gaming-pc" class="btn-slide">
             Shop Now
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
+        <div class="slide-image" aria-hidden="true">
+          <img src="images/hero-gaming-pc.jpg" alt="Overclock Phantom Pro X Gaming PC" loading="eager">
+        </div>
       </div>
-
-      <!-- Slide 2: Peripherals -->
       <div class="carousel-slide slide-2" role="group" aria-label="Slide 2 of 3">
         <div class="slide-bg-glow" aria-hidden="true"></div>
         <div class="slide-content">
@@ -55,9 +57,10 @@ $activePage = 'home';
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
+        <div class="slide-image" aria-hidden="true">
+          <img src="images/hero-keyboard.jpg" alt="Viper Edge Gaming Keyboard" loading="eager">
+        </div>
       </div>
-
-      <!-- Slide 3: Laptop -->
       <div class="carousel-slide slide-3" role="group" aria-label="Slide 3 of 3">
         <div class="slide-bg-glow" aria-hidden="true"></div>
         <div class="slide-content">
@@ -66,11 +69,14 @@ $activePage = 'home';
             APEX <span class="hi" style="color:#00ff96;text-shadow:0 0 24px rgba(0,255,150,0.5)">BLADE</span><br>LAPTOP
           </h2>
           <p class="slide-subtitle">QHD 240Hz &bull; RTX 4080 &bull; AMD Ryzen 9 &bull; 2kg Ultra-Light</p>
-          <div class="slide-price" style="color:#00ff96">$2,299 <span>was $2,799</span></div>
+          <div class="slide-price" style="color:#00ff96">$2,299</div>
           <a href="products.php?cat=laptop" class="btn-slide" style="background:#00ff96">
             Grab the Deal
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
+        </div>
+        <div class="slide-image" aria-hidden="true">
+          <img src="images/hero-laptop.jpg" alt="Apex Blade Gaming Laptop" loading="eager">
         </div>
       </div>
 
@@ -120,7 +126,7 @@ $activePage = 'home';
       <div class="what-card">
         <span class="what-icon" aria-hidden="true">⌨️</span>
         <h3>Peripherals</h3>
-        <p>Pro-grade keyboards, mice, headsets and monitors — the complete gaming setup.</p>
+        <p>Pro-grade keyboards and mouse.</p>
       </div>
     </div>
   </section>
@@ -250,7 +256,7 @@ $activePage = 'home';
         <div class="stat-label">Countries Shipped</div>
       </div>
       <div class="stat-item" role="listitem">
-        <span class="stat-number" aria-label="99.2 percent satisfaction">99.2%</span>
+        <span class="stat-number" aria-label="99.2 percent satisfaction">99%</span>
         <div class="stat-label">Satisfaction Rate</div>
       </div>
       <div class="stat-item" role="listitem">
