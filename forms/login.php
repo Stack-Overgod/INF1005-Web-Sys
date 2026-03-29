@@ -34,6 +34,8 @@ include '../includes/nav.php'; ?>
     <div class="role-selector" role="radiogroup" aria-label="Account type">
       <button type="button" class="role-btn active" data-role="customer" aria-pressed="true">Customer</button>
       <button type="button" class="role-btn" data-role="staff" aria-pressed="false">Staff</button>
+      <button type="button" class="role-btn" data-role="admin" aria-pressed="false">Admin</button>
+
     </div>
 
     <form id="loginForm" action="process_login.php" method="post" novalidate>
