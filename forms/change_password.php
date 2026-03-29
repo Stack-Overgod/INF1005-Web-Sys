@@ -9,6 +9,11 @@ if (!isset($_SESSION['user_id']) || !isset($_SESSION['pwd_verified'])) {
 
 $errorMsg = "";
 $successMsg = "";
+$roleConfig = [
+  'customer' => ['table' => 'customers', 'id_col' => 'customer_id'],
+  'staff' => ['table' => 'staff', 'id_col' => 'staff_id'],
+  'admin' => ['table' => 'admin', 'id_col' => 'admin_id'],
+];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $newPwd = $_POST['new_pwd'] ?? '';
@@ -35,8 +40,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $role   = $_SESSION['role'] ?? 'customer';
             $userId = $_SESSION['user_id'];
-            $table  = ($role === 'staff') ? 'staff' : 'customers';
-            $idCol  = ($role === 'staff') ? 'staff_id' : 'customer_id';
+            if (!array_key_exists($role, $roleConfig)) {
+              $role = 'customer';
+            }
+
+            $table  = $roleConfig[$role]['table'];
+            $idCol  = $roleConfig[$role]['id_col'];
 
             $hashedPwd = password_hash($newPwd, PASSWORD_BCRYPT);
             $stmt = $pdo->prepare("UPDATE $table SET password = :pwd WHERE $idCol = :id");
