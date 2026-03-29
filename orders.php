@@ -40,6 +40,24 @@ foreach ($orders as &$order) {
             min-height: 80vh;
             padding: 4rem 2rem;
         }
+        .btn-success-page {
+            font-family: var(--font-display);
+            padding: 0.8rem 2rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            transition: all 0.3s;
+        }
+        .btn-orders {
+            background: var(--neon);
+            color: var(--bg-black);
+            border: none;
+        }
+        .btn-orders:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--neon);
+        }
         .orders-container {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -133,14 +151,14 @@ foreach ($orders as &$order) {
 
 <main id="main-content" class="orders-wrapper">
     <div class="orders-container">
-        <h2 class="section-title text-center mb-5"><span class="hi">ORDER</span> HISTORY</h2>
+        <h1 class="section-title text-center mb-5"><span class="hi">ORDER</span> HISTORY</h1>
 
         <?php if (empty($orders)): ?>
             <div class="no-orders">
                 <div class="empty-icon"><i class="fa-solid fa-box-open"></i></div>
-                <h4 class="text-white">No orders found.</h4>
-                <p class="text-muted">You haven't placed any orders yet.</p>
-                <a href="products.php" class="btn btn-primary mt-3">Start Shopping</a>
+                <h2 class="text-white">No orders found.</h2>
+                <p class="text-white">You haven't placed any orders yet.</p>
+                <a href="products.php" class="btn btn-success-page btn-orders mt-3">Start Shopping</a>
             </div>
         <?php else: ?>
             <?php foreach ($orders as $order): ?>
@@ -173,7 +191,7 @@ foreach ($orders as &$order) {
                         <div class="text-right">
                             <span class="total-label d-block">Total Amount</span>
                             <span class="total-amount">$<?= number_format($order['total_price'], 2) ?></span>
-                            <a href="orderdetail.php?order_id=<?= $order['order_id'] ?>" class="btn btn-sm btn-outline-info mt-2">View Invoice</a>
+                            <a href="orderdetail.php?order_id=<?= $order['order_id'] ?>" class="btn btn-sm btn-outline-info mt-2">View Order</a>
                         </div>
                     </div>
                 </div>

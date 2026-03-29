@@ -88,6 +88,18 @@ foreach ($cart_items as $product) {
         from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
     }
+    .btn-checkout-custom {
+        background-color: #19692c !important;
+        border-color: #19692c !important;
+        color: #fff !important;
+        font-weight: 700;
+        box-shadow: 0 0 15px rgba(25, 105, 44, 0.3);
+    }
+    .btn-checkout-custom:hover {
+        background-color: #155724 !important;
+        border-color: #155724 !important;
+        box-shadow: 0 0 20px rgba(25, 105, 44, 0.5);
+    }
   </style>
 </head>
 <body>
@@ -96,11 +108,11 @@ foreach ($cart_items as $product) {
 
 <main id="main-content" class="cart-wrapper">
     <div class="cart-container">
-        <h2 class="section-title text-center mb-5"><span class="hi">YOUR</span> CART</h2>
+        <h1 class="section-title text-center mb-5"><span class="hi">YOUR</span> CART</h1>
 <?php if (!empty($cart_items)): ?>
 <div class="row">
     <div class="col-12">
-        <table class="table table-striped table-responsive" name="cart">
+        <table class="table table-striped table-responsive">
             <thead>
                 <tr>
                     <th scope="col">Product</th>
@@ -119,7 +131,7 @@ foreach ($cart_items as $product) {
                 ?>
                 <tr id="<?php echo $product['product_id']; ?>_row">
                     <td class="col-lg-1"><img style="width: 64px;height: 64px;" class="img-fluid"
-                            src="images/<?php echo $product['image']; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>"/>
+                            src="images/<?php echo $product['image']; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
                     </td>
                     <td><?php echo htmlspecialchars($product['name']); ?></td>
                     <td class="d-none"><?php echo $product['quantity']; ?></td>
@@ -132,7 +144,7 @@ foreach ($cart_items as $product) {
 
                     <td class="justify-content-center">
                         <div class="input-group mb-12">
-                            <select class="custom-select" id="<?php echo $product['product_id']; ?>" onchange="change_quantity(this)">
+                            <select title="Quantity" aria-label="Quantity" class="custom-select" id="<?php echo $product['product_id']; ?>" onchange="change_quantity(this)">
                                 <?php for ($i = 1; $i <= 10; $i++): ?>
                                     <option value="<?php echo $i; ?>" <?php echo ($product['quantity'] == $i) ? 'selected' : ''; ?>>
                                         <?php echo $i; ?>
@@ -144,7 +156,7 @@ foreach ($cart_items as $product) {
                     <td id="subtotal" class="text-right">$<?php echo number_format($subtotal, 2); ?></td>
                     <td class="text-right">
                         <button class="btn btn-sm btn-danger" id="<?php echo $product['product_id']; ?>_"
-                            onclick="delete_item(this)"><i class="fa fa-trash"></i>
+                            onclick="delete_item(this)"><i class="fa fa-trash"></i> Delete Item  
                         </button> 
                     </td>
                 </tr>
@@ -166,7 +178,7 @@ foreach ($cart_items as $product) {
                 <a href="products.php" class="btn btn-block btn-light">Continue Shopping</a>
             </div>
             <div class="col-sm-12 col-md-3 ml-auto">
-                <a href="checkout.php" class="btn btn-md btn-block btn-success text-uppercase">Checkout</a>
+                <a href="checkout.php" class="btn btn-md btn-block btn-checkout-custom text-uppercase">Checkout</a>
             </div>
         </div>
     </div>

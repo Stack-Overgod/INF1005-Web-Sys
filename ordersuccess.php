@@ -159,17 +159,10 @@ if (isset($_SESSION['pending_order_data']) && isset($_GET['session_id'])) {
         <?php else: ?>
             <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
             <h1 class="success-h1">THANK <span>YOU</span></h1>
-            <p class="success-text">Your order has been already processed or the session is active.</p>
+            <p class="success-text">Your order has been already processed.</p>
         <?php endif; ?>
-
-        <div class="feedback-card">
-            <h4 class="text-white mb-2">Help shape your next experience!</h4>
-            <p class="text-muted small mb-4">We'd love to hear your feedback on our new futuristic checkout system.</p>
-            <div class="d-flex justify-content-center">
-                <a href="home.php" class="btn btn-success-page btn-home">Return Home</a>
-                <a href="orders.php" class="btn btn-success-page btn-orders">View My Orders</a>
-            </div>
-        </div>
+             <a href="home.php" class="btn btn-success-page btn-home">Return Home</a>
+            <a href="orders.php" class="btn btn-success-page btn-orders">View My Orders</a>
     </div>
 </main>
 

@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
             unset($_SESSION['can_checkout']);
 
             // --- STRIPE PREPARATION ---
-            Stripe::setApiKey(base64_decode('c2tfdGVzdF81MVRGNjBiM1FnNExnNjcxNnYyQnBoNWVWanVXSkFvWGhEYTh4MkQ2bmRUcG1Lbzd6czU2UjFHSHpPMnJCTTVKTzlvY1ZnY1hBWlQ1QXJtdzYyRGRDMGdTWDAwdmtwUzhNQXc=')); // Intentionally left out api key - the repo is still public btw
+            Stripe::setApiKey('pk_test_51TF60b3Qg4Lg671611lR46VDVFhZHUM2Z8qMX2v4TeUOTFmtofME7xrshJndezcNBjacVzpo6VTW3OBmLeN3HbQ800AILmXFyV'); // Intentionally left out api key - the repo is still public btw
             // Build Line Items for Stripe
             $stripe_line_items = [];
             foreach ($cart_items as $item) {
@@ -151,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
 
 <main id="main-content" class="checkout-wrapper">    
     <div class="checkout-container">
-        <h2 class="section-title text-center mb-5"><span class="hi">CHECK</span>OUT</h2>
+        <h1 class="section-title text-center mb-5"><span class="hi">CHECK</span>OUT</h1>
         
         <?php if ($error): ?>
             <div class="alert alert-danger" role="alert">
@@ -161,15 +161,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
 
         <div class="row">
             <div class="col-md-5 order-md-2 mb-4">
-                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted">Your cart</span>
                     <span class="badge badge-secondary badge-pill"><?php echo count($cart_items); ?></span>
-                </h4>
+                </h2>
                 <ul class="list-group mb-3">
                     <?php foreach ($cart_items as $product): ?>
                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                         <div>
-                            <h6 class="my-0"><?php echo htmlspecialchars($product['name']); ?></h6>
+                            <a class="my-0"><?php echo htmlspecialchars($product['name']); ?></a>
                             <small class="text-muted">Quantity: <?php echo $product['quantity']; ?></small>
                         </div>
                         <span class="text-muted">$<?php echo number_format($product['price'] * $product['quantity'], 2); ?></span>
@@ -183,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
             </div>
 
             <div class="col-md-7 order-md-1">
-                <h4 class="mb-4">Shipping Information</h4>
+                <h2 class="mb-4">Shipping Information</h2>
                 <form action="checkout.php" method="POST" class="needs-validation">
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -219,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
 
                     <hr class="mb-4" style="border-top: 1px solid rgba(0,229,255,0.1);">
                     
-                    <h4 class="mb-3">Payment</h4>
+                    <h2 class="mb-3">Payment</h2>
                     <p class="text-muted small mb-4">Alipay, Credit Card, PayNow and GrabPay are supported. Click the button below to enter to Stripe payment gateway.</p>
                     
                     <input type="hidden" name="place_order" value="1">
