@@ -110,7 +110,6 @@ for ($i = 0; $i < $empty_stars; $i++) {
 }
 ?>
 
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

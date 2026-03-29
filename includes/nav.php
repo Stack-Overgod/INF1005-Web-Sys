@@ -27,7 +27,12 @@ function session_start_if_not_started() {
 
 // Check if user is logged in
 $isLoggedIn = isset($_SESSION['user_id']);
+$userRole   = $_SESSION['role'] ?? 'customer';
 $userName   = $isLoggedIn ? htmlspecialchars($_SESSION['username'] ?? 'Account') : null;
+
+if ($isLoggedIn && $userRole === 'staff') {
+  $navItems[] = ['href' => $basePath . 'staff.php', 'label' => 'Staff', 'key' => 'staff'];
+}
 ?>
 
 <nav class="navbar" role="navigation" aria-label="Main navigation">

@@ -5,8 +5,8 @@ $activePage = 'register';
 $fname = $lname = $email = $role = $password_hash = $errorMsg = "";
 $success = true;
 
-// Checks if user is a Customer or a Staff
-if (empty($_POST["role"]) || !in_array($_POST["role"], ['customer', 'staff'])) {
+// Public registration is for customers only
+if (empty($_POST["role"]) || $_POST["role"] !== 'customer') {
     $role = "customer";
 } else {
     $role = $_POST["role"];
@@ -45,24 +45,6 @@ if (empty($_POST["email"])) {
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errorMsg .= "Invalid email format.<br>";
         $success = false;
-    }
-
-    // Staff must use company email
-    if ($success && $role === 'staff') {
-        $domain = substr(strrchr($email, "@"), 1);
-        if (strtolower($domain) !== 'overclocktech.com') {
-            $errorMsg .= "Staff must register with their @overclocktech.com email.<br>";
-            $success = false;
-        }
-    }
-
-    // Customers cannot use staff email domain
-    if ($success && $role === 'customer') {
-        $domain = substr(strrchr($email, "@"), 1);
-        if (strtolower($domain) === 'overclocktech.com') {
-            $errorMsg .= "This is a staff email. Please select Staff to register.<br>";
-            $success = false;
-        }
     }
 
     // Check email domain for misspellings or unrecognised domains
@@ -167,8 +149,7 @@ function saveMember() {
         $pdo = new PDO("mysql:host=$host;dbname=$dbname", $dbuser, $dbpass);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Determine which table to use based on role
-        $table = ($role === 'staff') ? 'staff' : 'customers';
+        $table = 'customers';
 
         // Check if email already exists in the relevant table
         $checkStmt = $pdo->prepare("SELECT 1 FROM $table WHERE email = :email");

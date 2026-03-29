@@ -14,3 +14,8 @@ Card - use 4242424242424242, date/use whatever you want
 
 (Install the configuration in /phpiniconfigs to test)
 
+### acc and password for staff
+
+12345@overclocktech.com      A123@B123
+
+

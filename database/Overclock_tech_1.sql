@@ -248,8 +248,8 @@ LOCK TABLES `reviews` WRITE;
 /*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
 INSERT INTO `reviews` VALUES (1,4,1,4,'garbage','2026-03-29 06:44:21'),(2,4,2,1,'absolute horrible mouse','2026-03-29 07:28:37');
 /*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
-
 UNLOCK TABLES;
+
 --
 -- Table structure for table `staff`
 --
@@ -275,7 +275,6 @@ CREATE TABLE `staff` (
 
 LOCK TABLES `staff` WRITE;
 /*!40000 ALTER TABLE `staff` DISABLE KEYS */;
-INSERT INTO `staff` VALUES (1,'yuxuan','yuxuan','12345@overclocktech.com','$2y$10$UAOTJPSNhN9zLeFRw1I3wecvKZe9shQx7cKpmSCZFOs9IQOgt9rv2','2026-03-29 11:57:11');
 /*!40000 ALTER TABLE `staff` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -288,4 +287,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-03-29 16:45:53
+-- Dump completed on 2026-03-29 18:39:02

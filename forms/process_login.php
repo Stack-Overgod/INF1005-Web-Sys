@@ -2,12 +2,17 @@
 session_start();
 $activePage = 'login';
 
+$roleConfig = [
+  'customer' => ['table' => 'customers', 'id_col' => 'customer_id'],
+  'staff' => ['table' => 'staff', 'id_col' => 'staff_id'],
+];
+
 $email = $pwd = $role = $errorMsg = "";
 $fname = $lname = "";
 $success = true;
 
-// Check the role of user (Customer or Staff)
-if (empty($_POST["role"]) || !in_array($_POST["role"], ['customer', 'staff'])) {
+// Check the role of user
+if (empty($_POST["role"]) || !array_key_exists($_POST["role"], $roleConfig)) {
     $role = "customer";
 } else {
     $role = $_POST["role"];
@@ -61,7 +66,7 @@ function sanitize_input($data) {
 
 // Verify provided information with the stored data in MySQL
 function authenticateUser() {
-    global $fname, $lname, $email, $pwd, $role, $errorMsg, $success;
+  global $fname, $lname, $email, $pwd, $role, $errorMsg, $success, $roleConfig;
 
     try {
         // Create database connection directly
@@ -74,8 +79,8 @@ function authenticateUser() {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Determine which table to query based on role
-        $table = ($role === 'staff') ? 'staff' : 'customers';
-        $idCol = ($role === 'staff') ? 'staff_id' : 'customer_id';
+        $table = $roleConfig[$role]['table'];
+        $idCol = $roleConfig[$role]['id_col'];
 
         // Use prepared statement to prevent SQL injection
         $stmt = $pdo->prepare(
