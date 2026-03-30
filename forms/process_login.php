@@ -69,14 +69,7 @@ function authenticateUser() {
   global $fname, $lname, $email, $pwd, $role, $errorMsg, $success, $roleConfig;
 
     try {
-        // Create database connection directly
-        $host = 'localhost';
-        $dbname = 'overclock_tech';
-        $dbuser = 'root';
-        $dbpass = ''; // update this to match your MySQL password
-
-        $pdo = new PDO("mysql:host=$host;dbname=$dbname", $dbuser, $dbpass);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        require_once '../db.php';
 
         // Determine which table to query based on role
         $table = $roleConfig[$role]['table'];

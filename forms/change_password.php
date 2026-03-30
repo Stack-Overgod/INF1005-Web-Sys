@@ -29,13 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errorMsg = "Password does not meet the required strength.";
     } else {
         try {
-            $host = 'localhost';
-            $dbname = 'overclock_tech';
-            $dbuser = 'root';
-            $dbpass = ''; // update this to match your MySQL password
-
-            $pdo = new PDO("mysql:host=$host;dbname=$dbname", $dbuser, $dbpass);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            require_once '../db.php';
 
             $role   = $_SESSION['role'] ?? 'customer';
             $userId = $_SESSION['user_id'];

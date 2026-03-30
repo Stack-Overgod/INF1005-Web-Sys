@@ -14,8 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     'zoho.com', 'ymail.com', 'mail.com',
     'gmx.com', 'gmx.net',
     'singnet.com.sg', 'starhub.net.sg', 'myrepublic.net',
-    'ntu.edu.sg', 'nus.edu.sg', 'sit.singaporetech.edu.sg',
-    'overclocktech.com'
+    'ntu.edu.sg', 'nus.edu.sg', 'sit.singaporetech.edu.sg'
   ];
 
   function levenshtein(a, b) {

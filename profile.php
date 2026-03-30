@@ -24,13 +24,7 @@ if (!array_key_exists($role, $roleConfig)) {
 
 // Fetch current user data from DB
 try {
-    $host = 'localhost';
-    $dbname = 'overclock_tech';
-    $dbuser = 'root';
-    $dbpass = ''; // update this to match your MySQL password
-
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $dbuser, $dbpass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    require_once 'db.php';
 
     $table = $roleConfig[$role]['table'];
     $idCol = $roleConfig[$role]['id_col'];
