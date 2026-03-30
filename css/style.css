@@ -35,7 +35,7 @@ body {
   line-height: 1.6;
 }
 
-a { text-decoration: none; color: inherit; }
+a, a:hover { text-decoration: none; color: inherit; }
 
 /* SCROLLBAR */
 ::-webkit-scrollbar { width: 4px; }
@@ -53,6 +53,9 @@ a { text-decoration: none; color: inherit; }
   padding: 1rem 2rem;
   display: flex;
   flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: flex-start;
   height: 96px;
 }
 
@@ -65,6 +68,8 @@ a { text-decoration: none; color: inherit; }
   text-shadow: var(--neon-glow);
   white-space: nowrap;
   flex-shrink: 0;
+  margin: 0;
+  padding: 0;
 }
 .navbar-brand span { color: var(--text-white); }
 
@@ -84,6 +89,8 @@ a { text-decoration: none; color: inherit; }
   list-style: none;
   gap: 0.25rem;
   flex: 1;
+  margin: 0;
+  padding: 0;
 }
 
 .nav-links a {
@@ -102,6 +109,7 @@ a { text-decoration: none; color: inherit; }
 .nav-links a.active {
   color: var(--neon);
   background: var(--neon-dim);
+  text-decoration: none;
 }
 
 .nav-icons {
@@ -773,6 +781,32 @@ a { text-decoration: none; color: inherit; }
 
 /*SECTIONS COMMON*/
 .section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+/* FORMS & TABLES (Checkout / Cart Parity) */
+.table { color: var(--text-white); }
+.table thead th { border-top: none; color: var(--neon); font-family: var(--font-display); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.table td { border-top: 1px solid var(--border); vertical-align: middle; }
+
+.custom-select, .form-control { 
+  background-color: var(--bg-card2); 
+  border: 1px solid var(--border); 
+  color: var(--text-white); 
+}
+.custom-select:focus, .form-control:focus { 
+  background-color: var(--bg-card2); 
+  border-color: var(--neon); 
+  color: var(--text-white); 
+  box-shadow: var(--neon-glow); 
+}
+
+.list-group-item {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-white);
+}
+.list-group-item .text-muted {
+  color: var(--text-grey) !important;
+}
+
 .section-full { padding: 5rem 2rem; background: var(--bg-dark); }
 .section-full .section-inner { max-width: 1200px; margin: 0 auto; }
 

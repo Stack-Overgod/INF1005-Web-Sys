@@ -138,29 +138,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                     <span class="text-muted">Your cart</span>
                     <span class="badge badge-secondary badge-pill"><?php echo count($cart_items); ?></span>
                 </h2>
-                <ul class="list-group mb-3">
-                    <?php foreach ($cart_items as $product): ?>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <a class="my-0"><?php echo htmlspecialchars($product['name']); ?></a>
-                            <small class="text-muted">Quantity: <?php echo $product['quantity']; ?></small>
-                        </div>
-                        <span class="text-muted">$<?php echo number_format($product['price'] * $product['quantity'], 2); ?></span>
-                    </li>
-                    <?php endforeach; ?>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Subtotal (SGD)</span>
-                        <strong class="text-white">$<?php echo number_format($subtotal, 2); ?></strong>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Shipping (SGD)</span>
-                        <strong class="text-white">$<?php echo number_format($shipping_fee, 2); ?></strong>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Total (SGD)</span>
-                        <strong class="text-neon">$<?php echo number_format($total_amt, 2); ?></strong>
-                    </li>
-                </ul>
+                <div class="table-responsive">
+                    <table class="table table-striped text-white mb-3">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th class="text-right">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($cart_items as $product): ?>
+                            <tr>
+                                <td>
+                                    <div><?php echo htmlspecialchars($product['name']); ?></div>
+                                    <small class="text-grey">Quantity: <?php echo $product['quantity']; ?></small>
+                                </td>
+                                <td class="text-right align-middle text-grey">$<?php echo number_format($product['price'] * $product['quantity'], 2); ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                            <tr>
+                                <td>Subtotal (SGD)</td>
+                                <td class="text-right"><strong class="text-white">$<?php echo number_format($subtotal, 2); ?></strong></td>
+                            </tr>
+                            <tr>
+                                <td>Shipping (SGD)</td>
+                                <td class="text-right"><strong class="text-white">$<?php echo number_format($shipping_fee, 2); ?></strong></td>
+                            </tr>
+                            <tr>
+                                <td>Total (SGD)</td>
+                                <td class="text-right"><strong class="text-neon">$<?php echo number_format($total_amt, 2); ?></strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="col-md-7 order-md-1">

@@ -67,7 +67,6 @@ $displayName = trim($_SESSION['username'] ?? 'Staff');
       <section class="staff-section" aria-labelledby="accounts-heading">
         <div class="staff-section-head">
           <h2 id="accounts-heading" class="staff-section-title">All Account Info</h2>
-          <p class="staff-section-note">Stored passwords are shown as hashes from the database.</p>
         </div>
         <div class="staff-table-wrap">
           <table class="staff-table">
@@ -78,7 +77,6 @@ $displayName = trim($_SESSION['username'] ?? 'Staff');
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
-                <th>Password</th>
                 <th>Created</th>
               </tr>
             </thead>
@@ -90,7 +88,6 @@ $displayName = trim($_SESSION['username'] ?? 'Staff');
                   <td><?php echo htmlspecialchars($account['fname'] ?? ''); ?></td>
                   <td><?php echo htmlspecialchars($account['lname']); ?></td>
                   <td><?php echo htmlspecialchars($account['email']); ?></td>
-                  <td class="staff-mono"><?php echo htmlspecialchars($account['password']); ?></td>
                   <td><?php echo htmlspecialchars($account['created_at']); ?></td>
                 </tr>
               <?php endforeach; ?>
