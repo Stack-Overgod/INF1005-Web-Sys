@@ -2,15 +2,17 @@
 session_start();
 $activePage = 'faq'; 
 
+
+// PHPMailer required files
+require 'lib/PHPMailer/src/Exception.php';
+require 'lib/PHPMailer/src/PHPMailer.php';
+require 'lib/PHPMailer/src/SMTP.php';
+
+
 // Import PHPMailer classes
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-
-// Load PHPMailer manually (since you don't have Composer)
-require 'lib/PHPMailer/src/Exception.php';
-require 'lib/PHPMailer/src/PHPMailer.php';
-require 'lib/PHPMailer/src/SMTP.php';
 
 $message = '';
 $status = '';
@@ -95,16 +97,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta charset="UTF-8">
   <title>OVERCLOCK/TECH — Transmission Status</title>
   <link rel="stylesheet" href="css/style.css">
-  <style>
-    .result-wrapper {
-      min-height: calc(100vh - 96px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 3rem 1.5rem;
-      background: var(--bg-black);
-    }
-  </style>
 </head>
 <body>
 
@@ -115,6 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         <?php if ($status === 'success'): ?>
             <div class="result-icon result-success">
+                <!-- Tick svg -->
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
             </div>
             <h2 class="auth-heading">Query Received</h2>
@@ -126,12 +119,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
             </div>
             <h2 class="auth-heading">System Error</h2>
-            <div class="error-box" style="margin-top: 1.5rem;">
+            <div class="error-box">
                 <?php echo $message; ?>
             </div>
         <?php endif; ?>
 
-        <a href="home.php" class="btn-auth" style="margin-top: 1rem; text-decoration: none;">
+        <a href="home.php" class="btn-auth">
             <span>Return to Home</span>
         </a>
     </div>
