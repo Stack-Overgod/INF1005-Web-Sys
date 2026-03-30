@@ -24,7 +24,7 @@ $activePage = 'faq';
       <h1 class="section-title" id="faq-heading">
         FAQ <span class="hi">&</span> Support
       </h1>
-      <p class="section-sub">Everything you need to know about our gear, shipping.</p>
+      <p class="section-sub">Everything you need to know about our gear, shipping & warranty.</p>
     </div>
 
     <div class="faq-list">
