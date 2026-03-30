@@ -311,7 +311,7 @@ a, a:hover { text-decoration: none; color: inherit; }
   max-width: 280px;
 }
 
-.footer-col h4 {
+.footer-col h2 {
   font-family: var(--font-display);
   font-size: 0.7rem;
   letter-spacing: 0.15em;
@@ -338,7 +338,6 @@ a, a:hover { text-decoration: none; color: inherit; }
   justify-content: space-between;
   align-items: center;
   font-size: 0.8rem;
-  color: var(--text-muted);
   font-family: var(--font-mono);
 }
 
@@ -373,6 +372,10 @@ a, a:hover { text-decoration: none; color: inherit; }
   background: radial-gradient(circle, rgba(0,229,255,0.06) 0%, transparent 70%);
   pointer-events: none;
   animation: orbFloat 8s ease-in-out infinite alternate;
+}
+
+.landing-page .btn-discover {
+  margin-top: 2rem;
 }
 
 @keyframes orbFloat {

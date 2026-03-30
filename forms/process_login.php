@@ -133,7 +133,7 @@ include '../includes/nav.php'; ?>
           <path d="M20 6L9 17l-5-5"/>
         </svg>
       </div>
-      <h2 class="auth-heading">Login Successful!</h2>
+      <h1 class="auth-heading">Login Successful!</h1>
       <p class="auth-subtext">Welcome back, <strong><?php echo htmlspecialchars($displayName); ?></strong>.</p>
       <a href="../home.php" class="btn-auth">
         <span>Go to Home</span>
@@ -147,7 +147,7 @@ include '../includes/nav.php'; ?>
           <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
         </svg>
       </div>
-      <h2 class="auth-heading">Oops!</h2>
+      <h1 class="auth-heading">Oops!</h1>
       <p class="auth-subtext">The following errors were detected:</p>
       <div class="error-box" role="alert">
         <?php echo $errorMsg; ?>

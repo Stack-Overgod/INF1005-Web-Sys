@@ -20,7 +20,6 @@
       flex-direction: column;
       align-items: center;
       gap: 0.35rem;
-      color: var(--text-muted);
       font-family: var(--font-mono);
       font-size: 0.6rem;
       letter-spacing: 0.2em;
@@ -56,7 +55,6 @@
       font-family: var(--font-mono);
       font-size: 0.6rem;
       letter-spacing: 0.15em;
-      color: var(--text-muted);
       text-transform: uppercase;
     }
 
@@ -111,9 +109,9 @@
   <div class="landing-inner">
 
     <!-- Company Name / Logo -->
-    <div class="landing-logo" aria-label="OVERCLOCK TECH">
+    <h1 class="landing-logo">
       OVERCLOCK<span class="accent2">/</span><span class="accent">TECH</span>
-    </div>
+    </h1>
 
     <div class="landing-tagline">
       &#x25b6;&nbsp; Elite Gaming Hardware &nbsp;&#x25b6;
@@ -162,7 +160,7 @@
     </div>
 
     <!-- Mini stats -->
-    <div class="stat-row" aria-label="Company highlights">
+    <div class="stat-row" role="group" aria-label="Company highlights">
       <div class="mini-stat">
         <span class="num">500+</span>
         <span class="lbl">Products</span>

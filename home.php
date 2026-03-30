@@ -25,13 +25,13 @@ $activePage = 'home';
 
       <!-- Slide 1: Gaming PC -->
 
-      <div class="carousel-slide slide-1" role="group" aria-label="Slide 1 of 3">
+      <div id="slide-1" class="carousel-slide slide-1" role="tabpanel" aria-label="Slide 1 of 3">
         <div class="slide-bg-glow" aria-hidden="true"></div>
         <div class="slide-content">
           <div class="slide-tag">New Arrival</div>
-          <h2 class="slide-title">
+          <h1 class="slide-title">
             OVERCLOCK <span class="hi">PHANTOM</span><br>PRO X
-          </h2>
+          </h1>
           <p class="slide-subtitle">RTX 5090 &bull; Intel Core i9 &bull; 64GB DDR5 &bull; 4TB NVMe</p>
           <div class="slide-price">$4,999</div>
           <a href="products.php?cat=gaming-pc" class="btn-slide">
@@ -43,13 +43,13 @@ $activePage = 'home';
           <img src="images/hero-gaming-pc.jpg" alt="Overclock Phantom Pro X Gaming PC" loading="eager">
         </div>
       </div>
-      <div class="carousel-slide slide-2" role="group" aria-label="Slide 2 of 3">
+      <div id="slide-2" class="carousel-slide slide-2" role="tabpanel" aria-label="Slide 2 of 3">
         <div class="slide-bg-glow" aria-hidden="true"></div>
         <div class="slide-content">
           <div class="slide-tag">Best Seller</div>
-          <h2 class="slide-title">
+          <h1 class="slide-title">
             VIPER <span class="hi">EDGE</span><br>KEYBOARD
-          </h2>
+          </h1>
           <p class="slide-subtitle">Optical Switches &bull; Per-Key RGB &bull; Aluminum Frame &bull; NKRO</p>
           <div class="slide-price" style="color:var(--neon2);">$189 <span>free shipping</span></div>
           <a href="products.php?cat=keyboard" class="btn-slide">
@@ -61,13 +61,13 @@ $activePage = 'home';
           <img src="images/hero-keyboard.jpg" alt="Viper Edge Gaming Keyboard" loading="eager">
         </div>
       </div>
-      <div class="carousel-slide slide-3" role="group" aria-label="Slide 3 of 3">
+      <div id="slide-3" class="carousel-slide slide-3" role="tabpanel" aria-label="Slide 3 of 3">
         <div class="slide-bg-glow" aria-hidden="true"></div>
         <div class="slide-content">
           <div class="slide-tag" style="color:#00ff96">Limited Deal</div>
-          <h2 class="slide-title">
+          <h1 class="slide-title">
             APEX <span class="hi" style="color:#00ff96;text-shadow:0 0 24px rgba(0,255,150,0.5)">BLADE</span><br>LAPTOP
-          </h2>
+          </h1>
           <p class="slide-subtitle">QHD 240Hz &bull; RTX 4080 &bull; AMD Ryzen 9 &bull; 2kg Ultra-Light</p>
           <div class="slide-price" style="color:#00ff96">$2,299</div>
           <a href="products.php?cat=laptop" class="btn-slide" style="background:#00ff96">
@@ -88,9 +88,9 @@ $activePage = 'home';
 
     <!-- Dots -->
     <div class="carousel-nav" role="tablist" aria-label="Slide indicators">
-      <button class="carousel-dot active" data-slide="0" role="tab" aria-selected="true"  aria-label="Go to slide 1"></button>
-      <button class="carousel-dot"        data-slide="1" role="tab" aria-selected="false" aria-label="Go to slide 2"></button>
-      <button class="carousel-dot"        data-slide="2" role="tab" aria-selected="false" aria-label="Go to slide 3"></button>
+      <button class="carousel-dot active" data-slide="0" role="tab" aria-selected="true" aria-controls="slide-1" aria-label="Go to slide 1"></button>
+      <button class="carousel-dot" data-slide="1" role="tab" aria-selected="false" aria-controls="slide-2" aria-label="Go to slide 2"></button>
+      <button class="carousel-dot" data-slide="2" role="tab" aria-selected="false" aria-controls="slide-3" aria-label="Go to slide 3"></button>
     </div>
 
   </section>
@@ -184,7 +184,7 @@ $activePage = 'home';
     <div class="reviews-grid">
 
       <article class="review-card">
-        <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <div class="review-stars" role="img" aria-label="5 out of 5 stars">★★★★★</div>
         <p class="review-text">
           The OVERCLOCK PHANTOM is insane. No throttling during 12-hour tournament sessions, 
           temps stay perfect. This is genuinely the best rig I've ever played on.
@@ -192,14 +192,14 @@ $activePage = 'home';
         <div class="reviewer">
           <div class="reviewer-avatar" aria-hidden="true">🎮</div>
           <div>
-            <div class="reviewer-name">ZeroX Striker</div>
+            <h3 class="reviewer-name">ZeroX Striker</h3>
             <div class="reviewer-handle">@zerox_fps &mdash; Valorant Pro</div>
           </div>
         </div>
       </article>
 
       <article class="review-card">
-        <div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <div class="review-stars" role="img" aria-label="5 out of 5 stars">★★★★★</div>
         <p class="review-text">
           Switched my entire streaming setup to OVERCLOCK peripherals. The keyboard response 
           is unreal — the clicks feel absolutely crisp and precise every single time.
@@ -207,14 +207,14 @@ $activePage = 'home';
         <div class="reviewer">
           <div class="reviewer-avatar" aria-hidden="true">🖱️</div>
           <div>
-            <div class="reviewer-name">Lumina Plays</div>
+            <h3 class="reviewer-name">Lumina Plays</h3>
             <div class="reviewer-handle">@luminaplays &mdash; Twitch Partner</div>
           </div>
         </div>
       </article>
 
       <article class="review-card">
-        <div class="review-stars" aria-label="4 out of 5 stars">★★★★★</div>
+        <div class="review-stars" role="img" aria-label="5 out of 5 stars">★★★★★</div>
         <p class="review-text">
           Custom built mine through their site — the PC builder is super intuitive. 
           Arrived early, packed flawlessly. Frames are through the roof on every title.
@@ -222,7 +222,7 @@ $activePage = 'home';
         <div class="reviewer">
           <div class="reviewer-avatar" aria-hidden="true">💻</div>
           <div>
-            <div class="reviewer-name">NightOwl Gaming</div>
+            <h3 class="reviewer-name">NightOwl Gaming</h3>
             <div class="reviewer-handle">@nightowl_gg &mdash; CS2 IEM Champion</div>
           </div>
         </div>
@@ -244,23 +244,23 @@ $activePage = 'home';
 
     <div class="stats-grid" role="list">
       <div class="stat-item" role="listitem">
-        <span class="stat-number" aria-label="50 thousand plus customers">50K+</span>
+        <span class="stat-number">50K+</span>
         <div class="stat-label">Happy Customers</div>
       </div>
       <div class="stat-item" role="listitem">
-        <span class="stat-number" aria-label="500 plus products">500+</span>
+        <span class="stat-number">500+</span>
         <div class="stat-label">Products Listed</div>
       </div>
       <div class="stat-item" role="listitem">
-        <span class="stat-number" aria-label="12 countries">12</span>
+        <span class="stat-number">12</span>
         <div class="stat-label">Countries Shipped</div>
       </div>
       <div class="stat-item" role="listitem">
-        <span class="stat-number" aria-label="99 percent satisfaction">99%</span>
+        <span class="stat-number">99%</span>
         <div class="stat-label">Satisfaction Rate</div>
       </div>
       <div class="stat-item" role="listitem">
-        <span class="stat-number" aria-label="24 slash 7 support">24/7</span>
+        <span class="stat-number">24/7</span>
         <div class="stat-label">Support Available</div>
       </div>
     </div>

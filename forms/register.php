@@ -19,10 +19,10 @@ include '../includes/nav.php'; ?>
 <main id="main-content" class="auth-page">
   <div class="auth-card">
 
-    <div class="auth-tabs" role="tablist" aria-label="Account actions">
-      <a href="login.php" class="auth-tab" role="tab" aria-selected="false">Log In</a>
-      <a href="register.php" class="auth-tab active" role="tab" aria-selected="true">Register</a>
-    </div>
+    <nav class="auth-tabs" aria-label="Account actions">
+      <a href="login.php" class="auth-tab">Log In</a>
+      <a href="register.php" class="auth-tab active" aria-current="page">Register</a>
+    </nav>
 
     <h1 class="auth-heading">Create Account</h1>
     <p class="auth-subtext">
@@ -92,7 +92,7 @@ include '../includes/nav.php'; ?>
         <label class="auth-check-label">
           <input class="auth-check-input" type="checkbox" name="agree" id="agree" aria-describedby="agreeError">
           <span class="checkmark"></span>
-          I agree to the Terms &amp; Conditions</a>
+          <a>I agree to the Terms &amp; Conditions</a>
         </label>
         <span class="field-error" id="agreeError" role="alert"></span>
       </div>

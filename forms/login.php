@@ -20,10 +20,10 @@ include '../includes/nav.php'; ?>
   <div class="auth-card">
 
     <!-- Tab Toggle -->
-    <div class="auth-tabs" role="tablist" aria-label="Account actions">
-      <a href="login.php" class="auth-tab active" role="tab" aria-selected="true">Log In</a>
-      <a href="register.php" class="auth-tab" role="tab" aria-selected="false">Register</a>
-    </div>
+    <nav class="auth-tabs" aria-label="Account actions">
+      <a href="login.php" class="auth-tab active" aria-current="page">Log In</a>
+      <a href="register.php" class="auth-tab">Register</a>
+    </nav>
 
     <h1 class="auth-heading">Welcome Back</h1>
     <p class="auth-subtext">

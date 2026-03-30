@@ -138,8 +138,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errorMsg)) {
       </div>
 
       <div class="auth-form-group">
-        <label class="auth-form-label">Account Type</label>
-        <input disabled class="auth-form-input" type="text"
+        <label for="accountType" class="auth-form-label">Account Type</label>
+        <input id="accountType" disabled class="auth-form-input" type="text"
           value="<?php echo ucfirst(htmlspecialchars($role)); ?>">
       </div>
 
