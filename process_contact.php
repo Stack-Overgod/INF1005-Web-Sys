@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php include 'includes/nav.php'; ?>
 
 <main class="result-wrapper">
-    <div class="auth-card auth-result-card" style="margin: 0 auto;">
+    <div class="auth-card auth-result-card">
         
         <?php if ($status === 'success'): ?>
             <div class="result-icon result-success">

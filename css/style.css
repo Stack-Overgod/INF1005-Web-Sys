@@ -2888,10 +2888,8 @@ input[type="number"] {
 
 
 .result-wrapper {
-  min-height: calc(100vh - 96px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 3rem 1.5rem;
-  background: var(--bg-black);
 }
