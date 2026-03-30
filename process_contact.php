@@ -1,6 +1,7 @@
 <?php
 session_start();
 $activePage = 'faq'; 
+$config = require 'config.php';
 
 
 // PHPMailer required files
@@ -38,8 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->SMTPAuth   = true;               
             
             // email details to send the reply
-            $mail->Username   = 'overclocktech.dev@gmail.com'; 
-            $mail->Password   = 'obmgvyoimkyvzted'; 
+            $mail->Username   = $config['SMTP_USER']; 
+            $mail->Password   = $config['SMTP_PASS']; 
             
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587; 

@@ -2,6 +2,7 @@
 session_start();
 require_once 'db.php';
 require_once 'lib/stripe-php/init.php';
+$config = require 'config.php';
 
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
@@ -60,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
             unset($_SESSION['can_checkout']);
 
             // --- STRIPE PREPARATION ---
-            Stripe::setApiKey(''); // Intentionally left out api key - the repo is still public btw
+            Stripe::setApiKey($config['STRIPE_API_KEY']); // Intentionally left out api key - the repo is still public btw
             // Build Line Items for Stripe
             $stripe_line_items = [];
             foreach ($cart_items as $item) {
