@@ -78,6 +78,7 @@ $displayName = trim($_SESSION['username'] ?? 'Staff');
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Created</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -89,6 +90,11 @@ $displayName = trim($_SESSION['username'] ?? 'Staff');
                   <td><?php echo htmlspecialchars($account['lname']); ?></td>
                   <td><?php echo htmlspecialchars($account['email']); ?></td>
                   <td><?php echo htmlspecialchars($account['created_at']); ?></td>
+                  <td>
+                    <?php if ($account['account_type'] === 'customer'): ?>
+                      <a href="orders.php?client_id=<?php echo (int)$account['account_id']; ?>" class="btn btn-primary btn-sm"> <i class="fa fa-shopping-basket" aria-hidden="true"></i> View Orders</a>
+                    <?php endif; ?>
+                  </td>
                 </tr>
               <?php endforeach; ?>
             </tbody>

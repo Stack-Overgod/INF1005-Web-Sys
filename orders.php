@@ -9,10 +9,30 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
+$is_admin_view = false;
+$view_user_id = $user_id;
+
+if (isset($_GET['client_id']) && ($_SESSION['role'] ?? '') === 'staff') {
+    $view_user_id = (int)$_GET['client_id'];
+    $is_admin_view = true;
+}
+
+// Fetch user info for admin view banner
+$view_user_name = '';
+if ($is_admin_view) {
+    $userStmt = $pdo->prepare("SELECT fname, lname FROM customers WHERE customer_id = ?");
+    $userStmt->execute([$view_user_id]);
+    $userRow = $userStmt->fetch(PDO::FETCH_ASSOC);
+    if ($userRow) {
+        $view_user_name = trim($userRow['fname'] . ' ' . $userRow['lname']);
+    } else {
+        $view_user_name = 'Unknown User';
+    }
+}
 
 // Fetch orders for the user
 $stmt = $pdo->prepare("SELECT * FROM order_info WHERE user_id = ? ORDER BY timestamp DESC");
-$stmt->execute([$user_id]);
+$stmt->execute([$view_user_id]);
 $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // For each order, fetch its items
@@ -39,6 +59,13 @@ foreach ($orders as &$order) {
 
 <main id="main-content" class="page-wrapper">
     <div class="page-container page-container-wide">
+        <?php if ($is_admin_view): ?>
+            <div class="alert alert-warning text-center" style="margin-bottom: 2rem; border-radius: 8px;">
+                <strong>Reminder:</strong> You are currently viewing orders for customer <strong><?= htmlspecialchars($view_user_name) ?></strong>.
+                <a href="staff.php" class="btn btn-sm btn-dark ml-3">Return to Staff Page</a>
+            </div>
+        <?php endif; ?>
+
         <h1 class="section-title text-center mb-5"><span class="hi">ORDER</span> HISTORY</h1>
 
         <?php if (empty($orders)): ?>
@@ -79,7 +106,7 @@ foreach ($orders as &$order) {
                         <div class="text-right d-flex flex-column align-items-end">
                             <span class="total-label">Total Amount</span>
                             <span class="total-amount mb-2">$<?= number_format($order['total_price'], 2) ?></span>
-                            <a href="orderdetail.php?order_id=<?= $order['order_id'] ?>" class="btn btn-outline-info">View Order</a>
+                            <a href="orderdetail.php?order_id=<?= $order['order_id'] ?><?= $is_admin_view ? '&client_id=' . $view_user_id : '' ?>" class="btn btn-outline-info"> View Order</a>
                         </div>
                     </div>
                 </div>

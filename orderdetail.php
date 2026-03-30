@@ -16,15 +16,40 @@ if (!$order_id) {
     exit;
 }
 
+$is_admin_view = false;
+$view_user_id = $user_id;
+
+if (isset($_GET['client_id']) && ($_SESSION['role'] ?? '') === 'staff') {
+    $view_user_id = (int)$_GET['client_id'];
+    $is_admin_view = true;
+}
+
 // Fetch order info and verify ownership using parameterized query
 $stmt = $pdo->prepare("SELECT * FROM order_info WHERE order_id = ? AND user_id = ?");
-$stmt->execute([$order_id, $user_id]);
+$stmt->execute([$order_id, $view_user_id]);
 $order = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$order) {
     // If order doesn't exist or doesn't belong to the user
-    header("Location: orders.php");
+    $redirect_url = $is_admin_view ? "orders.php?client_id=" . $view_user_id : "orders.php";
+    header("Location: $redirect_url");
     exit;
+}
+
+// Fetch customer info if admin view
+$view_user_name = '';
+$view_user_email = '';
+if ($is_admin_view) {
+    $userStmt = $pdo->prepare("SELECT fname, lname, email FROM customers WHERE customer_id = ?");
+    $userStmt->execute([$view_user_id]);
+    $userRow = $userStmt->fetch(PDO::FETCH_ASSOC);
+    if ($userRow) {
+        $view_user_name = trim($userRow['fname'] . ' ' . $userRow['lname']);
+        $view_user_email = $userRow['email'];
+    }
+} else {
+    $view_user_name = $_SESSION['username'] ?? '';
+    $view_user_email = $_SESSION['email'] ?? '';
 }
 
 // Fetch order items using parameterized query
@@ -49,6 +74,11 @@ $order_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <main class="page-wrapper">
     <div class="page-container page-container-narrow">
+        <?php if ($is_admin_view): ?>
+            <div class="alert alert-warning text-center" style="margin-bottom: 2rem; border-radius: 8px;">
+                <strong>Reminder:</strong> You are currently viewing an order for customer <strong><?= htmlspecialchars($view_user_name) ?></strong>.
+            </div>
+        <?php endif; ?>
         <div class="text-right mb-4">
             <button onclick="window.print()" class="btn btn-outline-info btn-sm btn-print">
                 <i class="fa fa-print mr-2"></i>Print Invoice
@@ -72,8 +102,8 @@ $order_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="info-section">
                 <h2>Customer Details</h2>
                 <div class="info-content">
-                    <?= htmlspecialchars($_SESSION['username']) ?><br>
-                    <?= htmlspecialchars($_SESSION['email']) ?>
+                    <?= htmlspecialchars($view_user_name) ?><br>
+                    <?= htmlspecialchars($view_user_email) ?>
                 </div>
             </div>
             <div class="info-section">
