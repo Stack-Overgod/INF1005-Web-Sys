@@ -38,131 +38,17 @@ $order_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OVERCLOCK/TECH — Invoice Details</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        .invoice-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 80vh;
-            padding: 4rem 2rem;
-        }
-        .invoice-container {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            box-shadow: var(--neon-glow);
-            border-radius: 16px;
-            padding: 3rem;
-            width: 100%;
-            max-width: 800px;
-            position: relative;
-            z-index: 10;
-        }
-        .invoice-header {
-            border-bottom: 2px solid var(--neon);
-            padding-bottom: 1.5rem;
-            margin-bottom: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-        .invoice-title {
-            font-family: var(--font-display);
-            color: var(--text-white);
-            margin: 0;
-            font-size: 2.5rem;
-            letter-spacing: 0.1em;
-        }
-        .invoice-meta {
-            text-align: right;
-            color: var(--text-grey);
-            font-size: 0.9rem;
-        }
-        .invoice-info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-        .info-section h2 {
-            color: var(--neon);
-            font-family: var(--font-display);
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.75rem;
-        }
-        .info-content {
-            color: var(--text-white);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-        .invoice-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 2rem;
-        }
-        .invoice-table th {
-            text-align: left;
-            padding: 1rem;
-            background: rgba(0, 229, 255, 0.1);
-            color: var(--neon);
-            font-family: var(--font-display);
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 0.1em;
-        }
-        .invoice-table td {
-            padding: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--text-white);
-        }
-        .invoice-table tr:last-child td {
-            border-bottom: none;
-        }
-        .invoice-total-section {
-            margin-left: auto;
-            width: 300px;
-        }
-        .total-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem 0;
-        }
-        .total-row.grand-total {
-            border-top: 1px solid var(--neon);
-            margin-top: 1rem;
-            padding-top: 1rem;
-            color: var(--neon);
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            font-weight: 900;
-        }
-        .footer-note {
-            margin-top: 4rem;
-            text-align: center;
-            color: var(--text-grey);
-            font-size: 0.85rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 2rem;
-        }
-        @media print {
-            .navbar, .footer, .btn-print { display: none !important; }
-            body { background: white; color: black; }
-            .invoice-container { box-shadow: none; border: 1px solid #ddd; background: white; }
-            .invoice-title, .info-section h4, .invoice-table th, .total-row.grand-total { color: black; border-color: black; }
-            .invoice-table td, .info-content { color: black; }
-        }
     </style>
 </head>
 <body>
 
 <?php include 'includes/nav.php'; ?>
 
-<main class="invoice-wrapper">
-    <div class="invoice-container">
+<main class="page-wrapper">
+    <div class="page-container page-container-narrow">
         <div class="text-right mb-4">
             <button onclick="window.print()" class="btn btn-outline-info btn-sm btn-print">
                 <i class="fa fa-print mr-2"></i>Print Invoice
@@ -198,7 +84,7 @@ $order_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
 
-        <table class="invoice-table">
+        <table class="table table-borderless text-white">
             <thead>
                 <tr>
                     <th>Item Description</th>
@@ -243,7 +129,7 @@ $order_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
 
-        <div class="footer-note">
+        <div>
             <p>Thank you for choosing OVERCLOCK/TECH. For any questions regarding this invoice, please contact support@overclocktech.com</p>
         </div>
     </div>

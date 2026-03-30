@@ -115,66 +115,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        .checkout-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 80vh;
-            padding: 4rem 2rem;
-        }
-        .checkout-container {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            box-shadow: var(--neon-glow);
-            border-radius: 16px;
-            padding: 3rem;
-            width: 100%;
-            max-width: 1000px;
-            position: relative;
-            z-index: 10;
-        }
-        .form-control {
-            background: var(--bg-card2);
-            border: 1px solid var(--border);
-            color: var(--text-white);
-        }
-        .form-control:focus {
-            background: var(--bg-card2);
-            border-color: var(--neon);
-            color: var(--text-white);
-            box-shadow: var(--neon-glow);
-        }
-        .list-group-item {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(0, 229, 255, 0.1);
-            color: var(--text-white);
-        }
-        .text-muted { color: var(--text-grey) !important; }
-        label { color: var(--neon); font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; }
-        .btn-order {
-            background: var(--neon);
-            color: var(--bg-black);
-            font-family: var(--font-display);
-            font-weight: 900;
-            letter-spacing: 0.1em;
-            padding: 1rem;
-            transition: all 0.3s;
-        }
-        .btn-order:hover {
-            box-shadow: var(--neon-glow);
-            transform: translateY(-2px);
-            background: var(--text-white);
-        }
-    </style>
+
 </head>
 <body>
 
 <?php include 'includes/nav.php'; ?>
 
 
-<main id="main-content" class="checkout-wrapper">    
-    <div class="checkout-container">
+<main id="main-content" class="page-wrapper">    
+    <div class="page-container page-container-medium">
         <h1 class="section-title text-center mb-5"><span class="hi">CHECK</span>OUT</h1>
         
         <?php if ($error): ?>
@@ -255,7 +204,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                     <p class="text-muted small mb-4">Alipay, Credit Card, PayNow and GrabPay are supported. Click the button below to enter to Stripe payment gateway.</p>
                     
                     <input type="hidden" name="place_order" value="1">
-                    <button class="btn btn-order btn-block text-uppercase" type="submit">
+                    <button class="btn btn-success btn-block text-uppercase" type="submit">
                         <i class="fa-brands fa-stripe mr-2" style="font-size:1.5rem; vertical-align:middle;"></i> 
                         Pay $<?php echo number_format($total_amt, 2); ?> Now
                     </button>

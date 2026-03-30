@@ -61,60 +61,19 @@ $total_amt = $subtotal + $shipping_fee;
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
-  <style>
-    .cart-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 80vh;
-        padding: 2rem;
-    }
-    .cart-container {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        box-shadow: var(--neon-glow);
-        border-radius: 16px;
-        padding: 2.5rem;
-        width: 100%;
-        max-width: 1100px;
-        animation: fadeIn 0.8s ease-out;
-        position: relative;
-        z-index: 10;
-    }
-    .table { color: var(--text-white); }
-    .table thead th { border-top: none; color: var(--neon); font-family: var(--font-display); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
-    .table td { border-top: 1px solid rgba(0, 229, 255, 0.1); vertical-align: middle; }
-    .custom-select { background: var(--bg-card2); border: 1px solid var(--border); color: var(--text-white); }
-    .custom-select:focus { background: var(--bg-card2); border-color: var(--neon); color: var(--text-white); box-shadow: var(--neon-glow); }
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .btn-checkout-custom {
-        background-color: #19692c !important;
-        border-color: #19692c !important;
-        color: #fff !important;
-        font-weight: 700;
-        box-shadow: 0 0 15px rgba(25, 105, 44, 0.3);
-    }
-    .btn-checkout-custom:hover {
-        background-color: #155724 !important;
-        border-color: #155724 !important;
-        box-shadow: 0 0 20px rgba(25, 105, 44, 0.5);
-    }
-  </style>
+
 </head>
 <body>
 
 <?php include 'includes/nav.php'; ?>
 
-<main id="main-content" class="cart-wrapper">
-    <div class="cart-container">
+<main id="main-content" class="page-wrapper">
+    <div class="page-container page-container-wide">
         <h1 class="section-title text-center mb-5"><span class="hi">YOUR</span> CART</h1>
 <?php if (!empty($cart_items)): ?>
 <div class="row">
     <div class="col-12">
-        <table class="table table-striped table-responsive">
+        <table class="table table-striped table-responsive text-white">
             <thead>
                 <tr>
                     <th scope="col">Product</th>
@@ -196,7 +155,7 @@ $total_amt = $subtotal + $shipping_fee;
                 <a href="products.php" class="btn btn-block btn-light">Continue Shopping</a>
             </div>
             <div class="col-sm-12 col-md-3 ml-auto">
-                <a href="checkout.php" class="btn btn-md btn-block btn-checkout-custom text-uppercase">Checkout</a>
+                <a href="checkout.php" class="btn btn-md btn-block btn-success text-uppercase">Checkout</a>
             </div>
         </div>
     </div>

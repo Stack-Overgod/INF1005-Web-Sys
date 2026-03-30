@@ -82,94 +82,17 @@ if (isset($_SESSION['pending_order_data']) && isset($_GET['session_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OVERCLOCK/TECH — Order Successful</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        .success-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 80vh;
-            padding: 2rem;
-        }
-        .success-container {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            box-shadow: var(--neon-glow);
-            border-radius: 16px;
-            padding: 4rem 2rem;
-            width: 100%;
-            max-width: 750px;
-            text-align: center;
-            animation: fadeIn 0.8s ease-out;
-        }
-        .success-icon {
-            font-size: 5rem;
-            color: var(--neon);
-            margin-bottom: 2rem;
-            filter: drop-shadow(0 0 15px var(--neon));
-        }
-        .success-h1 {
-            font-family: var(--font-display);
-            color: var(--text-white);
-            margin-bottom: 1.5rem;
-            letter-spacing: 0.1em;
-            font-weight: 900;
-        }
-        .success-h1 span { color: var(--neon); }
-        .success-text {
-            color: var(--text-grey);
-            font-size: 1.1rem;
-            margin-bottom: 3rem;
-        }
-        .feedback-card {
-            background: rgba(0, 229, 255, 0.05);
-            border: 1px solid rgba(0, 229, 255, 0.1);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-top: 2rem;
-        }
-        .btn-success-page {
-            font-family: var(--font-display);
-            padding: 0.8rem 2rem;
-            border-radius: 4px;
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            transition: all 0.3s;
-        }
-        .btn-home {
-            background: var(--neon);
-            color: var(--bg-black);
-            border: none;
-        }
-        .btn-home:hover {
-            box-shadow: var(--neon-glow);
-            transform: translateY(-2px);
-        }
-        .btn-orders {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-white);
-            border: 1px solid var(--border);
-            margin-left: 1rem;
-        }
-        .btn-orders:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--neon);
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+
 </head>
 <body>
 
 <?php include 'includes/nav.php'; ?>
 
-<main class="success-wrapper">
-    <div class="success-container">
+<main class="page-wrapper">
+    <div class="page-container page-container-narrow text-center">
         <?php if ($success): ?>
             <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
             <h1 class="success-h1">TRANSACTION <span>SUCCESSFUL</span></h1>
@@ -183,8 +106,8 @@ if (isset($_SESSION['pending_order_data']) && isset($_GET['session_id'])) {
             <h1 class="success-h1">THANK <span>YOU</span></h1>
             <p class="success-text">Your order has been already processed.</p>
         <?php endif; ?>
-             <a href="home.php" class="btn btn-success-page btn-home">Return Home</a>
-            <a href="orders.php" class="btn btn-success-page btn-orders">View My Orders</a>
+             <a href="home.php" class="btn btn-primary">Return Home</a>
+            <a href="orders.php" class="btn btn-outline-info">View My Orders</a>
     </div>
 </main>
 

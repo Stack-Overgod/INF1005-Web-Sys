@@ -58,6 +58,30 @@ if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'customer') {
   $already_reviewed = $stmt->fetchColumn() > 0;
 }
 
+// handle add to cart
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
+  if (!isset($_SESSION['user_id'])) {
+    header("Location: forms/login.php");
+    exit;
+  }
+  $add_product_id = (int)$_POST['product_id'];
+  $user_id = $_SESSION['user_id'];
+
+  $stmt = $pdo->prepare("SELECT quantity FROM cartitems WHERE product_id = ? AND user_id = ?");
+  $stmt->execute([$add_product_id, $user_id]);
+  $item = $stmt->fetch();
+
+  if ($item) {
+    $stmt = $pdo->prepare("UPDATE cartitems SET quantity = quantity + 1 WHERE product_id = ? AND user_id = ?");
+    $stmt->execute([$add_product_id, $user_id]);
+  } else {
+    $stmt = $pdo->prepare("INSERT INTO cartitems (product_id, user_id, quantity) VALUES (?, ?, 1)");
+    $stmt->execute([$add_product_id, $user_id]);
+  }
+  $_SESSION['cart_success'] = true;
+  header("Location: product.php?id=$add_product_id");
+  exit;
+}
 
 // handle review submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_review'])) {
@@ -121,6 +145,13 @@ for ($i = 0; $i < $empty_stars; $i++) {
 <body>
   <?php include 'includes/nav.php'; ?>
 
+  <?php if (isset($_SESSION['cart_success'])): ?>
+    <div style="padding: 15px; margin: 20px auto; max-width: 1200px; background: rgba(0, 255, 150, 0.1); border: 1px solid var(--neon-green, #00ff96); color: var(--neon-green, #00ff96); text-align: center; border-radius: 4px;">
+      <strong>Success!</strong> Item added to cart.
+    </div>
+    <?php unset($_SESSION['cart_success']); ?>
+  <?php endif; ?>
+
   <main class="product-page">
 
     <div class="product-details">
@@ -139,7 +170,10 @@ for ($i = 0; $i < $empty_stars; $i++) {
         <p class="product-price">$<?= number_format($product['price'], 2) ?></p>
         <p class="product-stock">In Stock: <?= $product['stock'] ?></p>
 
-        <button class="add-to-cart">Add to Cart</button>
+        <form method="POST" action="product.php?id=<?= $product['product_id'] ?>">
+          <input type="hidden" name="product_id" value="<?= $product['product_id'] ?>">
+          <button type="submit" name="add_to_cart" class="add-to-cart">Add to Cart</button>
+        </form>
 
         <!-- Specifications -->
         <?php if (!empty($specs)): ?>

@@ -29,275 +29,16 @@ foreach ($orders as &$order) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="OVERCLOCK/TECH — View your order history and track your latest gaming gear.">
     <title>OVERCLOCK/TECH — My Orders</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        .navbar {
-            display: flex !important;
-            flex-direction: column !important;
-            padding: 1rem 2rem !important;
-            height: 96px !important;
-            flex-wrap: nowrap !important;
-            align-items: stretch !important;
-            justify-content: flex-start !important;
-        }
-
-        .nav-top {
-            display: flex !important;
-            align-items: center !important;
-            width: 100% !important;
-            flex: 0 0 auto !important;
-            flex-wrap: nowrap !important;
-            margin-bottom: 0 !important;
-            height: 52px !important;
-        }
-
-        .nav-links {
-            display: flex !important;
-            flex-direction: row !important;
-            list-style: none !important;
-            gap: 0.25rem !important;
-            flex: 0 0 auto !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            width: 100% !important;
-            justify-content: flex-start !important;
-            align-items: flex-end !important;
-            align-self: flex-end !important;
-            height: 36px !important;
-        }
-
-        .nav-links li {
-            list-style: none !important;
-            padding: 0 !important;
-            margin: 0 !important;
-        }
-        .nav-links a {
-            display: inline-flex !important;
-            align-items: center !important;
-            font-family: var(--font-body) !important;
-            font-weight: 600 !important;
-            font-size: 0.85rem !important;
-            letter-spacing: 0.08em !important;
-            text-transform: uppercase !important;
-            color: var(--text-grey) !important;
-            padding: 0.4rem 0.75rem !important;
-            border-radius: 4px !important;
-            border-bottom-left-radius: 0 !important;
-            border-bottom-right-radius: 0 !important;
-            transition: color 0.2s, background 0.2s !important;
-            white-space: nowrap !important;
-            text-decoration: none !important;
-            background: transparent !important;
-        }
-        .nav-links a:hover,
-        .nav-links a:focus,
-        .nav-links a.active {
-            color: var(--neon) !important;
-            background: var(--neon-dim) !important;
-            text-decoration: none !important;
-        }
-
-        .nav-icons {
-            margin-left: auto !important;
-            display: flex !important;
-            align-items: center !important;
-            gap: 0.5rem !important;
-            flex-shrink: 0 !important;
-        }
-
-        .navbar-brand {
-            color: var(--neon) !important;
-        }
-        .navbar-brand:hover {
-            color: var(--neon) !important;
-            text-decoration: none !important;
-        }
-        .navbar-brand span {
-            color: var(--text-white) !important;
-        }
-        .navbar-brand:hover span {
-            color: var(--text-white) !important;
-        }
-        .navbar-brand .brand-slash,
-        .navbar-brand:hover .brand-slash {
-            color: var(--neon2) !important;
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                height: 64px !important;
-                padding: 0 1rem !important;
-                flex-direction: row !important;
-                align-items: center !important;
-            }
-            .nav-top {
-                height: 64px !important;
-                flex: 1 !important;
-                width: 100% !important;
-            }
-            .nav-links {
-                display: none !important;
-                position: absolute !important;
-                top: 64px !important;
-                left: 0 !important;
-                right: 0 !important;
-                background: rgba(5,5,8,0.98) !important;
-                flex-direction: column !important;
-                padding: 1rem !important;
-                border-bottom: 1px solid var(--border) !important;
-                gap: 0 !important;
-                height: auto !important;
-                align-items: flex-start !important;
-                z-index: 999 !important;
-            }
-            .nav-links.open {
-                display: flex !important;
-            }
-        }
-
-        .orders-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 80vh;
-            padding: 4rem 2rem;
-        }
-        .btn-success-page {
-            font-family: var(--font-display);
-            padding: 0.8rem 2rem;
-            border-radius: 4px;
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            transition: all 0.3s;
-        }
-        .btn-orders {
-            background: var(--neon);
-            color: var(--bg-black);
-            border: none;
-        }
-        .btn-orders:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--neon);
-        }
-        .btn-view-order {
-            background: transparent;
-            border: 1px solid var(--neon);
-            color: var(--neon);
-            font-family: var(--font-display);
-            font-size: 0.75rem;
-            padding: 0.5rem 1.25rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            transition: all 0.3s;
-            border-radius: 4px;
-            font-weight: 700;
-            display: inline-block;
-            text-decoration: none;
-        }
-        .btn-view-order:hover {
-            background: var(--neon-dim);
-            color: var(--text-white);
-            box-shadow: var(--neon-glow);
-            transform: translateY(-2px);
-            text-decoration: none;
-        }
-        .orders-container {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            box-shadow: var(--neon-glow);
-            border-radius: 16px;
-            padding: 3rem;
-            width: 100%;
-            max-width: 1100px;
-            position: relative;
-            z-index: 10;
-            animation: fadeIn 0.8s ease-out;
-        }
-        .order-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(0, 229, 255, 0.1);
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            overflow: hidden;
-            transition: transform 0.3s, border-color 0.3s;
-        }
-        .order-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--neon);
-        }
-        .order-header {
-            background: rgba(0, 229, 255, 0.05);
-            padding: 1.5rem;
-            border-bottom: 1px solid rgba(0, 229, 255, 0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .order-id { font-family: var(--font-display); color: var(--neon); font-size: 1.1rem; }
-        .order-date { color: var(--text-grey); font-size: 0.9rem; }
-        .order-status {
-            padding: 0.25rem 1rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 0.05em;
-        }
-        .status-pending { background: rgba(255, 193, 7, 0.2); color: #ffc107; border: 1px solid #ffc107; }
-        .status-shipped { background: rgba(0, 123, 255, 0.2); color: #007bff; border: 1px solid #007bff; }
-        .status-delivered { background: rgba(40, 167, 69, 0.2); color: #28a745; border: 1px solid #28a745; }
-        .status-success { background: rgba(0, 229, 255, 0.2); color: var(--neon); border: 1px solid var(--neon); }
-        
-        .order-body { padding: 1.5rem; }
-        .order-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .order-item:last-child { border-bottom: none; }
-        .item-name { color: var(--text-white); font-weight: 500; }
-        .item-details { color: var(--text-grey); font-size: 0.85rem; }
-        .item-price { color: var(--text-white); font-family: var(--font-display); }
-
-        .order-footer {
-            padding: 1.5rem;
-            background: rgba(0, 0, 0, 0.2);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .total-label { color: var(--text-grey); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em; }
-        .total-amount { color: var(--neon); font-size: 1.4rem; font-family: var(--font-display); font-weight: 900; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .no-orders {
-            text-align: center;
-            padding: 4rem 0;
-        }
-        .empty-icon {
-            font-size: 4rem;
-            color: rgba(255, 255, 255, 0.1);
-            margin-bottom: 1.5rem;
-        }
-    </style>
 </head>
 <body>
 
 <?php include 'includes/nav.php'; ?>
 
-<main id="main-content" class="orders-wrapper">
-    <div class="orders-container">
+<main id="main-content" class="page-wrapper">
+    <div class="page-container page-container-wide">
         <h1 class="section-title text-center mb-5"><span class="hi">ORDER</span> HISTORY</h1>
 
         <?php if (empty($orders)): ?>
@@ -305,7 +46,7 @@ foreach ($orders as &$order) {
                 <div class="empty-icon"><i class="fa-solid fa-box-open"></i></div>
                 <h2 class="text-white">No orders found.</h2>
                 <p class="text-white">You haven't placed any orders yet.</p>
-                <a href="products.php" class="btn btn-success-page btn-orders mt-3">Start Shopping</a>
+                <a href="products.php" class="btn btn-success mt-3">Start Shopping</a>
             </div>
         <?php else: ?>
             <?php foreach ($orders as $order): ?>
@@ -338,7 +79,7 @@ foreach ($orders as &$order) {
                         <div class="text-right d-flex flex-column align-items-end">
                             <span class="total-label">Total Amount</span>
                             <span class="total-amount mb-2">$<?= number_format($order['total_price'], 2) ?></span>
-                            <a href="orderdetail.php?order_id=<?= $order['order_id'] ?>" class="btn-view-order">View Order</a>
+                            <a href="orderdetail.php?order_id=<?= $order['order_id'] ?>" class="btn btn-outline-info">View Order</a>
                         </div>
                     </div>
                 </div>
