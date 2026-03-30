@@ -2803,3 +2803,95 @@ input[type="number"] {
     margin-bottom: 3rem;
 }
 
+/* =========================================
+  FAQ RELATED CSS
+   ========================================= */
+
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 800px;
+  margin: 0 auto 4rem;
+}
+
+.faq-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+
+/*Make it glow with abit of hover effect*/
+.faq-item:hover {
+  border-color: var(--neon);
+  box-shadow: var(--neon-glow);
+  transform: translateY(-2px);
+}
+
+.faq-item summary {
+  padding: 1.5rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 2px;
+  cursor: pointer;
+  list-style: none; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+/*for apple devices specifically, to remove the default arrow*/
+.faq-item summary::-webkit-details-marker {
+  display: none; 
+}
+
+.faq-item summary::after {
+  content: '+';
+  color: var(--neon);
+  font-size: 2rem;
+  line-height: 1;
+  font-family: var(--font-mono); /*to make rotation look smooth*/
+  transition: transform 0.3s ease;
+}
+
+.faq-item[open] summary::after {
+  content: '−';
+  color: var(--neon2);
+  transform: rotate(180deg);
+}
+
+.faq-item[open] {
+  border-color: var(--border-hover);
+}
+
+.faq-answer {
+  padding: 0 1.5rem 1.5rem;
+  color: var(--text-grey);
+}
+
+.contact-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.faq-card {
+  max-width: 600px; 
+  width: 100%;
+}
+
+
+.result-wrapper {
+  min-height: calc(100vh - 96px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  background: var(--bg-black);
+}

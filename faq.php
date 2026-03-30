@@ -11,83 +11,6 @@ $activePage = 'faq';
   <title>OVERCLOCK/TECH — FAQ & Support</title>
   <link rel="stylesheet" href="css/style.css">
   
-  <style>
-    /* Scoped styles for the FAQ Accordion */
-    .faq-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      max-width: 800px;
-      margin: 0 auto 4rem;
-    }
-
-    .faq-item {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      transition: all 0.3s ease;
-      overflow: hidden;
-    }
-
-    .faq-item:hover {
-      border-color: var(--neon);
-      box-shadow: var(--neon-glow);
-      transform: translateY(-2px);
-    }
-
-    .faq-item summary {
-      padding: 1.5rem;
-      font-family: var(--font-display);
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text-white);
-      letter-spacing: 0.08em;
-      cursor: pointer;
-      list-style: none; /* Removes default arrow */
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      text-transform: uppercase;
-    }
-
-    .faq-item summary::-webkit-details-marker {
-      display: none; /* Removes Safari default arrow */
-    }
-
-    .faq-item summary::after {
-      content: '+';
-      color: var(--neon);
-      font-size: 1.8rem;
-      line-height: 1;
-      font-family: var(--font-mono);
-      transition: transform 0.3s ease;
-    }
-
-    .faq-item[open] summary::after {
-      content: '−';
-      color: var(--neon2);
-      transform: rotate(180deg);
-    }
-
-    .faq-item[open] {
-      border-color: var(--border-hover);
-    }
-
-    .faq-answer {
-      padding: 0 1.5rem 1.5rem;
-      color: var(--text-grey);
-      font-size: 0.95rem;
-      line-height: 1.8;
-    }
-
-    /* Wrapper to center the contact form */
-    .contact-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-    }
-  </style>
 </head>
 <body>
 
@@ -101,7 +24,7 @@ $activePage = 'faq';
       <h1 class="section-title" id="faq-heading">
         FAQ <span class="hi">&</span> Support
       </h1>
-      <p class="section-sub">Everything you need to know about our gear, shipping, and warranties.</p>
+      <p class="section-sub">Everything you need to know about our gear, shipping.</p>
     </div>
 
     <div class="faq-list">
@@ -137,33 +60,36 @@ $activePage = 'faq';
     </div>
   </section>
 
+  <!-- FAQ question submission form -->
   <section class="section-full" aria-labelledby="contact-heading">
     <div class="section-inner contact-wrapper">
       
-      <div class="auth-card" style="max-width: 600px; width: 100%;">
-        <h2 class="auth-heading" id="contact-heading" style="text-align: center;">Still Need Help?</h2>
+      <div class="auth-card faq-card">
+        <h2 class="auth-heading" style="text-align: center;">Still Need Help?</h2>
         <p class="auth-subtext" style="text-align: center;">Transmit a message to our support deck. We usually reply within 24 hours.</p>
 
+        <!--  Actual Form  -->
         <form action="process_contact.php" method="POST">
           
           <div class="auth-form-row">
             <div class="auth-form-group">
               <label class="auth-form-label" for="name">Name</label>
-              <input type="text" id="name" name="name" class="auth-form-input" placeholder="Enter your handle" required>
+              <input type="text" id="name" name="name" class="auth-form-input" placeholder="Enter your Name" required>
             </div>
             <div class="auth-form-group">
               <label class="auth-form-label" for="email">Email Address</label>
-              <input type="email" id="email" name="email" class="auth-form-input" placeholder="Enter your email" required>
+              <input type="email" id="email" name="email" class="auth-form-input" placeholder="Enter your Email" required>
             </div>
           </div>
 
           <div class="auth-form-group">
             <label class="auth-form-label" for="question">Your Question</label>
-            <textarea id="question" name="question" class="auth-form-input" rows="5" placeholder="Describe your issue..." style="resize: vertical;" required></textarea>
+            <textarea id="question" name="question" class="auth-form-input" rows="5" placeholder="Describe your issue..." style="resize: none;" required></textarea>
           </div>
 
           <button type="submit" class="btn-auth">
             <span>Send Transmission</span>
+            <!-- Simple Arrow -->
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left: 8px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
 

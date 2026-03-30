@@ -29,26 +29,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail = new PHPMailer(true);
 
         try {
-            // --- SERVER SETTINGS (The Post Office) ---
+            // smtp server configurations
             $mail->SMTPDebug = SMTP::DEBUG_OFF; 
             $mail->isSMTP();                                            
             $mail->Host       = 'smtp.gmail.com'; 
             $mail->SMTPAuth   = true;               
             
-            // PUT YOUR BURNER GMAIL AND 16-LETTER APP PASSWORD HERE
+            // email details to send the reply
             $mail->Username   = 'overclocktech.dev@gmail.com'; 
             $mail->Password   = 'obmgvyoimkyvzted'; 
             
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587; 
 
-            // --- RECIPIENTS (The Destination) ---
+            // From field
             $mail->setFrom('overclocktech.dev@gmail.com', 'OVERCLOCK/TECH Support'); 
             
-            // This sends the email directly to whatever email the user typed into the form!
+            // To field
             $mail->addAddress($email, $name); 
 
-            // --- CONTENT (The Message) ---
+            // Content in html with all the fancy styling
             $mail->isHTML(true); 
             $mail->Subject = 'Transmission Received // OVERCLOCK/TECH Support';
             
@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             $mail->AltBody = "Hello {$name},\n\nWe received your transmission: \n'{$question}'\n\nOur team will respond within 24 hours.\n\nEnd of line,\nOVERCLOCK/TECH";
 
-            // 3. Send the email
+            // Send the email
             $mail->send();
             $status = 'success';
             $message = 'Transmission successful. A confirmation receipt has been sent to your email.';
