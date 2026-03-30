@@ -256,7 +256,7 @@ $activePage = 'home';
         <div class="stat-label">Countries Shipped</div>
       </div>
       <div class="stat-item" role="listitem">
-        <span class="stat-number" aria-label="99.2 percent satisfaction">99%</span>
+        <span class="stat-number" aria-label="99 percent satisfaction">99%</span>
         <div class="stat-label">Satisfaction Rate</div>
       </div>
       <div class="stat-item" role="listitem">

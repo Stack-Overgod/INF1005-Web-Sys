@@ -49,13 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($valid) {
         try {
-            $host = 'localhost';
-            $dbname = 'overclock_tech';
-            $dbuser = 'root';
-            $dbpass = ''; // update this to match your MySQL password
-
-            $pdo = new PDO("mysql:host=$host;dbname=$dbname", $dbuser, $dbpass);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            require_once '../db.php';
 
             $table = ($role === 'staff') ? 'staff' : 'customers';
 
