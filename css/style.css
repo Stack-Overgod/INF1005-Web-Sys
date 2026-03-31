@@ -105,8 +105,7 @@ a, a:hover { text-decoration: none; color: inherit; }
   transition: color 0.2s, background 0.2s;
   white-space: nowrap;
 }
-.nav-links a:hover,
-.nav-links a.active {
+.nav-links a:hover {
   color: var(--neon);
   background: var(--neon-dim);
   text-decoration: none;
@@ -1965,11 +1964,6 @@ a, a:hover { text-decoration: none; color: inherit; }
   color: var(--neon);
 }
 
-.staff-section-note {
-  color: var(--text-grey);
-  font-size: 0.85rem;
-}
-
 .staff-table-wrap {
   overflow-x: auto;
   border: 1px solid var(--border);
@@ -2036,6 +2030,74 @@ a, a:hover { text-decoration: none; color: inherit; }
 .staff-badge-staff {
   background: rgba(255, 45, 85, 0.12);
   color: #ff7b94;
+}
+
+.staff-section-note {
+  color: var(--text-grey);
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.staff-form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.staff-create-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.75rem;
+}
+
+.staff-create-title {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-white);
+  margin-bottom: 1.25rem;
+}
+
+.staff-create-card .btn-auth {
+  margin-bottom: 0;
+}
+
+.staff-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238899bb' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+.staff-textarea {
+  resize: none;
+  min-height: 100px;
+  overflow-y: auto;
+}
+
+.staff-create-card + .staff-create-card {
+  margin-top: 0.5rem;
+}
+
+.staff-field-note {
+  font-size: 0.78rem;
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 520px) {
+  .staff-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .staff-create-card {
+    padding: 1.25rem;
+  }
 }
 
 @keyframes authCardFadeIn {

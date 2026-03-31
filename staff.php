@@ -51,8 +51,8 @@ function checkEmailDomain($email) {
     'zoho.com', 'ymail.com', 'mail.com',
     'gmx.com', 'gmx.net',
     'singnet.com.sg', 'starhub.net.sg', 'myrepublic.net',
-    'ntu.edu.sg', 'nus.edu.sg', 'sit.singaporetech.edu.sg' , 'overclocktech.com'
-    
+    'ntu.edu.sg', 'nus.edu.sg', 'sit.singaporetech.edu.sg', 
+    'overclocktech.com'
   ];
 
   $parts = explode('@', $email);
@@ -522,12 +522,33 @@ $currentProductSpecValuesJson = json_encode($productFormData['spec_values'], JSO
 
             <div class="auth-form-group">
               <label for="staff-password" class="auth-form-label">Password</label>
-              <input class="auth-form-input" type="password" id="staff-password" name="password" placeholder="Enter password" required>
+              <div class="password-wrapper">
+                <input class="auth-form-input" type="password" id="staff-password" name="password" placeholder="Enter password" required autocomplete="new-password" aria-describedby="staffPwdChecklist">
+                <button type="button" class="toggle-pwd" aria-label="Toggle password visibility" data-target="staff-password">
+                  <svg class="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <svg class="eye-closed" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                </button>
+              </div>
+              <div class="pwd-checklist" id="staffPwdChecklist" style="display:none;" aria-live="polite">
+                <p class="pwd-checklist-title">Password must contain:</p>
+                <ul>
+                  <li id="staffCheckLower" class="pwd-req"><span class="pwd-req-icon" aria-hidden="true"></span> At least one <strong>lowercase</strong> letter</li>
+                  <li id="staffCheckUpper" class="pwd-req"><span class="pwd-req-icon" aria-hidden="true"></span> At least one <strong>uppercase</strong> letter</li>
+                  <li id="staffCheckNumber" class="pwd-req"><span class="pwd-req-icon" aria-hidden="true"></span> At least one <strong>number</strong></li>
+                  <li id="staffCheckLength" class="pwd-req"><span class="pwd-req-icon" aria-hidden="true"></span> Minimum <strong>8 characters</strong></li>
+                </ul>
+              </div>
             </div>
 
             <div class="auth-form-group">
               <label for="staff-password-confirm" class="auth-form-label">Confirm Password</label>
-              <input class="auth-form-input" type="password" id="staff-password-confirm" name="password_confirm" placeholder="Confirm password" required>
+              <div class="password-wrapper">
+                <input class="auth-form-input" type="password" id="staff-password-confirm" name="password_confirm" placeholder="Confirm password" required autocomplete="new-password">
+                <button type="button" class="toggle-pwd" aria-label="Toggle confirm password visibility" data-target="staff-password-confirm">
+                  <svg class="eye-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <svg class="eye-closed" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                </button>
+              </div>
             </div>
 
             <button type="submit" class="btn-auth">
@@ -599,7 +620,7 @@ $currentProductSpecValuesJson = json_encode($productFormData['spec_values'], JSO
         <div class="staff-section-head">
           <h2 id="accounts-heading" class="staff-section-title">All Account Info</h2>
         </div>
-        <div class="staff-table-wrap">
+        <div class="staff-table-wrap" tabindex="0" role="region" aria-label="Scrollable accounts table">
           <table class="staff-table">
             <thead>
               <tr>
@@ -638,7 +659,7 @@ $currentProductSpecValuesJson = json_encode($productFormData['spec_values'], JSO
           <h2 id="products-heading" class="staff-section-title">All Product Info</h2>
           <p class="staff-section-note">Live product data from the products table and linked category names.</p>
         </div>
-        <div class="staff-table-wrap">
+        <div class="staff-table-wrap" tabindex="0" role="region" aria-label="Scrollable products table">
           <table class="staff-table">
             <thead>
               <tr>
@@ -744,5 +765,6 @@ $currentProductSpecValuesJson = json_encode($productFormData['spec_values'], JSO
   })();
 </script>
 
+<script src="js/auth.js?v=8" defer></script>
 </body>
 </html>

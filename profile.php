@@ -13,6 +13,14 @@ $userId = $_SESSION['user_id'];
 $fname = $lname = $email = "";
 $errorMsg = "";
 $successMsg = "";
+
+function sanitize_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
 $roleConfig = [
   'customer' => ['table' => 'customers', 'id_col' => 'customer_id'],
   'staff' => ['table' => 'staff', 'id_col' => 'staff_id'],
@@ -46,8 +54,8 @@ try {
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errorMsg)) {
-    $newFname = trim($_POST['fname'] ?? '');
-    $newLname = trim($_POST['lname'] ?? '');
+    $newFname = sanitize_input($_POST['fname'] ?? '');
+    $newLname = sanitize_input($_POST['lname'] ?? '');
     $updateError = false;
 
     // Validate last name
@@ -64,10 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($errorMsg)) {
         $errorMsg = "First name must contain only letters, spaces, hyphens, and apostrophes.";
         $updateError = true;
     }
-
-    // Sanitize
-    $newFname = htmlspecialchars(stripslashes($newFname));
-    $newLname = htmlspecialchars(stripslashes($newLname));
 
     if (!$updateError) {
         try {
