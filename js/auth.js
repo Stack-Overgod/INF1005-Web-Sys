@@ -108,6 +108,29 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  // Staff Create Account — password checklist
+  var staffPwdField = document.getElementById('staff-password');
+  var staffChecklist = document.getElementById('staffPwdChecklist');
+
+  if (staffPwdField && staffChecklist) {
+    var sCheckLower = document.getElementById('staffCheckLower');
+    var sCheckUpper = document.getElementById('staffCheckUpper');
+    var sCheckNumber = document.getElementById('staffCheckNumber');
+    var sCheckLength = document.getElementById('staffCheckLength');
+
+    staffPwdField.addEventListener('focus', function () {
+      staffChecklist.style.display = 'block';
+    });
+
+    staffPwdField.addEventListener('input', function () {
+      var val = staffPwdField.value;
+      setReqStatus(sCheckLower, /[a-z]/.test(val));
+      setReqStatus(sCheckUpper, /[A-Z]/.test(val));
+      setReqStatus(sCheckNumber, /[0-9]/.test(val));
+      setReqStatus(sCheckLength, val.length >= 8);
+    });
+  }
+
   // Role Selector Toggle
 
   var roleBtns = document.querySelectorAll('.role-btn');

@@ -5,16 +5,21 @@ $activePage = 'login';
 $errorMsg = "";
 $successMsg = "";
 
+function sanitize_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email'] ?? '');
+    $email = sanitize_input($_POST['email'] ?? '');
     $role = $_POST['role'] ?? 'customer';
     $newPwd = $_POST['new_pwd'] ?? '';
     $confirmPwd = $_POST['confirm_pwd'] ?? '';
     $valid = true;
 
     if (!in_array($role, ['customer', 'staff'])) { $role = 'customer'; }
-
-    $email = htmlspecialchars(stripslashes($email));
 
     if (empty($email)) {
         $errorMsg .= "Email is required.<br>"; $valid = false;
@@ -167,6 +172,6 @@ include '../includes/nav.php'; ?>
 </main>
 
 <?php include '../includes/footer.php'; ?>
-<script src="../js/auth.js?v=5" defer></script>
+<script src="../js/auth.js?v=8" defer></script>
 </body>
 </html>
