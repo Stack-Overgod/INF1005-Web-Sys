@@ -276,7 +276,7 @@ $activePage = 'find-us';
         <p>
           Phone: <a href="tel:+6567676767" aria-label="Call us at plus 65 6767 6767">+65 6767 6767</a><br>
           WhatsApp: <a href="https://wa.me/6576767676" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp us at plus 65 7676 7676 (opens in new tab)">+65 7676 7676</a><br>
-          Email: <a href="mailto:support@overclocktech.sg" aria-label="Email us at support at overclocktech dot sg">support@overclocktech.sg</a>
+          Email: <a href="mailto:overclocktech.dev@gmail.com" aria-label="Email us at overclocktech.dev at gmail dot com">overclocktech.dev@gmail.com</a>
         </p>
       </article>
 
