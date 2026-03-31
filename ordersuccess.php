@@ -2,6 +2,7 @@
 session_start();
 require_once 'db.php';
 require_once 'lib/stripe-php/init.php';
+$config = parse_ini_file('/var/www/private/config.ini');
 
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
@@ -23,7 +24,7 @@ if (isset($_SESSION['pending_order_data']) && isset($_GET['session_id'])) {
     
     try {
         // --- FETCH STRIPE SESSION TO GET ACTUAL PAYMENT METHOD ---
-        Stripe::setApiKey('');
+        Stripe::setApiKey($config['STRIPE_API_KEY']);
         // Expand payment_intent.payment_method to see the actual method used
         $checkout_session = Session::retrieve(['id' => $session_id, 'expand' => ['payment_intent.payment_method']]);
         

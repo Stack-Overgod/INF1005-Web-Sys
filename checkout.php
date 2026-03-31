@@ -93,8 +93,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                 'payment_method_types' => ['card', 'grabpay', 'paynow', 'alipay'],
                 'line_items' => $stripe_line_items,
                 'mode' => 'payment',
-                'success_url' => 'http://localhost/ordersuccess.php?session_id={CHECKOUT_SESSION_ID}',
-                'cancel_url' => 'http://localhost/checkout.php',
+                'success_url' => 'http://35.212.238.192/ordersuccess.php?session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => 'http://35.212.238.192/checkout.php',
             ]);
 
             header("Location: " . $session->url);
