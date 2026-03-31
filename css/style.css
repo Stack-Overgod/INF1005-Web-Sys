@@ -1139,6 +1139,12 @@ a, a:hover { text-decoration: none; color: inherit; }
   margin-top: 2.5rem;
 }
 
+.btn-primary {
+    color: #000000;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
 .btn-secondary {
   display: inline-flex;
   align-items: center;

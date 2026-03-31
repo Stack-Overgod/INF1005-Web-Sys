@@ -161,7 +161,7 @@ $total_amt = $subtotal + $shipping_fee;
     </div>
 </div>
 <?php else: ?>
-<h6 class="text-center mb-4">There is nothing in your cart.</h6>
+<p class="text-center mb-4">There is nothing in your cart.</p>
 <div class="text-center">
     <a href="products.php" class="btn btn-md btn-primary">Shop</a>
 </div>
