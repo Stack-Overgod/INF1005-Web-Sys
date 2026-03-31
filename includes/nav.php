@@ -38,7 +38,7 @@ if ($isLoggedIn) {
 }
 ?>
 
-<nav class="navbar" role="navigation" aria-label="Main navigation">
+<nav class="navbar" aria-label="Main navigation">
   <!-- Brand -->
   <div class="nav-top">
     <a href="<?= $basePath ?>home.php" class="navbar-brand" aria-label="OVERCLOCK TECH Home">
@@ -48,7 +48,7 @@ if ($isLoggedIn) {
       <!-- Desktop Search -->
       <div class="search" id="searchBar">
       <form action="search.php" method="GET" id="searchForm">
-        <input class="search-input" type="search" name="q" placeholder="Search Products" />
+        <input class="search-input" type="search" name="q" placeholder="Search Products">
       </form>
       <button class="nav-icon-btn" id="searchBtn" aria-label="Search">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -135,7 +135,7 @@ if ($isLoggedIn) {
           </svg>
         </button>
         <form action="search.php" method="GET" id="mobileSearchForm" class="mobile-search-form">
-          <input class="search-input" type="search" name="q" placeholder="Search Products" autofocus/>
+          <input class="search-input" type="search" name="q" placeholder="Search Products" autofocus>
         </form>
       </div>
 

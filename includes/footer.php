@@ -4,7 +4,7 @@
 $basePath = $basePath ?? '';
 ?>
 
-<footer class="site-footer" role="contentinfo">
+<footer class="site-footer">
   <div class="footer-grid">
 
     <!-- Brand column -->
@@ -17,7 +17,7 @@ $basePath = $basePath ?? '';
 
     <!-- Products column -->
     <div class="footer-col">
-      <h4>Products</h4>
+      <h3>Products</h3>
       <ul>
         <li><a href="<?= $basePath ?>products.php?cat=gaming-pc">Gaming PCs</a></li>
         <li><a href="<?= $basePath ?>products.php?cat=laptop">Laptops</a></li>
@@ -28,7 +28,7 @@ $basePath = $basePath ?? '';
 
     <!-- Company column -->
     <div class="footer-col">
-      <h4>Company</h4>
+      <h3>Company</h3>
       <ul>
         <li><a href="<?= $basePath ?>about.php">About Us</a></li>
         <li><a href="<?= $basePath ?>Findus.php">Find Us</a></li>
@@ -36,7 +36,7 @@ $basePath = $basePath ?? '';
     </div>
 
     <div class="footer-col">
-      <h4>Support</h4>
+      <h3>Support</h3>
       <ul>
         <li><a href="<?= $basePath ?>faq.php">FAQ</a></li>
       </ul>
