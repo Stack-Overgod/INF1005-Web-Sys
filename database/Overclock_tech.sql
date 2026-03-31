@@ -18,6 +18,8 @@
 --
 -- Table structure for table `cartitems`
 --
+CREATE DATABASE IF NOT EXISTS Overclock_tech;
+USE Overclock_tech;
 
 DROP TABLE IF EXISTS `cartitems`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

@@ -1,7 +1,7 @@
 <?php
 session_start();
 $activePage = 'faq'; 
-$config = require 'config.php';
+$config = parse_ini_file('/var/www/private/config.ini');
 
 
 // PHPMailer required files

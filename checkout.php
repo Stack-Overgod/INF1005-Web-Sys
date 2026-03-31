@@ -2,7 +2,7 @@
 session_start();
 require_once 'db.php';
 require_once 'lib/stripe-php/init.php';
-$config = require 'config.php';
+$config = parse_ini_file('/var/www/private/config.ini');
 
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
