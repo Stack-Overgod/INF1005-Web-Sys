@@ -65,7 +65,7 @@ $activePage = 'faq';
     <div class="section-inner contact-wrapper">
       
       <div class="auth-card faq-card">
-        <h2 class="auth-heading" style="text-align: center;">Still Need Help?</h2>
+        <h2 class="auth-heading" id="contact-heading" style="text-align: center;">Still Need Help?</h2>
         <p class="auth-subtext" style="text-align: center;">Transmit a message to our support deck. We usually reply within 24 hours.</p>
 
         <!--  Actual Form  -->
