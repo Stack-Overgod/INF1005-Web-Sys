@@ -401,9 +401,6 @@ $currentProductSpecValuesJson = json_encode($productFormData['spec_values'], JSO
   <title>OVERCLOCK/TECH — Staff</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
-    .btn-primary {
-      border-color: #007bff;
-    }
     .staff-file-picker {
       display: flex;
       align-items: center;
@@ -647,7 +644,7 @@ $currentProductSpecValuesJson = json_encode($productFormData['spec_values'], JSO
                   <td><?php echo htmlspecialchars($account['created_at']); ?></td>
                   <td>
                     <?php if ($account['account_type'] === 'customer'): ?>
-                      <a href="orders.php?client_id=<?php echo (int)$account['account_id']; ?>" class="btn btn-primary btn-sm"> <i class="fa fa-shopping-basket" aria-hidden="true"></i> View Orders</a>
+                      <a href="orders.php?client_id=<?php echo (int)$account['account_id']; ?>" class="btn btn-sm"> <i class="fa fa-shopping-basket" aria-hidden="true"></i> View Orders</a>
                     <?php endif; ?>
                   </td>
                 </tr>
