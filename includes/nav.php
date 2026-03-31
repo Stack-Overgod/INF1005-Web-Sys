@@ -1,4 +1,7 @@
 <?php
+// includes/nav.php — Shared Navigation
+// Set $activePage and $basePath before including.
+// Root pages: $basePath = '';  |  Forms pages: $basePath = '../';
 
 $activePage = $activePage ?? '';
 $basePath   = $basePath ?? '';
@@ -9,10 +12,10 @@ $navItems = [
   ['href' => $basePath . 'products.php?category=2',     'label' => 'Laptop',     'key' => 'laptop'],
   ['href' => $basePath . 'products.php?category=3',     'label' => 'Keyboard',   'key' => 'keyboard'],
   ['href' => $basePath . 'products.php?category=4',     'label' => 'Mouse',      'key' => 'mouse'],
-  ['href' => $basePath . 'find-us.php',                 'label' => 'Find Us',    'key' => 'find-us'],
+  ['href' => $basePath . 'Findus.php',                  'label' => 'Find Us',    'key' => 'find-us'],
 ];
 
-// Cart item count 
+// Cart item count (from session)
 session_start_if_not_started();
 $cartCount = isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart'], 'qty')) : 0;
 

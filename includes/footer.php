@@ -1,5 +1,6 @@
 <?php
 // Include at the bottom of every page EXCEPT the landing page
+// $basePath should be set before including this file
 $basePath = $basePath ?? '';
 ?>
 
@@ -30,7 +31,7 @@ $basePath = $basePath ?? '';
       <h3>Company</h3>
       <ul>
         <li><a href="<?= $basePath ?>about.php">About Us</a></li>
-        <li><a href="<?= $basePath ?>find-us.php">Find Us</a></li>
+        <li><a href="<?= $basePath ?>Findus.php">Find Us</a></li>
       </ul>
     </div>
 
