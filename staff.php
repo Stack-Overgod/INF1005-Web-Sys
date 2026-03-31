@@ -35,6 +35,124 @@ $productFormData = [
   'image' => '',
 ];
 
+function sanitize_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}
+
+function checkEmailDomain($email) {
+  $validDomains = [
+    'gmail.com', 'yahoo.com', 'yahoo.com.sg', 'yahoo.co.uk',
+    'hotmail.com', 'outlook.com', 'live.com', 'msn.com',
+    'icloud.com', 'me.com', 'mac.com',
+    'aol.com', 'protonmail.com', 'proton.me',
+    'zoho.com', 'ymail.com', 'mail.com',
+    'gmx.com', 'gmx.net',
+    'singnet.com.sg', 'starhub.net.sg', 'myrepublic.net',
+    'ntu.edu.sg', 'nus.edu.sg', 'sit.singaporetech.edu.sg' , 'overclocktech.com'
+    
+  ];
+
+  $parts = explode('@', $email);
+  if (count($parts) !== 2) {
+    return null;
+  }
+
+  $domain = strtolower($parts[1]);
+
+  if (in_array($domain, $validDomains, true)) {
+    return null;
+  }
+
+  $closest = null;
+  $closestDist = 999;
+  foreach ($validDomains as $valid) {
+    $dist = levenshtein($domain, $valid);
+    if ($dist < $closestDist) {
+      $closestDist = $dist;
+      $closest = $valid;
+    }
+  }
+
+  if ($closestDist <= 2 && $closest !== $domain) {
+    return $parts[0] . '@' . $closest;
+  }
+
+  return 'unrecognised';
+}
+
+function validate_account_input(array $input) {
+  $result = [
+    'role' => 'customer',
+    'fname' => '',
+    'lname' => '',
+    'email' => '',
+    'password_hash' => '',
+    'errors' => [],
+  ];
+
+  $accountType = $input['account_type'] ?? 'customer';
+  if (!in_array($accountType, ['customer', 'staff'], true)) {
+    $result['errors'][] = 'Invalid account type.';
+  } else {
+    $result['role'] = $accountType;
+  }
+
+  if (!empty($input['fname'])) {
+    $result['fname'] = sanitize_input($input['fname']);
+
+    if (!preg_match("/^[a-zA-Z\s'-]+$/", $result['fname'])) {
+      $result['errors'][] = 'First name must contain only letters, spaces, hyphens, and apostrophes.';
+    }
+  }
+
+  if (empty($input['lname'])) {
+    $result['errors'][] = 'Last Name is required.';
+  } else {
+    $result['lname'] = sanitize_input($input['lname']);
+
+    if (!preg_match("/^[a-zA-Z\s'-]+$/", $result['lname'])) {
+      $result['errors'][] = 'Last name must contain only letters, spaces, hyphens, and apostrophes.';
+    }
+  }
+
+  if (empty($input['email'])) {
+    $result['errors'][] = 'Email is required.';
+  } else {
+    $result['email'] = sanitize_input($input['email']);
+
+    if (!filter_var($result['email'], FILTER_VALIDATE_EMAIL)) {
+      $result['errors'][] = 'Invalid email format.';
+    } elseif ($result['role'] === 'customer') {
+      $suggestion = checkEmailDomain($result['email']);
+      if ($suggestion === 'unrecognised') {
+        $result['errors'][] = 'Please use a valid email domain (e.g. gmail.com, yahoo.com, outlook.com).';
+      } elseif ($suggestion !== null) {
+        $result['errors'][] = 'Invalid email domain. Did you mean ' . htmlspecialchars($suggestion) . '?';
+      }
+    }
+  }
+
+  $password = $input['password'] ?? '';
+  $passwordConfirm = $input['password_confirm'] ?? '';
+
+  if ($password === '') {
+    $result['errors'][] = 'Password is required.';
+  } elseif ($passwordConfirm === '') {
+    $result['errors'][] = 'Password Confirmation is required.';
+  } elseif ($password !== $passwordConfirm) {
+    $result['errors'][] = 'Passwords do not match.';
+  } elseif (!preg_match('/[a-z]/', $password) || !preg_match('/[A-Z]/', $password) || !preg_match('/[0-9]/', $password) || strlen($password) < 8) {
+    $result['errors'][] = 'Password does not meet the required strength.';
+  } else {
+    $result['password_hash'] = password_hash($password, PASSWORD_BCRYPT);
+  }
+
+  return $result;
+}
+
 require_once 'db.php';
 
 try {
@@ -42,11 +160,21 @@ try {
     $formAction = $_POST['form_action'] ?? '';
 
     if ($formAction === 'create_account') {
-      $accountType = $_POST['account_type'] ?? 'customer';
-      $fname = trim($_POST['fname'] ?? '');
-      $lname = trim($_POST['lname'] ?? '');
-      $email = trim($_POST['email'] ?? '');
-      $password = $_POST['password'] ?? '';
+      $validationResult = validate_account_input($_POST, [
+        'allowed_roles' => ['customer', 'staff'],
+        'role_field' => 'account_type',
+        'default_role' => 'customer',
+        'password_field' => 'password',
+        'password_confirm_field' => 'password_confirm',
+        'require_password_confirmation' => true,
+        'require_terms' => false,
+        'validate_customer_email_domain' => true,
+      ]);
+
+      $accountType = $validationResult['role'];
+      $fname = $validationResult['fname'];
+      $lname = $validationResult['lname'];
+      $email = $validationResult['email'];
 
       $accountFormData = [
         'account_type' => $accountType,
@@ -55,20 +183,8 @@ try {
         'email' => $email,
       ];
 
-      if (!in_array($accountType, ['customer', 'staff'], true)) {
-        $errorMsg = 'Invalid account type.';
-      } elseif ($lname === '') {
-        $errorMsg = 'Last name is required for new accounts.';
-      } elseif (!preg_match("/^[a-zA-Z\s'-]+$/", $lname)) {
-        $errorMsg = 'Last name contains invalid characters.';
-      } elseif ($fname !== '' && !preg_match("/^[a-zA-Z\s'-]+$/", $fname)) {
-        $errorMsg = 'First name contains invalid characters.';
-      } elseif ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errorMsg = 'A valid email is required for new accounts.';
-      } elseif ($password === '') {
-        $errorMsg = 'Password is required for new accounts.';
-      } elseif (!preg_match('/[a-z]/', $password) || !preg_match('/[A-Z]/', $password) || !preg_match('/[0-9]/', $password) || strlen($password) < 8) {
-        $errorMsg = 'New account password must include uppercase, lowercase, number, and at least 8 characters.';
+      if (!empty($validationResult['errors'])) {
+        $errorMsg = implode("\n", $validationResult['errors']);
       } else {
         $checkStmt = $pdo->prepare(
           "SELECT 'customers' AS source FROM customers WHERE email = :email
@@ -82,7 +198,6 @@ try {
           $errorMsg = 'An account with this email already exists.';
         } else {
           $table = $accountType === 'staff' ? 'staff' : 'customers';
-          $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
           $insertAccountStmt = $pdo->prepare(
             "INSERT INTO $table (fname, lname, email, password) VALUES (:fname, :lname, :email, :password)"
           );
@@ -90,7 +205,7 @@ try {
             ':fname' => $fname !== '' ? $fname : null,
             ':lname' => $lname,
             ':email' => $email,
-            ':password' => $hashedPassword,
+            ':password' => $validationResult['password_hash'],
           ]);
           $successMsg = ucfirst($accountType) . ' account created successfully.';
           $accountFormData = [
@@ -285,6 +400,69 @@ $currentProductSpecValuesJson = json_encode($productFormData['spec_values'], JSO
   <meta name="description" content="Staff area for OVERCLOCK/TECH.">
   <title>OVERCLOCK/TECH — Staff</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .staff-file-picker {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.4rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      background: rgba(10, 12, 20, 0.82);
+    }
+
+    .staff-file-display {
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      padding: 0.75rem 0.85rem;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    .staff-file-display:focus {
+      outline: none;
+    }
+
+    .staff-file-trigger {
+      flex: 0 0 auto;
+      border: 0;
+      border-radius: 10px;
+      padding: 0.85rem 1.2rem;
+      background: linear-gradient(135deg, #f0445f 0%, #ff7a3d 100%);
+      color: #fff;
+      font: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .staff-file-trigger:hover {
+      filter: brightness(1.05);
+    }
+
+    .staff-file-trigger:focus-visible,
+    .staff-file-picker:focus-within {
+      outline: 2px solid rgba(255, 122, 61, 0.45);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 640px) {
+      .staff-file-picker {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .staff-file-trigger {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -305,7 +483,7 @@ $currentProductSpecValuesJson = json_encode($productFormData['spec_values'], JSO
     <?php endif; ?>
 
     <?php if (!empty($errorMsg)): ?>
-      <div class="error-box" role="alert"><?php echo htmlspecialchars($errorMsg); ?></div>
+      <div class="error-box" role="alert"><?php echo nl2br(htmlspecialchars($errorMsg)); ?></div>
     <?php endif; ?>
 
       <section class="staff-section" aria-labelledby="create-tools-heading">
@@ -345,6 +523,11 @@ $currentProductSpecValuesJson = json_encode($productFormData['spec_values'], JSO
             <div class="auth-form-group">
               <label for="staff-password" class="auth-form-label">Password</label>
               <input class="auth-form-input" type="password" id="staff-password" name="password" placeholder="Enter password" required>
+            </div>
+
+            <div class="auth-form-group">
+              <label for="staff-password-confirm" class="auth-form-label">Confirm Password</label>
+              <input class="auth-form-input" type="password" id="staff-password-confirm" name="password_confirm" placeholder="Confirm password" required>
             </div>
 
             <button type="submit" class="btn-auth">
@@ -395,7 +578,14 @@ $currentProductSpecValuesJson = json_encode($productFormData['spec_values'], JSO
 
             <div class="auth-form-group">
               <label for="product-image-file" class="auth-form-label">Product Image</label>
-              <input class="auth-form-input" type="file" id="product-image-file" name="image_file" accept=".jpg,.jpeg,.png,.gif,.webp" required>
+              <div class="staff-file-picker">
+                <input class="auth-form-input staff-file-display" type="text" id="product-image-display" placeholder="Choose product image" value="" readonly>
+                <button type="button" class="staff-file-trigger" id="product-image-file-trigger">
+                  <span>Browse</span>
+                </button>
+              </div>
+              <input type="file" id="product-image-file" name="image_file" accept=".jpg,.jpeg,.png,.gif,.webp" required style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
+              <p class="staff-field-note">Accepted formats: JPG, JPEG, PNG, GIF, WEBP.</p>
             </div>
 
             <button type="submit" class="btn-auth">
@@ -488,9 +678,23 @@ $currentProductSpecValuesJson = json_encode($productFormData['spec_values'], JSO
     var currentSpecValues = <?php echo $currentProductSpecValuesJson ?: '{}'; ?>;
     var categorySelect = document.getElementById('category_id');
     var specFieldsContainer = document.getElementById('product-spec-fields');
+    var imageInput = document.getElementById('product-image-file');
+    var imageDisplay = document.getElementById('product-image-display');
+    var imageTrigger = document.getElementById('product-image-file-trigger');
 
     if (!categorySelect || !specFieldsContainer) {
       return;
+    }
+
+    if (imageInput && imageDisplay && imageTrigger) {
+      imageTrigger.addEventListener('click', function () {
+        imageInput.click();
+      });
+
+      imageInput.addEventListener('change', function () {
+        var selectedFile = imageInput.files && imageInput.files.length ? imageInput.files[0].name : '';
+        imageDisplay.value = selectedFile;
+      });
     }
 
     function renderSpecFields() {
