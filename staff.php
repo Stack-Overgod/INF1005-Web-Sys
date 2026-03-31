@@ -401,6 +401,9 @@ $currentProductSpecValuesJson = json_encode($productFormData['spec_values'], JSO
   <title>OVERCLOCK/TECH — Staff</title>
   <link rel="stylesheet" href="css/style.css">
   <style>
+    .btn-primary {
+      border-color: #007bff;
+    }
     .staff-file-picker {
       display: flex;
       align-items: center;
