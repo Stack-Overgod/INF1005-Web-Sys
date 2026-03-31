@@ -74,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
 
   <main class="products-page">
 
+    <h1>Browse Our Products</h1>
     <!-- Category filter buttons -->
     <div class="category-filters">
       <a href="products.php" class="filter-btn <?= !$selected_category ? 'active' : '' ?>">All</a>
@@ -94,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
         <div class="product-card">
           <a href="product.php?id=<?= $product['product_id'] ?>" style="text-decoration: none;">
             <img src="images/<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>">
-            <h3><?= htmlspecialchars($product['name']) ?></h3>
+            <h2><?= htmlspecialchars($product['name']) ?></h2>
             <p><?= htmlspecialchars($product['description']) ?></p>
             <p class="price">$<?= number_format($product['price'], 2) ?></p>
           </a>
