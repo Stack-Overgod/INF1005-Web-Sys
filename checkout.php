@@ -26,6 +26,7 @@ $stmt = $pdo->prepare("SELECT p.product_id, p.name, p.price, ci.quantity FROM ca
 $stmt->execute([$user_id]);
 $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// Fetch user info for prefilling the form based on role
 $user_role = $_SESSION['role'] ?? 'customer';
 if ($user_role === 'staff') {
     $stmt = $pdo->prepare("SELECT fname, lname, email FROM staff WHERE staff_id = ?");
@@ -44,19 +45,24 @@ $total_amt = $subtotal + $shipping_fee;
 
 $error = '';
 
+// Handle Checkout Trigger
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
     if ($total_amt >= 0.50) {
         try {
+            // --- PREPARE PENDING ORDER in Session ---
+            // Instead of saving now, we save it on ordersuccess.php after Stripe redirect
             $_SESSION['pending_order_data'] = [
                 'total_price'  => $total_amt,
                 'full_address' => $_POST['address'] . ", " . $_POST['unit_no'] . " SG " . $_POST['zip'],
                 'items'        => $cart_items
             ];
 
+            // Clear the checkout flag
             unset($_SESSION['can_checkout']);
 
+            // --- STRIPE PREPARATION ---
             Stripe::setApiKey($config['STRIPE_API_KEY']); // Intentionally left out api key - the repo is still public btw
-
+            // Build Line Items for Stripe
             $stripe_line_items = [];
             foreach ($cart_items as $item) {
                 $stripe_line_items[] = [
@@ -107,15 +113,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OVERCLOCK/TECH — Checkout</title>
-    <meta name="description" content="Confirm you order information.">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
 
@@ -139,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                     <span class="badge badge-secondary badge-pill"><?php echo count($cart_items); ?></span>
                 </h2>
                 <div class="table-responsive">
-                    <table class="table table-striped table-cyber text-white mb-3">
+                    <table class="table table-striped text-white mb-3">
                         <thead>
                             <tr>
                                 <th>Product</th>
@@ -150,28 +151,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                             <?php foreach ($cart_items as $product): ?>
                             <tr>
                                 <td>
-                                    <div class="text-white"><strong><?php echo htmlspecialchars($product['name']); ?></strong></div>
+                                    <div><?php echo htmlspecialchars($product['name']); ?></div>
                                     <small class="text-grey">Quantity: <?php echo $product['quantity']; ?></small>
                                 </td>
                                 <td class="text-right align-middle text-grey">$<?php echo number_format($product['price'] * $product['quantity'], 2); ?></td>
                             </tr>
                             <?php endforeach; ?>
                             <tr>
-                                <td class="text-muted">Subtotal (SGD)</td>
+                                <td>Subtotal (SGD)</td>
                                 <td class="text-right"><strong class="text-white">$<?php echo number_format($subtotal, 2); ?></strong></td>
                             </tr>
                             <tr>
-                                <td class="text-muted">Shipping (SGD)</td>
+                                <td>Shipping (SGD)</td>
                                 <td class="text-right"><strong class="text-white">$<?php echo number_format($shipping_fee, 2); ?></strong></td>
                             </tr>
-                            <tr style="background: rgba(0, 229, 255, 0.05);">
-                                <td class="text-white"><strong>Total (SGD)</strong></td>
-                                <td class="text-right"><strong class="text-neon" style="font-size: 1.1rem;">$<?php echo number_format($total_amt, 2); ?></strong></td>
+                            <tr>
+                                <td>Total (SGD)</td>
+                                <td class="text-right"><strong class="text-neon">$<?php echo number_format($total_amt, 2); ?></strong></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-
             </div>
 
             <div class="col-md-7 order-md-1">

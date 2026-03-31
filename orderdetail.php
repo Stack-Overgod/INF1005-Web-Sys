@@ -60,18 +60,13 @@ $order_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OVERCLOCK/TECH — Invoice Details</title>
-    <meta name="description" content="OVERCLOCK/TECH — Premium gaming hardware. Ready-to-ship gaming PCs, laptops, keyboards, mice and more.">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/style.css">  
+    <link rel="stylesheet" href="css/style.css">
+    </style>
 </head>
 <body>
 
@@ -85,7 +80,7 @@ $order_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         <?php endif; ?>
         <div class="text-right mb-4">
-            <button onclick="window.print()" class="btn btn-info btn-sm btn-print">
+            <button onclick="window.print()" class="btn btn-outline-info btn-sm btn-print">
                 <i class="fa fa-print mr-2"></i>Print Invoice
             </button>
         </div>

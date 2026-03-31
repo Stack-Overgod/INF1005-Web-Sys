@@ -47,16 +47,11 @@ foreach ($orders as &$order) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="OVERCLOCK/TECH — View your order history and track your latest gaming gear.">
     <title>OVERCLOCK/TECH — My Orders</title>
-    <meta name="description" content="OVERCLOCK/TECH — View your order history and track your latest gaming gear.">    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/style.css">  
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -111,7 +106,7 @@ foreach ($orders as &$order) {
                         <div class="text-right d-flex flex-column align-items-end">
                             <span class="total-label">Total Amount</span>
                             <span class="total-amount mb-2">$<?= number_format($order['total_price'], 2) ?></span>
-                            <a href="orderdetail.php?order_id=<?= $order['order_id'] ?><?= $is_admin_view ? '&client_id=' . $view_user_id : '' ?>" class="btn btn-info"> View Order</a>
+                            <a href="orderdetail.php?order_id=<?= $order['order_id'] ?><?= $is_admin_view ? '&client_id=' . $view_user_id : '' ?>" class="btn btn-outline-info"> View Order</a>
                         </div>
                     </div>
                 </div>
