@@ -1,7 +1,4 @@
 <?php
-// includes/nav.php — Shared Navigation
-// Set $activePage and $basePath before including.
-// Root pages: $basePath = '';  |  Forms pages: $basePath = '../';
 
 $activePage = $activePage ?? '';
 $basePath   = $basePath ?? '';
@@ -13,11 +10,9 @@ $navItems = [
   ['href' => $basePath . 'products.php?category=3',     'label' => 'Keyboard',   'key' => 'keyboard'],
   ['href' => $basePath . 'products.php?category=4',     'label' => 'Mouse',      'key' => 'mouse'],
   ['href' => $basePath . 'find-us.php',                 'label' => 'Find Us',    'key' => 'find-us'],
-  ['href' => 'partnership.php',             'label' => 'Partnership','key' => 'partnership'],
-
 ];
 
-// Cart item count (from session)
+// Cart item count 
 session_start_if_not_started();
 $cartCount = isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart'], 'qty')) : 0;
 
@@ -40,7 +35,7 @@ if ($isLoggedIn) {
 }
 ?>
 
-<nav class="navbar" aria-label="Main navigation">
+<nav class="navbar" role="navigation" aria-label="Main navigation">
   <!-- Brand -->
   <div class="nav-top">
     <a href="<?= $basePath ?>home.php" class="navbar-brand" aria-label="OVERCLOCK TECH Home">
@@ -50,7 +45,7 @@ if ($isLoggedIn) {
       <!-- Desktop Search -->
       <div class="search" id="searchBar">
       <form action="search.php" method="GET" id="searchForm">
-        <input class="search-input" type="search" name="q" placeholder="Search Products">
+        <input class="search-input" type="search" name="q" placeholder="Search Products" />
       </form>
       <button class="nav-icon-btn" id="searchBtn" aria-label="Search">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -137,7 +132,7 @@ if ($isLoggedIn) {
           </svg>
         </button>
         <form action="search.php" method="GET" id="mobileSearchForm" class="mobile-search-form">
-          <input class="search-input" type="search" name="q" placeholder="Search Products" autofocus>
+          <input class="search-input" type="search" name="q" placeholder="Search Products" autofocus/>
         </form>
       </div>
 

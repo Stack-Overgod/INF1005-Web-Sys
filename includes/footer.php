@@ -1,10 +1,9 @@
 <?php
 // Include at the bottom of every page EXCEPT the landing page
-// $basePath should be set before including this file
 $basePath = $basePath ?? '';
 ?>
 
-<footer class="site-footer">
+<footer class="site-footer" role="contentinfo">
   <div class="footer-grid">
 
     <!-- Brand column -->
@@ -17,7 +16,7 @@ $basePath = $basePath ?? '';
 
     <!-- Products column -->
     <div class="footer-col">
-      <h2>Products</h2>
+      <h4>Products</h4>
       <ul>
         <li><a href="<?= $basePath ?>products.php?cat=gaming-pc">Gaming PCs</a></li>
         <li><a href="<?= $basePath ?>products.php?cat=laptop">Laptops</a></li>
@@ -28,23 +27,17 @@ $basePath = $basePath ?? '';
 
     <!-- Company column -->
     <div class="footer-col">
-      <h2>Company</h2>
+      <h4>Company</h4>
       <ul>
         <li><a href="<?= $basePath ?>about.php">About Us</a></li>
         <li><a href="<?= $basePath ?>find-us.php">Find Us</a></li>
-        <li><a href="<?= $basePath ?>partnership.php">Partnerships</a></li>
-        <li><a href="<?= $basePath ?>careers.php">Careers</a></li>
       </ul>
     </div>
 
-    <!-- Support column -->
     <div class="footer-col">
-      <h2>Support</h2>
+      <h4>Support</h4>
       <ul>
         <li><a href="<?= $basePath ?>faq.php">FAQ</a></li>
-        <li><a href="<?= $basePath ?>shipping.php">Shipping</a></li>
-        <li><a href="<?= $basePath ?>returns.php">Returns</a></li>
-        <li><a href="<?= $basePath ?>contact.php">Contact</a></li>
       </ul>
     </div>
 
