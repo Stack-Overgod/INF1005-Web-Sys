@@ -280,18 +280,27 @@ $currentProductSpecValuesJson = json_encode($productFormData['spec_values'], JSO
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Staff area for OVERCLOCK/TECH.">
-  <title>OVERCLOCK/TECH — Staff</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OVERCLOCK/TECH — Staff</title>
+    <meta name="description" content="Staff page for OVERCLOCK/TECH.">    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/style.css">  
 </head>
 <body>
 
 <?php include 'includes/nav.php'; ?>
 
-<main id="main-content" class="auth-page staff-page">
-  <div class="auth-card staff-card">
+<main id="main-content" class="page-wrapper staff-page">
+  <div class="page-container page-container-wide">
+    <div class="auth-card staff-card">
+
     <div class="result-icon result-success" aria-hidden="true">
       <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M20 6L9 17l-5-5"/>
@@ -414,31 +423,32 @@ $currentProductSpecValuesJson = json_encode($productFormData['spec_values'], JSO
             <thead>
               <tr>
                 <th>Type</th>
-                <th>ID</th>
+                <th class="col-id">ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
-                <th>Created</th>
-                <th>Actions</th>
+                <th class="col-date">Created</th>
+                <th class="col-actions">Actions</th>
               </tr>
             </thead>
             <tbody>
               <?php foreach ($accountRows as $account): ?>
                 <tr>
                   <td><span class="staff-badge staff-badge-<?php echo htmlspecialchars($account['account_type']); ?>"><?php echo htmlspecialchars(ucfirst($account['account_type'])); ?></span></td>
-                  <td><?php echo (int) $account['account_id']; ?></td>
+                  <td class="col-id"><?php echo (int) $account['account_id']; ?></td>
                   <td><?php echo htmlspecialchars($account['fname'] ?? ''); ?></td>
                   <td><?php echo htmlspecialchars($account['lname']); ?></td>
                   <td><?php echo htmlspecialchars($account['email']); ?></td>
-                  <td><?php echo htmlspecialchars($account['created_at']); ?></td>
-                  <td>
+                  <td class="col-date"><?php echo htmlspecialchars($account['created_at']); ?></td>
+                  <td class="col-actions">
                     <?php if ($account['account_type'] === 'customer'): ?>
-                      <a href="orders.php?client_id=<?php echo (int)$account['account_id']; ?>" class="btn btn-primary btn-sm"> <i class="fa fa-shopping-basket" aria-hidden="true"></i> View Orders</a>
+                      <a href="orders.php?client_id=<?php echo (int)$account['account_id']; ?>" class="btn btn-primary btn-sm"> <i class="fa fa-shopping-basket" aria-hidden="true"></i> Orders</a>
                     <?php endif; ?>
                   </td>
                 </tr>
               <?php endforeach; ?>
             </tbody>
+
           </table>
         </div>
       </section>
@@ -452,31 +462,33 @@ $currentProductSpecValuesJson = json_encode($productFormData['spec_values'], JSO
           <table class="staff-table">
             <thead>
               <tr>
-                <th>ID</th>
+                <th class="col-id">ID</th>
                 <th>Category</th>
                 <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Stock</th>
+                <th class="col-desc">Description</th>
+                <th class="col-price">Price</th>
+                <th class="col-stock">Stock</th>
                 <th>Image</th>
               </tr>
             </thead>
             <tbody>
               <?php foreach ($productRows as $product): ?>
                 <tr>
-                  <td><?php echo (int) $product['product_id']; ?></td>
+                  <td class="col-id"><?php echo (int) $product['product_id']; ?></td>
                   <td><?php echo htmlspecialchars($product['category_name'] ?? 'Uncategorized'); ?></td>
-                  <td><?php echo htmlspecialchars($product['name']); ?></td>
-                  <td><?php echo htmlspecialchars($product['description'] ?? ''); ?></td>
-                  <td>$<?php echo number_format((float) $product['price'], 2); ?></td>
-                  <td><?php echo (int) $product['stock']; ?></td>
+                  <td><strong><?php echo htmlspecialchars($product['name']); ?></strong></td>
+                  <td class="col-desc" title="<?php echo htmlspecialchars($product['description'] ?? ''); ?>"><?php echo htmlspecialchars($product['description'] ?? ''); ?></td>
+                  <td class="col-price">$<?php echo number_format((float) $product['price'], 2); ?></td>
+                  <td class="col-stock"><?php echo (int) $product['stock']; ?></td>
                   <td class="staff-mono"><?php echo htmlspecialchars($product['image'] ?? ''); ?></td>
                 </tr>
               <?php endforeach; ?>
             </tbody>
+
           </table>
         </div>
       </section>
+    </div>
   </div>
 </main>
 
