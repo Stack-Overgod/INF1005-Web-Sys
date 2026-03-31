@@ -174,7 +174,7 @@ $activePage = 'find-us';
     }
 
     .badge-mrt { background: var(--neon); color: var(--bg-black); }
-    .badge-bus { background: var(--neon2); color: #fff; }
+    .badge-bus { background: var(--neon2); color: #000000; }
     .badge-car { background: #ffd700; color: var(--bg-black); }
 
     .directions-btn {

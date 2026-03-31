@@ -39,7 +39,7 @@ $activePage = 'about';
         </div>
       </div>
 
-      <aside class="about-hero-panel" aria-label="Company highlights">
+      <div class="about-hero-panel" role="group" aria-label="Company highlights">
         <div class="about-panel-label">Performance Snapshot</div>
         <div class="about-panel-stat">
           <strong>50K+</strong>
@@ -53,7 +53,7 @@ $activePage = 'about';
           <strong>12+</strong>
           <span>Industry Awards</span>
         </div>
-      </aside>
+      </div>
     </div>
   </section>
 

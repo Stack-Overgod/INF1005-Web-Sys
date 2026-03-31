@@ -17,18 +17,18 @@ $basePath = $basePath ?? '';
 
     <!-- Products column -->
     <div class="footer-col">
-      <h3>Products</h3>
+      <h2>Products</h2>
       <ul>
         <li><a href="<?= $basePath ?>products.php?cat=gaming-pc">Gaming PCs</a></li>
         <li><a href="<?= $basePath ?>products.php?cat=laptop">Laptops</a></li>
         <li><a href="<?= $basePath ?>products.php?cat=keyboard">Keyboards</a></li>
-        <li><a href="<?= $basePath ?>products.php?cat=mouse">Mouse</a></li>
+        <li><a href="<?= $basePath ?>products.php?cat=mouse">Mice</a></li>
       </ul>
     </div>
 
     <!-- Company column -->
     <div class="footer-col">
-      <h3>Company</h3>
+      <h2>Company</h2>
       <ul>
         <li><a href="<?= $basePath ?>about.php">About Us</a></li>
         <li><a href="<?= $basePath ?>Findus.php">Find Us</a></li>
@@ -36,7 +36,7 @@ $basePath = $basePath ?? '';
     </div>
 
     <div class="footer-col">
-      <h3>Support</h3>
+      <h2>Support</h2>
       <ul>
         <li><a href="<?= $basePath ?>faq.php">FAQ</a></li>
       </ul>
