@@ -308,33 +308,53 @@ a, a:hover { text-decoration: none; color: inherit; }
 .site-footer {
   background: var(--bg-dark);
   border-top: 1px solid var(--border);
-  padding: 3rem 2rem 1.5rem;
+  padding: 4rem 5vw 2rem;
 }
+
+
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 2.5rem;
-  max-width: 1200px;
-  margin: 0 auto 2.5rem;
+  grid-template-columns: 2fr 1fr 1fr 1fr; /* Keep Brand wider for better fit */
+  gap: clamp(2rem, 5vw, 8rem);
+  width: 100%;
+  margin: 0 auto 3rem;
+  align-items: start;
 }
+
+.footer-brand .navbar-brand {
+  margin-bottom: 1.5rem; /* Match h3 header spacing exactly for alignment */
+  justify-content: flex-start;
+  height: auto; /* Allow the content to define height for better baseline alignment */
+  line-height: 1;
+}
+
+
+
+
+
+
 
 .footer-brand p {
   color: var(--text-grey);
-  font-size: 0.9rem;
-  margin-top: 0.75rem;
-  line-height: 1.7;
-  max-width: 280px;
+  font-size: 0.95rem;
+  margin-top: 1.25rem;
+  line-height: 1.8;
+  max-width: 420px;
 }
 
-.footer-col h2 {
+
+.footer-col h3 {
   font-family: var(--font-display);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   letter-spacing: 0.15em;
   color: var(--neon);
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   text-transform: uppercase;
+  line-height: 1;
 }
+
+
 
 .footer-col ul { list-style: none; }
 .footer-col ul li { margin-bottom: 0.5rem; }
@@ -346,8 +366,12 @@ a, a:hover { text-decoration: none; color: inherit; }
 .footer-col ul a:hover { color: var(--neon); }
 
 .footer-bottom {
-  max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
+
+
+
+
   padding-top: 1.5rem;
   border-top: 1px solid var(--border);
   display: flex;
