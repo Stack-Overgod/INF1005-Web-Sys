@@ -48,59 +48,87 @@ $error = '';
 // Handle Checkout Trigger
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
     if ($total_amt >= 0.50) {
-        try {
-            // --- PREPARE PENDING ORDER in Session ---
-            // Instead of saving now, we save it on ordersuccess.php after Stripe redirect
-            $_SESSION['pending_order_data'] = [
-                'total_price'  => $total_amt,
-                'full_address' => $_POST['address'] . ", " . $_POST['unit_no'] . " SG " . $_POST['zip'],
-                'items'        => $cart_items
-            ];
-
-            // Clear the checkout flag
-            unset($_SESSION['can_checkout']);
-
-            // --- STRIPE PREPARATION ---
-            Stripe::setApiKey($config['STRIPE_API_KEY']); // Intentionally left out api key - the repo is still public btw
-            // Build Line Items for Stripe
-            $stripe_line_items = [];
+        // --- 1. SERVER-SIDE SANITIZATION & VALIDATION ---
+        $address = htmlspecialchars(strip_tags(trim($_POST['address'] ?? '')));
+        $unit_no = htmlspecialchars(strip_tags(trim($_POST['unit_no'] ?? '')));
+        $zip = htmlspecialchars(strip_tags(trim($_POST['zip'] ?? '')));
+        
+        if (empty($address) || empty($zip) || !preg_match('/^[0-9]{6}$/', $zip)) {
+            $error = 'Please provide a valid address and a 6-digit zip code.';
+        } else {
+            // --- 2. PRE-PAYMENT STOCK CHECK ---
+            $stock_error = false;
+            $out_of_stock_items = [];
             foreach ($cart_items as $item) {
-                $stripe_line_items[] = [
-                    'price_data' => [
-                        'currency' => 'sgd',
-                        'unit_amount' => (int)round($item['price'] * 100),
-                        'product_data' => [
-                            'name' => $item['name'],
-                        ],
-                    ],
-                    'quantity' => $item['quantity'],
-                ];
+                $stmt_check = $pdo->prepare("SELECT stock FROM products WHERE product_id = ?");
+                $stmt_check->execute([$item['product_id']]);
+                $current_stock = $stmt_check->fetchColumn();
+                
+                if ($current_stock === false || $current_stock < $item['quantity']) {
+                    $stock_error = true;
+                    $out_of_stock_items[] = $item['name'];
+                }
             }
             
-            // Add Shipping Fee as a line item
-            $stripe_line_items[] = [
-                'price_data' => [
-                    'currency' => 'sgd',
-                    'unit_amount' => (int)round($shipping_fee * 100),
-                    'product_data' => [
-                        'name' => 'Shipping Fee',
-                    ],
-                ],
-                'quantity' => 1,
-            ];
-
-            $session = Session::create([
-                'payment_method_types' => ['card', 'grabpay', 'paynow', 'alipay'],
-                'line_items' => $stripe_line_items,
-                'mode' => 'payment',
-                'success_url' => 'http://35.212.238.192/ordersuccess.php?session_id={CHECKOUT_SESSION_ID}',
-                'cancel_url' => 'http://35.212.238.192/checkout.php',
-            ]);
-
-            header("Location: " . $session->url);
-            exit();
-        } catch (Exception $e) {
-            $error = 'Stripe Error: ' . $e->getMessage();
+            if ($stock_error) {
+                $error = 'Sorry, the following items do not have enough stock: ' . htmlspecialchars(implode(', ', $out_of_stock_items)) . '. Please update your cart.';
+            } else {
+                try {
+                    // --- PREPARE PENDING ORDER in Session ---
+                    // Instead of saving now, we save it on ordersuccess.php after Stripe redirect
+                    $_SESSION['pending_order_data'] = [
+                        'total_price'  => $total_amt,
+                        'full_address' => $address . (!empty($unit_no) ? ", " . $unit_no : "") . " SG " . $zip,
+                        'items'        => $cart_items
+                    ];
+        
+                    // Clear the checkout flag
+                    unset($_SESSION['can_checkout']);
+        
+                    // --- STRIPE PREPARATION ---
+                    Stripe::setApiKey($config['STRIPE_API_KEY']); // Intentionally left out api key - the repo is still public btw
+                    // Build Line Items for Stripe
+                    $stripe_line_items = [];
+                    foreach ($cart_items as $item) {
+                        $stripe_line_items[] = [
+                            'price_data' => [
+                                'currency' => 'sgd',
+                                'unit_amount' => (int)round($item['price'] * 100),
+                                'product_data' => [
+                                    'name' => $item['name'],
+                                ],
+                            ],
+                            'quantity' => $item['quantity'],
+                        ];
+                    }
+                    
+                    // Add Shipping Fee as a line item
+                    $stripe_line_items[] = [
+                        'price_data' => [
+                            'currency' => 'sgd',
+                            'unit_amount' => (int)round($shipping_fee * 100),
+                            'product_data' => [
+                                'name' => 'Shipping Fee',
+                            ],
+                        ],
+                        'quantity' => 1,
+                    ];
+        
+                    $session = Session::create([
+                        'payment_method_types' => ['card', 'grabpay', 'paynow', 'alipay'],
+                        'line_items' => $stripe_line_items,
+                        'mode' => 'payment',
+                        'success_url' => 'http://35.212.238.192/ordersuccess.php?session_id={CHECKOUT_SESSION_ID}',
+                        'cancel_url' => 'http://35.212.238.192/checkout.php',
+                    ]);
+        
+                    header("Location: " . $session->url);
+                    exit();
+                } catch (Exception $e) {
+                    error_log('Stripe Error: ' . $e->getMessage());
+                    $error = 'A payment processing error occurred. Please try again later.';
+                }
+            }
         }
     } else {
         $error = 'Your cart is empty or the amount is too low.';

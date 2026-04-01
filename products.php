@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
           </a>
           <form method="POST" action="products.php<?= $selected_category ? '?category=' . $selected_category : '' ?>">
             <input type="hidden" name="product_id" value="<?= $product['product_id'] ?>">
-            <button type="submit" name="add_to_cart" class="add-to-cart">Add to Cart</button>
+            <button type="submit" name="add_to_cart" class="btn-secondary" style="width: 100%; border-radius: 8px;">Add to Cart</button>
           </form>
         </div>
         <?php endforeach; ?>
