@@ -179,7 +179,7 @@ for ($i = 0; $i < $empty_stars; $i++) {
 
         <form method="POST" action="product.php?id=<?= $product['product_id'] ?>">
           <input type="hidden" name="product_id" value="<?= $product['product_id'] ?>">
-          <button type="submit" name="add_to_cart" class="add-to-cart">Add to Cart</button>
+          <button type="submit" name="add_to_cart" class="btn-secondary" style="width: 100%; max-width: 300px; border-radius: 8px;">Add to Cart</button>
         </form>
 
         <!-- Specifications -->

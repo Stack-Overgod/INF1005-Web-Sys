@@ -71,7 +71,8 @@ if (isset($_SESSION['pending_order_data']) && isset($_GET['session_id'])) {
         if ($pdo->inTransaction()) {
             $pdo->rollBack();
         }
-        $error = "Error finalizing order: " . $e->getMessage();
+        error_log("Order Finalization Error: " . $e->getMessage());
+        $error = "A critical error occurred while processing your order. Please try again or contact us.";
     }
 } else {
     // If no session data, check if they are just visiting (handled by view)
