@@ -283,7 +283,7 @@ for ($i = 0; $i < $empty_stars; $i++) {
       </div>
     </div>
 
-  </main>
+  </main><?php include 'includes/footer.php'; ?>
 
 </body>
 </html>
