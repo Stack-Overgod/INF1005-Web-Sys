@@ -61,13 +61,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
   <?php include 'includes/nav.php'; ?>
 
   <?php if (isset($_SESSION['cart_success'])): ?>
-    <div class="container mt-3">
-      <div class="alert alert-success alert-dismissible fade show" role="alert" style="background: rgba(0, 255, 150, 0.1); border: 1px solid var(--neon-green); color: var(--neon-green); position: relative; z-index: 1000;">
-        <strong>Success!</strong> Item added to cart.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color: var(--neon-green); opacity: 1;">
-          <span aria-hidden="true">&times;</span>
-        </button>
+    <div class="page-alert" id="cart-alert">
+      <div class="alert-content">
+        <i class="fa-solid fa-circle-check"></i>
+        <span><strong>Success!</strong> Item added to cart successfully.</span>
       </div>
+      <button type="button" class="close-alert" onclick="this.parentElement.remove()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
     <?php unset($_SESSION['cart_success']); ?>
   <?php endif; ?>

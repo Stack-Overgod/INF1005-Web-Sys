@@ -140,14 +140,21 @@ for ($i = 0; $i < $empty_stars; $i++) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= htmlspecialchars($product['name']) ?></title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <?php include 'includes/nav.php'; ?>
 
   <?php if (isset($_SESSION['cart_success'])): ?>
-    <div style="padding: 15px; margin: 20px auto; max-width: 1200px; background: rgba(0, 255, 150, 0.1); border: 1px solid var(--neon-green, #00ff96); color: var(--neon-green, #00ff96); text-align: center; border-radius: 4px;">
-      <strong>Success!</strong> Item added to cart.
+    <div class="page-alert" id="cart-alert">
+      <div class="alert-content">
+        <i class="fa-solid fa-circle-check"></i>
+        <span><strong>Success!</strong> Item added to cart successfully.</span>
+      </div>
+      <button type="button" class="close-alert" onclick="this.parentElement.remove()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
     <?php unset($_SESSION['cart_success']); ?>
   <?php endif; ?>
