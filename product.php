@@ -44,7 +44,7 @@ if (isset($_SESSION['user_id']) && $_SESSION['role'] === 'customer') {
   $stmt = $pdo->prepare("
     SELECT COUNT(*) FROM order_items oi
     JOIN order_info o ON oi.order_id = o.order_id
-    WHERE o.user_id = ? AND oi.product_id = ? AND o.status = 'delivered'
+    WHERE o.user_id = ? AND oi.product_id = ? AND o.status = 'Success'
   ");
   $stmt->execute([$customer_id, $product_id]);
   $can_review = $stmt->fetchColumn() > 0;
