@@ -31,7 +31,7 @@ $basePath = $basePath ?? '';
       <h2>Company</h2>
       <ul>
         <li><a href="<?= $basePath ?>about.php">About Us</a></li>
-        <li><a href="<?= $basePath ?>Findus.php">Find Us</a></li>
+        <li><a href="<?= $basePath ?>findus.php">Find Us</a></li>
       </ul>
     </div>
 

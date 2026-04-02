@@ -142,6 +142,40 @@ for ($i = 0; $i < $empty_stars; $i++) {
   <title><?= htmlspecialchars($product['name']) ?></title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .add-to-cart {
+      margin-top: auto;
+      padding: 8px;
+      border-radius: 8px;
+      border: 2px solid var(--neon);
+      background: transparent;
+      color: var(--neon);
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .add-to-cart::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--neon);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+      z-index: 0;
+    }
+
+    .add-to-cart:hover::before { transform: scaleX(1); }
+    .add-to-cart:hover { color: var(--bg-black); box-shadow: var(--neon-glow); }
+    .add-to-cart span, .add-to-cart svg { position: relative; z-index: 1; }
+  </style>
 </head>
 <body>
   <?php include 'includes/nav.php'; ?>
@@ -179,7 +213,7 @@ for ($i = 0; $i < $empty_stars; $i++) {
 
         <form method="POST" action="product.php?id=<?= $product['product_id'] ?>">
           <input type="hidden" name="product_id" value="<?= $product['product_id'] ?>">
-          <button type="submit" name="add_to_cart" class="btn-secondary" style="width: 100%; max-width: 300px; border-radius: 8px;">Add to Cart</button>
+          <button type="submit" name="add_to_cart" class="btn-secondary" style="width: 100%; max-width: 300px; border-radius: 8px;"><span>Add to Cart</span></button>
         </form>
 
         <!-- Specifications -->
