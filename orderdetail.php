@@ -72,7 +72,7 @@ $order_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?php include 'includes/nav.php'; ?>
 
-<main id="main-content" class="page-wrapper" role="main">
+<main id="main-content" class="page-wrapper">
     <div class="page-container page-container-narrow">
         <?php if ($is_admin_view): ?>
             <div class="alert alert-warning text-center" role="alert" style="margin-bottom: 2rem; border-radius: 8px;">
@@ -90,7 +90,7 @@ $order_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <h1 class="invoice-title">INVOICE</h1>
                 <div class="info-content mt-2">OVERCLOCK<span style="color:var(--neon)">/</span>TECH</div>
             </div>
-            <div class="invoice-meta" aria-label="Invoice details">
+            <div class="invoice-meta" role="group" aria-label="Invoice details">
                 <div>Order #ORD-<?= str_pad($order['order_id'], 6, '0', STR_PAD_LEFT) ?></div>
                 <div>Date: <time datetime="<?= date('c', strtotime($order['timestamp'])) ?>"><?= date('d M Y, g:i a', strtotime($order['timestamp'])) ?></time></div>
                 <div>Payment: <?= htmlspecialchars($order['payment_method']) ?></div>

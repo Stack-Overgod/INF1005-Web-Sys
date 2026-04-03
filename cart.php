@@ -72,7 +72,7 @@ $total_amt = $subtotal + $shipping_fee;
 
 <?php include 'includes/nav.php'; ?>
 
-<main id="main-content" class="page-wrapper" role="main">
+<main id="main-content" class="page-wrapper">
     <div class="page-container page-container-wide">
         <h1 class="section-title text-center mb-5"><span class="hi">YOUR</span> CART</h1>
 <?php if (!empty($cart_items)): ?>
@@ -94,7 +94,7 @@ $total_amt = $subtotal + $shipping_fee;
             </thead>
             <tbody>
                 <?php foreach ($cart_items as $product): 
-                    $subtotal = $product['price'] * $product['quantity'];
+                    $item_subtotal = $product['price'] * $product['quantity'];
                 ?>
                 <tr id="<?php echo $product['product_id']; ?>_row">
                     <td class="col-lg-1"><img style="width: 64px;height: 64px;" class="img-fluid"
@@ -120,7 +120,7 @@ $total_amt = $subtotal + $shipping_fee;
                             </select>
                         </div>
                     </td>
-                    <td id="subtotal" class="text-right">$<?php echo number_format($subtotal, 2); ?></td>
+                    <td id="subtotal_<?php echo $product['product_id']; ?>" class="text-right">$<?php echo number_format($subtotal, 2); ?></td>
                     <td class="text-right">
                         <button class="btn btn-sm btn-danger" id="<?php echo $product['product_id']; ?>_"
                             onclick="delete_item(this)" aria-label="Remove <?php echo htmlspecialchars($product['name']); ?> from cart"><i class="fa fa-trash" aria-hidden="true"></i> Delete Item  

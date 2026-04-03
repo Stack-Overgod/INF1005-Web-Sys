@@ -65,7 +65,7 @@ foreach ($orders as &$order) {
 
 <?php include 'includes/nav.php'; ?>
 
-<main id="main-content" class="page-wrapper" role="main">
+<main id="main-content" class="page-wrapper">
     <div class="page-container page-container-wide">
         <?php if ($is_admin_view): ?>
             <div class="alert alert-warning text-center" role="alert" style="margin-bottom: 2rem; border-radius: 8px;">

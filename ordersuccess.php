@@ -94,7 +94,7 @@ if (isset($_SESSION['pending_order_data']) && isset($_GET['session_id'])) {
 
 <?php include 'includes/nav.php'; ?>
 
-<main id="main-content" class="page-wrapper" role="main">
+<main id="main-content" class="page-wrapper">
     <div class="page-container page-container-narrow text-center">
         <?php if ($success): ?>
             <section role="status" aria-live="polite" aria-label="Order result">

@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
 <?php include 'includes/nav.php'; ?>
 
 
-<main id="main-content" class="page-wrapper" role="main">
+<main id="main-content" class="page-wrapper">
     <div class="page-container page-container-medium">
         <h1 class="section-title text-center mb-5"><span class="hi">CHECK</span>OUT</h1>
         
@@ -173,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
             <section class="col-md-5 order-md-2 mb-4" aria-label="Order summary">
                 <h2 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted">Your cart</span>
-                    <span class="badge badge-secondary badge-pill" aria-label="<?php echo count($cart_items); ?> items in cart"><?php echo count($cart_items); ?></span>
+                    <span class="badge badge-secondary badge-pill" role="status" aria-label="<?php echo count($cart_items); ?> items in cart"><?php echo count($cart_items); ?></span>
                 </h2>
                 <div class="table-responsive">
                     <table class="table table-striped text-white mb-3" aria-label="Order summary items">
@@ -216,32 +216,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="firstName">First name</label>
-                            <input type="text" class="form-control" id="firstName" name="first_name" value="<?= htmlspecialchars($user_info['fname']) ?>" required autocomplete="given-name" aria-required="true">
+                            <input type="text" class="form-control" id="firstName" name="first_name" value="<?= htmlspecialchars($user_info['fname']) ?>" required autocomplete="given-name">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="lastName">Last name</label>
-                            <input type="text" class="form-control" id="lastName" name="last_name" value="<?= htmlspecialchars($user_info['lname']) ?>" required autocomplete="family-name" aria-required="true">
+                            <input type="text" class="form-control" id="lastName" name="last_name" value="<?= htmlspecialchars($user_info['lname']) ?>" required autocomplete="family-name">
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($user_info['email']) ?>" placeholder="you@example.com" required autocomplete="email" aria-required="true">
+                        <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($user_info['email']) ?>" placeholder="you@example.com" required autocomplete="email">
                     </div>
 
                     <div class="mb-3">
                         <label for="address">Address</label>
-                        <input type="text" class="form-control" id="address" name="address" placeholder="1234 Main St" required autocomplete="street-address" aria-required="true">
+                        <input type="text" class="form-control" id="address" name="address" placeholder="1234 Main St" required autocomplete="address-line1">
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="unit_no">Unit No.</label>
-                            <input type="text" class="form-control" id="unit_no" name="unit_no" placeholder="#01-1234" required aria-required="true">
+                            <input type="text" class="form-control" id="unit_no" name="unit_no" placeholder="#01-1234" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="zip">Zip Code</label>
-                            <input type="text" class="form-control" id="zip" name="zip" placeholder="123456" required pattern="[0-9]{6}" autocomplete="postal-code" aria-required="true" aria-describedby="zipHelp">
+                            <input type="text" class="form-control" id="zip" name="zip" placeholder="123456" required pattern="[0-9]{6}" autocomplete="postal-code" aria-describedby="zipHelp">
                             <small id="zipHelp" class="sr-only">Enter a 6-digit zip code</small>
                         </div>
                     </div>
