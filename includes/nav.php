@@ -13,7 +13,7 @@ $navItems = [
   ['href' => $basePath . 'products.php?category=3',     'label' => 'Keyboard',   'key' => 'keyboard'],
   ['href' => $basePath . 'products.php?category=4',     'label' => 'Mouse',      'key' => 'mouse'],
   ['href' => $basePath . 'findus.php',                  'label' => 'Find Us',    'key' => 'find-us'],
-];
+  ];
 
 // Cart item count (from session)
 session_start_if_not_started();

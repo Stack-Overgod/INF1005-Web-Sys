@@ -94,20 +94,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_to_cart'])) {
 <body>
   <?php include 'includes/nav.php'; ?>
 
-  <?php if (isset($_SESSION['cart_success'])): ?>
-    <div class="page-alert" id="cart-alert">
-      <div class="alert-content">
-        <i class="fa-solid fa-circle-check"></i>
+  <main class="products-page">
+
+    <?php if (isset($_SESSION['cart_success'])): ?>
+      <div class="success-box" style="margin-bottom: 2rem;">
+        <i class="fa-solid fa-circle-check" style="margin-right: 8px;"></i>
         <span><strong>Success!</strong> Item added to cart successfully.</span>
       </div>
-      <button type="button" class="close-alert" onclick="this.parentElement.remove()" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <?php unset($_SESSION['cart_success']); ?>
-  <?php endif; ?>
-
-  <main class="products-page">
+      <?php unset($_SESSION['cart_success']); ?>
+    <?php endif; ?>
 
     <h1>Browse Our Products</h1>
     <!-- Category filter buttons -->
