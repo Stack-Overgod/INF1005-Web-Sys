@@ -72,19 +72,20 @@ $total_amt = $subtotal + $shipping_fee;
 
 <?php include 'includes/nav.php'; ?>
 
-<main id="main-content" class="page-wrapper">
+<main id="main-content" class="page-wrapper" role="main">
     <div class="page-container page-container-wide">
         <h1 class="section-title text-center mb-5"><span class="hi">YOUR</span> CART</h1>
 <?php if (!empty($cart_items)): ?>
+<section aria-label="Cart items">
 <div class="row">
     <div class="col-12">
-        <table class="table table-striped table-responsive text-white">
+        <table class="table table-striped table-responsive text-white" aria-label="Shopping cart items">
             <thead>
                 <tr>
                     <th scope="col">Product</th>
                     <th scope="col">Name</th>
-                    <th class="d-none"></th>
-                    <th class="d-none"></th>
+                    <th class="d-none" aria-hidden="true"></th>
+                    <th class="d-none" aria-hidden="true"></th>
                     <th scope="col" class="text-right">Price</th>
                     <th scope="col" class="text-center">Quantity</th>
                     <th scope="col" class="text-right">Sub-Total</th>
@@ -110,7 +111,7 @@ $total_amt = $subtotal + $shipping_fee;
 
                     <td class="justify-content-center">
                         <div class="input-group mb-12">
-                            <select title="Quantity" aria-label="Quantity" class="custom-select" id="<?php echo $product['product_id']; ?>" onchange="change_quantity(this)">
+                            <select title="Quantity for <?php echo htmlspecialchars($product['name']); ?>" aria-label="Quantity for <?php echo htmlspecialchars($product['name']); ?>" class="custom-select" id="qty_<?php echo $product['product_id']; ?>" onchange="change_quantity(this)">
                                 <?php for ($i = 1; $i <= 10; $i++): ?>
                                     <option value="<?php echo $i; ?>" <?php echo ($product['quantity'] == $i) ? 'selected' : ''; ?>>
                                         <?php echo $i; ?>
@@ -122,7 +123,7 @@ $total_amt = $subtotal + $shipping_fee;
                     <td id="subtotal" class="text-right">$<?php echo number_format($subtotal, 2); ?></td>
                     <td class="text-right">
                         <button class="btn btn-sm btn-danger" id="<?php echo $product['product_id']; ?>_"
-                            onclick="delete_item(this)"><i class="fa fa-trash"></i> Delete Item  
+                            onclick="delete_item(this)" aria-label="Remove <?php echo htmlspecialchars($product['name']); ?> from cart"><i class="fa fa-trash" aria-hidden="true"></i> Delete Item  
                         </button> 
                     </td>
                 </tr>
@@ -154,22 +155,25 @@ $total_amt = $subtotal + $shipping_fee;
             </tbody>
         </table>
     </div>
-    <div class="col mb-2">
+    <nav class="col mb-2" aria-label="Cart actions">
         <div class="row">
             <div class="col-sm-12 col-md-3 mr-auto">
-                <a href="products.php" class="btn btn-block btn-light">Continue Shopping</a>
+                <a href="products.php" class="btn btn-block btn-light" role="button">Continue Shopping</a>
             </div>
             <div class="col-sm-12 col-md-3 ml-auto">
-                <a href="checkout.php" class="btn btn-md btn-block btn-success text-uppercase">Checkout</a>
+                <a href="checkout.php" class="btn btn-md btn-block btn-success text-uppercase" role="button">Checkout</a>
             </div>
         </div>
-    </div>
+    </nav>
 </div>
+</section>
 <?php else: ?>
+<section aria-label="Empty cart" role="status">
 <p class="text-center mb-4">There is nothing in your cart.</p>
 <div class="text-center">
-    <a href="products.php" class="btn btn-md btn-primary">Shop</a>
+    <a href="products.php" class="btn btn-md btn-primary" role="button">Shop</a>
 </div>
+</section>
 <?php endif; ?>
     </div>
 </main>
@@ -185,7 +189,7 @@ function delete_item(btn) {
 }
 
 function change_quantity(select) {
-    const productId = select.id;
+    const productId = select.id.replace('qty_', '');
     const qty = select.value;
     window.location.href = `cart.php?action=update&product_id=${productId}&qty=${qty}`;
 }

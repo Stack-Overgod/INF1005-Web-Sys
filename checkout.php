@@ -75,7 +75,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
             } else {
                 try {
                     // --- PREPARE PENDING ORDER in Session ---
-                    // Instead of saving now, we save it on ordersuccess.php after Stripe redirect
                     $_SESSION['pending_order_data'] = [
                         'total_price'  => $total_amt,
                         'full_address' => $address . (!empty($unit_no) ? ", " . $unit_no : "") . " SG " . $zip,
@@ -141,6 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OVERCLOCK/TECH — Checkout</title>
+    <meta name="description" content="OVERCLOCK/TECH — Complete your order. Enter shipping info and pay securely via Stripe.">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -159,28 +159,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
 <?php include 'includes/nav.php'; ?>
 
 
-<main id="main-content" class="page-wrapper">    
+<main id="main-content" class="page-wrapper" role="main">
     <div class="page-container page-container-medium">
         <h1 class="section-title text-center mb-5"><span class="hi">CHECK</span>OUT</h1>
         
         <?php if ($error): ?>
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger" role="alert" aria-live="assertive">
                 <?php echo $error; ?>
             </div>
         <?php endif; ?>
 
         <div class="row">
-            <div class="col-md-5 order-md-2 mb-4">
+            <section class="col-md-5 order-md-2 mb-4" aria-label="Order summary">
                 <h2 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted">Your cart</span>
-                    <span class="badge badge-secondary badge-pill"><?php echo count($cart_items); ?></span>
+                    <span class="badge badge-secondary badge-pill" aria-label="<?php echo count($cart_items); ?> items in cart"><?php echo count($cart_items); ?></span>
                 </h2>
                 <div class="table-responsive">
-                    <table class="table table-striped text-white mb-3">
+                    <table class="table table-striped text-white mb-3" aria-label="Order summary items">
                         <thead>
                             <tr>
-                                <th>Product</th>
-                                <th class="text-right">Price</th>
+                                <th scope="col">Product</th>
+                                <th scope="col" class="text-right">Price</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -208,40 +208,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </section>
 
-            <div class="col-md-7 order-md-1">
+            <section class="col-md-7 order-md-1" aria-label="Shipping and payment">
                 <h2 class="mb-4">Shipping Information</h2>
-                <form action="checkout.php" method="POST" class="needs-validation">
+                <form action="checkout.php" method="POST" class="needs-validation" aria-label="Checkout form" novalidate>
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="firstName">First name</label>
-                            <input type="text" class="form-control" id="firstName" name="first_name" value="<?= htmlspecialchars($user_info['fname']) ?>" required>
+                            <input type="text" class="form-control" id="firstName" name="first_name" value="<?= htmlspecialchars($user_info['fname']) ?>" required autocomplete="given-name" aria-required="true">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="lastName">Last name</label>
-                            <input type="text" class="form-control" id="lastName" name="last_name" value="<?= htmlspecialchars($user_info['lname']) ?>" required>
+                            <input type="text" class="form-control" id="lastName" name="last_name" value="<?= htmlspecialchars($user_info['lname']) ?>" required autocomplete="family-name" aria-required="true">
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($user_info['email']) ?>" placeholder="you@example.com" required>
+                        <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($user_info['email']) ?>" placeholder="you@example.com" required autocomplete="email" aria-required="true">
                     </div>
 
                     <div class="mb-3">
                         <label for="address">Address</label>
-                        <input type="text" class="form-control" id="address" name="address" placeholder="1234 Main St" required>
+                        <input type="text" class="form-control" id="address" name="address" placeholder="1234 Main St" required autocomplete="street-address" aria-required="true">
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="unit_no">Unit No.</label>
-                            <input type="text" class="form-control" id="unit_no" name="unit_no" placeholder="#01-1234" required>
+                            <input type="text" class="form-control" id="unit_no" name="unit_no" placeholder="#01-1234" required aria-required="true">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="zip">Zip Code</label>
-                            <input type="text" class="form-control" id="zip" name="zip" placeholder="123456" required pattern="[0-9]{6}">
+                            <input type="text" class="form-control" id="zip" name="zip" placeholder="123456" required pattern="[0-9]{6}" autocomplete="postal-code" aria-required="true" aria-describedby="zipHelp">
+                            <small id="zipHelp" class="sr-only">Enter a 6-digit zip code</small>
                         </div>
                     </div>
 
@@ -251,12 +252,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['place_order'])) {
                     <p class="text-muted small mb-4">Alipay, Credit Card, PayNow and GrabPay are supported. Click the button below to enter to Stripe payment gateway.</p>
                     
                     <input type="hidden" name="place_order" value="1">
-                    <button class="btn btn-success btn-block text-uppercase" type="submit">
-                        <i class="fa-brands fa-stripe mr-2" style="font-size:1.5rem; vertical-align:middle;"></i> 
+                    <button class="btn btn-success btn-block text-uppercase" type="submit" aria-label="Pay $<?php echo number_format($total_amt, 2); ?> now via Stripe">
+                        <i class="fa-brands fa-stripe mr-2" style="font-size:1.5rem; vertical-align:middle;" aria-hidden="true"></i> 
                         Pay $<?php echo number_format($total_amt, 2); ?> Now
                     </button>
                 </form>
-            </div>
+            </section>
         </div>
     </div>
 </main>

@@ -65,33 +65,34 @@ foreach ($orders as &$order) {
 
 <?php include 'includes/nav.php'; ?>
 
-<main id="main-content" class="page-wrapper">
+<main id="main-content" class="page-wrapper" role="main">
     <div class="page-container page-container-wide">
         <?php if ($is_admin_view): ?>
-            <div class="alert alert-warning text-center" style="margin-bottom: 2rem; border-radius: 8px;">
+            <div class="alert alert-warning text-center" role="alert" style="margin-bottom: 2rem; border-radius: 8px;">
                 <strong>Reminder:</strong> You are currently viewing orders for customer <strong><?= htmlspecialchars($view_user_name) ?></strong>.
-                <a href="staff.php" class="btn btn-sm btn-dark ml-3">Return to Staff Page</a>
+                <a href="staff.php" class="btn btn-sm btn-dark ml-3" role="button">Return to Staff Page</a>
             </div>
         <?php endif; ?>
 
         <h1 class="section-title text-center mb-5"><span class="hi">ORDER</span> HISTORY</h1>
 
         <?php if (empty($orders)): ?>
-            <div class="no-orders">
-                <div class="empty-icon"><i class="fa-solid fa-box-open"></i></div>
+            <section class="no-orders" aria-label="No orders" role="status">
+                <div class="empty-icon"><i class="fa-solid fa-box-open" aria-hidden="true"></i></div>
                 <h2 class="text-white">No orders found.</h2>
                 <p class="text-white">You haven't placed any orders yet.</p>
-                <a href="products.php" class="btn btn-success mt-3">Start Shopping</a>
-            </div>
+                <a href="products.php" class="btn btn-success mt-3" role="button">Start Shopping</a>
+            </section>
         <?php else: ?>
+            <section aria-label="Order list">
             <?php foreach ($orders as $order): ?>
-                <div class="order-card">
+                <article class="order-card" aria-label="Order #ORD-<?= str_pad($order['order_id'], 6, '0', STR_PAD_LEFT) ?>">
                     <div class="order-header">
                         <div>
                             <span class="order-id">#ORD-<?= str_pad($order['order_id'], 6, '0', STR_PAD_LEFT) ?></span>
-                            <div class="order-date"><i class="far fa-calendar-alt mr-2"></i><?= date('F j, Y, g:i a', strtotime($order['timestamp'])) ?></div>
+                            <div class="order-date"><i class="far fa-calendar-alt mr-2" aria-hidden="true"></i><time datetime="<?= date('c', strtotime($order['timestamp'])) ?>"><?= date('F j, Y, g:i a', strtotime($order['timestamp'])) ?></time></div>
                         </div>
-                        <span class="order-status status-<?= strtolower($order['status']) ?>">
+                        <span class="order-status status-<?= strtolower($order['status']) ?>" role="status" aria-label="Order status: <?= htmlspecialchars($order['status']) ?>">
                             <?= htmlspecialchars($order['status']) ?>
                         </span>
                     </div>
@@ -114,11 +115,12 @@ foreach ($orders as &$order) {
                         <div class="text-right d-flex flex-column align-items-end">
                             <span class="total-label">Total Amount</span>
                             <span class="total-amount mb-2">$<?= number_format($order['total_price'], 2) ?></span>
-                            <a href="orderdetail.php?order_id=<?= $order['order_id'] ?><?= $is_admin_view ? '&client_id=' . $view_user_id : '' ?>" class="btn btn-outline-info"> View Order</a>
+                            <a href="orderdetail.php?order_id=<?= $order['order_id'] ?><?= $is_admin_view ? '&client_id=' . $view_user_id : '' ?>" class="btn btn-outline-info" aria-label="View details for order #ORD-<?= str_pad($order['order_id'], 6, '0', STR_PAD_LEFT) ?>"> View Order</a>
                         </div>
                     </div>
-                </div>
+                </article>
             <?php endforeach; ?>
+            </section>
         <?php endif; ?>
     </div>
 </main>

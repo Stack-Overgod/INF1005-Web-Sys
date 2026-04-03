@@ -72,7 +72,7 @@ if (isset($_SESSION['pending_order_data']) && isset($_GET['session_id'])) {
             $pdo->rollBack();
         }
         error_log("Order Finalization Error: " . $e->getMessage());
-        $error = "A critical error occurred while processing your order. Please try again or contact us.";
+        $error = 'A critical error occurred while processing your order. Please try again or visit our <a href="faq.php">Support FAQ</a>.';
     }
 } else {
     // If no session data, check if they are just visiting (handled by view)
@@ -84,6 +84,7 @@ if (isset($_SESSION['pending_order_data']) && isset($_GET['session_id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OVERCLOCK/TECH — Order Successful</title>
+    <meta name="description" content="OVERCLOCK/TECH — Your order has been processed. View your receipt and track your order status.">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -93,23 +94,31 @@ if (isset($_SESSION['pending_order_data']) && isset($_GET['session_id'])) {
 
 <?php include 'includes/nav.php'; ?>
 
-<main class="page-wrapper">
+<main id="main-content" class="page-wrapper" role="main">
     <div class="page-container page-container-narrow text-center">
         <?php if ($success): ?>
-            <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <section role="status" aria-live="polite" aria-label="Order result">
+            <div class="success-icon"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></div>
             <h1 class="success-h1">TRANSACTION <span>SUCCESSFUL</span></h1>
             <p class="success-text">A receipt has been recorded in your profile. You can track your order status in the orders history.</p>
+            </section>
         <?php elseif ($error): ?>
-            <div class="success-icon" style="color:#ff4d4d; filter: drop-shadow(0 0 15px #ff4d4d);"><i class="fa-solid fa-circle-xmark"></i></div>
+            <section role="alert" aria-live="assertive" aria-label="Order error">
+            <div class="success-icon" style="color:#ff4d4d; filter: drop-shadow(0 0 15px #ff4d4d);"><i class="fa-solid fa-circle-xmark" aria-hidden="true"></i></div>
             <h1 class="success-h1">PROCESSING <span>ERROR</span></h1>
-            <p class="success-text"><?= htmlspecialchars($error) ?></p>
+            <p class="success-text"><?= $error ?></p>
+            </section>
         <?php else: ?>
-            <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+            <section role="status" aria-live="polite" aria-label="Order result">
+            <div class="success-icon"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></div>
             <h1 class="success-h1">THANK <span>YOU</span></h1>
             <p class="success-text">Your order has been already processed.</p>
+            </section>
         <?php endif; ?>
-             <a href="home.php" class="btn btn-primary">Return Home</a>
-            <a href="orders.php" class="btn btn-outline-info">View My Orders</a>
+            <nav aria-label="Post-order actions">
+             <a href="home.php" class="btn btn-primary" role="button">Return Home</a>
+            <a href="orders.php" class="btn btn-outline-info" role="button" aria-label="View your order history">View My Orders</a>
+            </nav>
     </div>
 </main>
 

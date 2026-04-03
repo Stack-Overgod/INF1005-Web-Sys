@@ -63,6 +63,7 @@ $order_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OVERCLOCK/TECH — Invoice Details</title>
+    <meta name="description" content="OVERCLOCK/TECH — View your invoice and order details.">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
@@ -71,55 +72,55 @@ $order_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?php include 'includes/nav.php'; ?>
 
-<main class="page-wrapper">
+<main id="main-content" class="page-wrapper" role="main">
     <div class="page-container page-container-narrow">
         <?php if ($is_admin_view): ?>
-            <div class="alert alert-warning text-center" style="margin-bottom: 2rem; border-radius: 8px;">
+            <div class="alert alert-warning text-center" role="alert" style="margin-bottom: 2rem; border-radius: 8px;">
                 <strong>Reminder:</strong> You are currently viewing an order for customer <strong><?= htmlspecialchars($view_user_name) ?></strong>.
             </div>
         <?php endif; ?>
         <div class="text-right mb-4">
-            <button onclick="window.print()" class="btn btn-outline-info btn-sm btn-print">
-                <i class="fa fa-print mr-2"></i>Print Invoice
+            <button onclick="window.print()" class="btn btn-outline-info btn-sm btn-print" aria-label="Print this invoice">
+                <i class="fa fa-print mr-2" aria-hidden="true"></i>Print Invoice
             </button>
         </div>
 
-        <div class="invoice-header">
+        <header class="invoice-header">
             <div>
                 <h1 class="invoice-title">INVOICE</h1>
                 <div class="info-content mt-2">OVERCLOCK<span style="color:var(--neon)">/</span>TECH</div>
             </div>
-            <div class="invoice-meta">
+            <div class="invoice-meta" aria-label="Invoice details">
                 <div>Order #ORD-<?= str_pad($order['order_id'], 6, '0', STR_PAD_LEFT) ?></div>
-                <div>Date: <?= date('d M Y, g:i a', strtotime($order['timestamp'])) ?></div>
+                <div>Date: <time datetime="<?= date('c', strtotime($order['timestamp'])) ?>"><?= date('d M Y, g:i a', strtotime($order['timestamp'])) ?></time></div>
                 <div>Payment: <?= htmlspecialchars($order['payment_method']) ?></div>
-                <div>Status: <span style="color:var(--neon)"><?= strtoupper($order['status']) ?></span></div>
+                <div>Status: <span style="color:var(--neon)" role="status"><?= strtoupper($order['status']) ?></span></div>
             </div>
-        </div>
+        </header>
 
         <div class="invoice-info-grid">
-            <div class="info-section">
+            <section class="info-section" aria-label="Customer details">
                 <h2>Customer Details</h2>
                 <div class="info-content">
                     <?= htmlspecialchars($view_user_name) ?><br>
                     <?= htmlspecialchars($view_user_email) ?>
                 </div>
-            </div>
-            <div class="info-section">
+            </section>
+            <section class="info-section" aria-label="Shipping address">
                 <h2>Shipping Address</h2>
-                <div class="info-content">
+                <address class="info-content">
                     <?= nl2br(htmlspecialchars($order['address'])) ?>
-                </div>
-            </div>
+                </address>
+            </section>
         </div>
 
-        <table class="table table-borderless text-white">
+        <table class="table table-borderless text-white" aria-label="Order items">
             <thead>
                 <tr>
-                    <th>Item Description</th>
-                    <th class="text-center">Qty</th>
-                    <th class="text-right">Price</th>
-                    <th class="text-right">Amount</th>
+                    <th scope="col">Item Description</th>
+                    <th scope="col" class="text-center">Qty</th>
+                    <th scope="col" class="text-right">Price</th>
+                    <th scope="col" class="text-right">Amount</th>
                 </tr>
             </thead>
             <tbody>
@@ -158,9 +159,9 @@ $order_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
 
-        <div>
-            <p>Thank you for choosing OVERCLOCK/TECH. For any questions regarding this invoice, please contact support@overclocktech.com</p>
-        </div>
+        <footer>
+            <p>Thank you for choosing OVERCLOCK/TECH. For any questions regarding this invoice, please visit our <a href="faq.php">Support FAQ</a></p>
+        </footer>
     </div>
 </main>
 
