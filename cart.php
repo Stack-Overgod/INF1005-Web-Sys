@@ -120,7 +120,7 @@ $total_amt = $subtotal + $shipping_fee;
                             </select>
                         </div>
                     </td>
-                    <td id="subtotal_<?php echo $product['product_id']; ?>" class="text-right">$<?php echo number_format($subtotal, 2); ?></td>
+                    <td id="subtotal_<?php echo $product['product_id']; ?>" class="text-right">$<?php echo number_format($item_subtotal, 2); ?></td>
                     <td class="text-right">
                         <button class="btn btn-sm btn-danger" id="<?php echo $product['product_id']; ?>_"
                             onclick="delete_item(this)" aria-label="Remove <?php echo htmlspecialchars($product['name']); ?> from cart"><i class="fa fa-trash" aria-hidden="true"></i> Delete Item  
