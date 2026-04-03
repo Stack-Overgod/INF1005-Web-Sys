@@ -1,21 +1,19 @@
-# INF1005-Web-Sys
+<div align="center">
+  <h1>OVERCLOCK/TECH</h1>
+  <p>
+    Web Application Project for INF1005 Web Systems and Technologies.
+  </p>
+</div>
 
-### Database setup
+## About
 
-To use it open mysql workbench then open a schema and import it(i think), currently my setup for establishing connections is shifting all the files to xampp/htdocs/ and then starting apache and MySQL, theoretically should be able to connect to the database doing that.
+Overclock/Tech is a full-stack ecommerce web application that sells gaming computers and related peripherals. It aims to serve as a premium destination for gamers who are looking to upgrade their current setups with our top-tier, specialized performance hardware. The site uses a predominantly neon-blue CSS design with similarly themed fonts to evoke a futuristic theme.
 
+Our website comprises:\
+• A main landing page that introduces the company\
+• A common navigation bar that allows users to navigate to the various sub-pages\
+• An "About Us" and "Find Us" page that provides more details about the company\
+• Sub-pages that provides information of the company's gaming hardware\
+• Back-end functionality that supports the creation, storing, and updating of data (user accounts, product catalogue, shopping cart, reviews, and payment)
 
-
-### Test stripe gateway
-
-Paynow/grabpay - just click through and approve
-
-Card - use 4242424242424242, date/use whatever you want
-
-(Install the configuration in /phpiniconfigs to test)
-
-### acc and password for staff
-
-12345@overclocktech.com      A123@B123
-
-
+**SMTP** is used for sending emails from PHP and **Stripe** serves as our external payment gateway.
